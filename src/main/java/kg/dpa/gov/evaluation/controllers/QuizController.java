@@ -14,11 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/form")
+@RequestMapping("/quizes")
 public class QuizController {
 
     @GetMapping
     private String showPage(Model model) {
+        model.addAttribute("quizForm", new Subject());
+        return "quiz-group";
+    }
+
+    @GetMapping("/form")
+    private String showQuiz(Model model) {
         model.addAttribute("quizForm", new Subject());
         return "form";
     }

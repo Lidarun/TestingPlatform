@@ -18,9 +18,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/", "index").permitAll()
                         .requestMatchers("/", "/form").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -43,4 +44,6 @@ public class WebSecurityConfig {
 
         return new InMemoryUserDetailsManager(user);
     }
+
+
 }

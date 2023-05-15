@@ -1,3 +1,4 @@
+@import "header.css";
 body{
     background-color: black;
 }
@@ -11,24 +12,4 @@ img{
 
 .under-row{
     padding-top: 3%;
-}
-
-
-/*HEADER*/
-.navbar{
-    color: #0064bd;
-}
-.navbar-brand{
-    padding-left: 5%;
-}
-
-.login{
-    color: #06335C;
-    margin-right: 30px;
-    font-size: 1.8rem
-}
-
-.login:hover{
-    color: #06335C;
-    font-size: 2.1rem;
 }
