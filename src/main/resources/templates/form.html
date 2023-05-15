@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Викторина</title>
+    <link th:href="@{css/form.css}" rel="stylesheet">
+</head>
+<body>
+
+
+<div class="container">
+    <form role="form" method="post"
+          th:action="@{/form}" th:object="${quizForm}">
+
+        <h3 class="title">Ответьте на вопросы для генерации оценки защищенности политики конфиденциальности</h3>
+
+        <!--  Укажите ФИО или название организации, которая собирает персональные данные -->
+        <h5 class="subtitle">Укажите ФИО или название организации, которая собирает персональные данные <span
+                class="starmark">*</span></h5>
+        <div class="form-check">
+            <label class="input-group">
+                <input type="text" th:field="*{name}" class="form-control" placeholder="Название организации"/>
+            </label>
+        </div>
+
+        <!-- 1. Вопрос:  -->
+        <h5 class="subtitle"> Что тяжелее, килограмм яблок или килограмм ваты?: <span class="starmark">*</span></h5>
+        <div class="form-check">
+            <div th:each="val : ${list}">
+                <input type="radio" th:field="*{answer1}" th:id="${val}" th:name="${val}" th:value="${val}">
+                <span th:for="${val}" th:text="${val}"></span>
+            </div>
+        </div>
+
+<!--        &lt;!&ndash; 2. Вопрос:  &ndash;&gt;-->
+<!--        <h5 class="subtitle"> Кто умнее, дурак или мудрец?: <span class="starmark">*</span></h5>-->
+<!--        <div class="form-check">-->
+<!--            <div th:each="val : ${list}">-->
+<!--                <input type="checkbox" th:field="*{answer1}" th:id="${val}" th:name="${val}" th:value="${val}">-->
+<!--                <span th:for="${val}" th:text="${val}"></span>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 3. Вопрос:  &ndash;&gt;-->
+<!--        <h5 class="subtitle"> Кто умнее, дурак или мудрец?: <span class="starmark">*</span></h5>-->
+<!--        <div class="form-check">-->
+<!--            <div th:each="val : ${list}">-->
+<!--                <input type="checkbox" th:field="*{answer1}" th:id="${val}" th:name="${val}" th:value="${val}">-->
+<!--                <span th:for="${val}" th:text="${val}"></span>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="button">
+            <button class="button" type="submit"> Оценка</button>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
