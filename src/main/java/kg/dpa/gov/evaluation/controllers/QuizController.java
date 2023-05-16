@@ -2,6 +2,7 @@ package kg.dpa.gov.evaluation.controllers;
 
 import jakarta.validation.Valid;
 import kg.dpa.gov.evaluation.models.Subject;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@PreAuthorize("hasAnyAuthority()")
 @RequestMapping("/quizes")
 public class QuizController {
 
