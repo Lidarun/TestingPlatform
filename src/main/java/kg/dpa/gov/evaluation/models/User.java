@@ -26,7 +26,7 @@ public class User {
     @NotEmpty(message = "Обязательное поле")
     String email;
 
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     Set<Role> role;

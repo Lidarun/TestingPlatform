@@ -18,7 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return rep.findByUsername(username)
+        return rep.findByUsernameOrEmail(username, username)
                 .map(SecurityUser::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден: " + username));
     }

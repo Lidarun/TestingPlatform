@@ -20,7 +20,7 @@
 
             <div class="d-flex" sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="post">
-                    <span sec:authentication="name"></span>
+                    <span class="userName" sec:authentication="name"></span>
                     <button class="headButton" type="submit"><i class="fas fa-sign-out-alt"></i></button>
                 </form>
             </div>

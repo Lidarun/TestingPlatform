@@ -15,25 +15,30 @@
 
         <div class="signin-signup">
 
-            <form th:action="@{/login}" method="post" class="sign-in-form">
-                <h2 class="title">Вход</h2>
+            <!--SIGN UP-->
+            <form th:action="@{/register}" method="post" th:object="${userForm}" class="sign-in-form">
+                <h2 class="title">Регистрация</h2>
 
-                <div th:if="${param.error}">
-                    Invalid username and password.
-                </div>
-                <div th:if="${param.logout}">
-                    You have been logged out.
+                <p class="error" th:if="${#fields.hasErrors('username')}" th:errorclass="error"
+                   th:errors="*{username}"/>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" th:field="*{username}" placeholder="Username"/>
                 </div>
 
                 <div class="input-field">
-                    <i class="fas fa-user"></i>
-                    <input type="text" name="username" placeholder="username"/>
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" th:field="*{email}" placeholder="Email"/>
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" name="password" placeholder="Пароль"/>
+                    <input type="text" th:field="*{password}" placeholder="Пароль"/>
                 </div>
-                <input type="submit" value="Sign In" class="btn solid"/>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="text" th:field="*{confirmPassword}" placeholder="Повторный пароль"/>
+                </div>
+                <input type="submit" class="btn" value="Подтвердить"/>
             </form>
 
         </div>
@@ -47,9 +52,9 @@
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
                     ex ratione. Aliquid!
                 </p>
-                <a href="/register">
+                <a href="/login">
                     <button class="btn transparent" id="sign-in-btn">
-                        Регистрация
+                        Вход
                     </button>
                 </a>
             </div>
@@ -57,7 +62,5 @@
         </div>
     </div>
 </div>
-</div>
-
 </body>
 </html>

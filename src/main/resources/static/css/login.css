@@ -51,11 +51,6 @@ form {
     grid-row: 1 / 2;
 }
 
-form.sign-up-form {
-    opacity: 0;
-    z-index: 1;
-}
-
 form.sign-in-form {
     z-index: 2;
 }
@@ -149,6 +144,7 @@ form.sign-in-form {
 
 .btn:hover {
     background-color: #4d84e2;
+    width: 155px;
 }
 .panels-container {
     position: absolute;
@@ -224,6 +220,13 @@ form.sign-in-form {
     height: 41px;
     font-weight: 600;
     font-size: 0.8rem;
+}
+
+.btn.transparent:hover{
+    border: 2px solid #0d75ab;
+    width: 133px;
+    font-weight: 606;
+    font-size: 0.83rem;
 }
 
 .right-panel .image,

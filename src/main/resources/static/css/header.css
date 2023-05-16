@@ -5,11 +5,17 @@
 .navbar-brand{
     padding-left: 1%;
 }
+.userName{
+    color: #073967;
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    font-family: "Lucida Console";
+}
 .headButton{
-    width: 34px;
-    height: 34px;
-    color: #06335C;
-    font-size: 1.2rem;
+    width: 38px;
+    height: 35px;
+    color: #073967;
+    font-size: 1.3rem;
     border-radius: 33px;
     text-align: center;
     margin: 0 30px 0 30px;
