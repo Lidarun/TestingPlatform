@@ -21,9 +21,9 @@ public class User {
     @NotEmpty(message = "Обязательное поле")
     String username;
 
-    @Email
     @Column(unique = true)
     @NotEmpty(message = "Обязательное поле")
+    @Email(message = "Пожалуйста, введите действительный e-mail адрес")
     String email;
 
     @Enumerated(EnumType.STRING)

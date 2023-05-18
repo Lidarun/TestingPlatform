@@ -401,3 +401,15 @@ form.sign-in-form {
         left: 50%;
     }
 }
+
+.homeLogin{
+    position: absolute;
+    padding-top: 55%;
+    padding-left: 35%;
+}
+
+.homeSignUp{
+    position: absolute;
+    padding-top: 65%;
+    padding-left: 35%;
+}

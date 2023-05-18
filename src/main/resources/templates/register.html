@@ -26,14 +26,22 @@
                     <input type="text" th:field="*{username}" placeholder="Username"/>
                 </div>
 
+                <p class="error" th:if="${#fields.hasErrors('email')}" th:errorclass="error"
+                   th:errors="*{email}"/>
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
                     <input type="text" th:field="*{email}" placeholder="Email"/>
                 </div>
+
+                <p class="error" th:if="${#fields.hasErrors('password')}" th:errorclass="error"
+                   th:errors="*{password}"/>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
                     <input type="text" th:field="*{password}" placeholder="Пароль"/>
                 </div>
+
+                <p class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errorclass="error"
+                   th:errors="*{confirmPassword}"/>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
                     <input type="text" th:field="*{confirmPassword}" placeholder="Повторный пароль"/>
@@ -41,6 +49,9 @@
                 <input type="submit" class="btn" value="Подтвердить"/>
             </form>
 
+            <div class="homeSignUp">
+                <a class="navbar-brand mx-auto" href="/">
+                    <img th:src="@{images/logo.png}" height="55px"></a></div>
         </div>
     </div>
 
