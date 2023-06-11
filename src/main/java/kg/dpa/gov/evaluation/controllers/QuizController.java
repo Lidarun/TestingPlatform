@@ -14,37 +14,51 @@ import java.util.List;
 public class QuizController {
     private List<Question> questions;
     private int currentQuestionIndex;
+    private int result;
 
     public QuizController() {
         questions = new ArrayList<>();
-        // Добавьте вопросы в список
-        // Например:
-        questions.add(new Question("Какой год был основан Java?", Arrays.asList("1995", "2000", "1985", "1970"), 0));
+        questions.add(new Question("В каком году был основан Java?", Arrays.asList("1995", "2000", "1985", "1970"), 0));
         questions.add(new Question("Что такое JVM?", Arrays.asList("Java Virtual Machine", "Java Virtual Memory", "Java Validation Machine", "Java Verification Machine"), 0));
         currentQuestionIndex = 0;
     }
 
     @GetMapping()
     public String showQuestion(Model model) {
+        if (currentQuestionIndex > questions.size()) currentQuestionIndex = 0;
         if (currentQuestionIndex < questions.size()) {
             Question currentQuestion = questions.get(currentQuestionIndex);
+            model.addAttribute("result", result);
+            model.addAttribute("quizSize", questions.size());
             model.addAttribute("question", currentQuestion);
             return "question";
-        } else {
-
-            currentQuestionIndex = 0;
-            return "result";
         }
+
+        model.addAttribute("result", result);
+        model.addAttribute("quizSize", questions.size());
+
+        result = 0;
+        currentQuestionIndex = 0;
+
+        return "result";
     }
 
     @PostMapping()
-    public String submitAnswer(Integer answer) {
+    public String submitAnswer(@RequestParam("correctAnswer") Integer answer, Model model) {
         Question currentQuestion = questions.get(currentQuestionIndex);
-        boolean isCorrect = currentQuestion.isCorrect(answer != null ? answer : -1);
-        // Обработка ответа, например, подсчет количества правильных ответов
-        // Здесь вы можете использовать сервисы или репозитории для сохранения результатов и других операций с данными
+        boolean check = currentQuestion.isCorrect(answer != null ? answer : -1);
 
         currentQuestionIndex++;
-        return "redirect:/quiz";
+        System.out.println(currentQuestionIndex);
+
+        if (check) {
+            result++;
+            return "redirect:/quiz";
+
+        }else {
+            model.addAttribute("rightAnswer",
+                    currentQuestion.getOptions().get(currentQuestion.getCorrectAnswer()));
+            return "checker";
+        }
     }
 }

@@ -1,9 +1,19 @@
 @import "header.css";
 
 .row{
-    padding-top: 5%;
+    padding-top: 7%;
 }
-
+.card-header{
+    display: inline-flex;
+}
+.currentRes{
+    display: inline-flex;
+    position: absolute;
+    right: 3%;
+}
+.cardTXT{
+    color: #0d3a65;
+}
 .btn{
-    margin: 3% 0 0 5%;
+    margin: 3% 0 0 3.5%;
 }

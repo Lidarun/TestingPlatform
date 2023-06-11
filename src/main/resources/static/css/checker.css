@@ -1,0 +1,11 @@
+@import "header.css";
+
+.row{
+    padding-top: 7%;
+}
+.cardTXT{
+    color: #0d3a65;
+}
+.btn{
+    margin: 0 0 3% 2.5%;
+}

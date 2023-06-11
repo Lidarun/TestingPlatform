@@ -3,3 +3,14 @@
 .row{
     padding-top: 10%;
 }
+.cardTXT{
+    color: #0d3a65;
+}
+.resultBtn{
+    display: inline-flex;
+    margin: 0 0 2% 0;
+    cursor: pointer;
+}
+a{
+    margin-left: 2%;
+}
