@@ -1,9 +1,13 @@
 package kg.dpa.gov.evaluation.controllers;
 
 import kg.dpa.gov.evaluation.models.Question;
+import kg.dpa.gov.evaluation.repository.QuestionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,19 +16,21 @@ import java.util.List;
 @Controller
 @RequestMapping("/quiz")
 public class QuizController {
+    private final QuestionRepository repository;
     private List<Question> questions;
     private int currentQuestionIndex;
     private int result;
 
-    public QuizController() {
-        questions = new ArrayList<>();
-        questions.add(new Question("В каком году был основан Java?", Arrays.asList("1995", "2000", "1985", "1970"), 0));
-        questions.add(new Question("Что такое JVM?", Arrays.asList("Java Virtual Machine", "Java Virtual Memory", "Java Validation Machine", "Java Verification Machine"), 0));
+    public QuizController(QuestionRepository repository) {
+        this.repository = repository;
+        this.questions = repository.findAll();
         currentQuestionIndex = 0;
     }
 
     @GetMapping()
     public String showQuestion(Model model) {
+        questions.forEach(System.out::println);
+
         if (currentQuestionIndex > questions.size()) currentQuestionIndex = 0;
         if (currentQuestionIndex < questions.size()) {
             Question currentQuestion = questions.get(currentQuestionIndex);
@@ -58,6 +64,8 @@ public class QuizController {
         }else {
             model.addAttribute("rightAnswer",
                     currentQuestion.getOptions().get(currentQuestion.getCorrectAnswer()));
+            model.addAttribute("why",
+                    currentQuestion.getAnswerExplain());
             return "checker";
         }
     }

@@ -7,6 +7,7 @@ import kg.dpa.gov.evaluation.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -33,9 +34,9 @@ public class RegistrationController {
 //        ObjectError errorEmail = employeeService.existEmployee(employee.getEmail());
 //        if (errorEmail != null) bindingResult.addError(errorEmail);
 //
-//        ObjectError errorConfirmPassword = employeeService
-//                .comparePassword(employee.getPassword(), employee.getConfirmPassword());
-//        if (errorConfirmPassword != null) bindingResult.addError(errorConfirmPassword);
+        ObjectError errorConfirmPassword = userService
+                .comparePassword(user.getPassword(), user.getConfirmPassword());
+        if (errorConfirmPassword != null) bindingResult.addError(errorConfirmPassword);
 //
 //        ObjectError errorPassword = employeeService.validPassword(employee.getPassword());
 //        if (errorPassword != null) bindingResult.addError(errorPassword);

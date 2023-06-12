@@ -37,7 +37,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/", "index").permitAll()
-                        .requestMatchers("/", "/form").permitAll()
+                        .requestMatchers("/questions/**", "/edit/**", "/questions/edit/js/**").permitAll()
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )

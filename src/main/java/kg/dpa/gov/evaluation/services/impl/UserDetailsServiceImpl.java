@@ -1,4 +1,4 @@
-package kg.dpa.gov.evaluation.services;
+package kg.dpa.gov.evaluation.services.impl;
 
 import kg.dpa.gov.evaluation.models.SecurityUser;
 import kg.dpa.gov.evaluation.repository.UserRepository;

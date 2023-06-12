@@ -1,0 +1,42 @@
+.checkbox-button {
+    margin-top: 1.5%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.checkbox-button:hover {
+    transition: 1s;
+    background-color: #00cc00;
+    color: black;
+}
+.checkbox-button input[type="radio"]:checked + .checkbox-label {
+    background-color: #00cc00;
+    color: #000000;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+
+.checkbox-input {
+    display: none;
+}
+
+.checkbox-label {
+    font-weight: bold;
+}
+
+.checkbox-input:checked + .checkbox-label {
+    color: #fff;
+    background-color: #007bff;
+}
+.text-sm{
+    margin-right: 1%;
+}
+
+.delete{
+    
+}

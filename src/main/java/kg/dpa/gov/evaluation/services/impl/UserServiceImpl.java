@@ -6,8 +6,8 @@ import kg.dpa.gov.evaluation.repository.UserRepository;
 import kg.dpa.gov.evaluation.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.ObjectError;
 
-import java.util.Collections;
 import java.util.Set;
 
 @Service
@@ -24,5 +24,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         user.setRole(Set.of(Role.ROLE_USER));
         userRep.save(user);
+    }
+
+    @Override
+    public ObjectError comparePassword(String password, String confirmPassword) {
+        ObjectError error = null;
+        if (!password.equals(confirmPassword)) error =
+                new ObjectError("global", "Пароли не совпадают, попробуйте снова");
+
+        return error;
     }
 }
