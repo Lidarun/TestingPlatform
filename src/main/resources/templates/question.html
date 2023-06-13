@@ -25,6 +25,7 @@
                 <div class="card-body">
                     <div>
                         <form id="quiz-form" th:action="@{/quiz}" th:object="${question}" method="post">
+                            <input type="hidden" th:csrf="true"/>
                             <div class="form-check" th:each="option, index : ${question.options}">
                                 <input class="form-check-input" type="radio" th:field="*{correctAnswer}"
                                        th:value="${index.index}" th:id="${index.index}"/>

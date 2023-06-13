@@ -2,6 +2,7 @@ package kg.dpa.gov.evaluation.controllers;
 
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/questions")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class QuestionController {
     private final QuestionRepository questionRepository;
 

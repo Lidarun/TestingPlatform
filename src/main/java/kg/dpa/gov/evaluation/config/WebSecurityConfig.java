@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -35,10 +34,7 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/", "index").permitAll()
-                        .requestMatchers("/questions/**", "/edit/**", "/questions/edit/js/**").permitAll()
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/", "/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

@@ -40,6 +40,8 @@ public class QuizController {
             return "question";
         }
 
+        if (questions.isEmpty()) return "redirect:/";
+
         model.addAttribute("result", result);
         model.addAttribute("quizSize", questions.size());
 

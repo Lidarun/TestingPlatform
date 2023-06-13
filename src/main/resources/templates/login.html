@@ -16,6 +16,7 @@
         <div class="signin-signup">
 
             <form th:action="@{/login}" method="post" class="sign-in-form">
+                <input type="hidden" th:csrf="true"/>
                 <h2 class="title">Вход</h2>
 
                 <div th:if="${param.error}">
@@ -51,6 +52,12 @@
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
                     ex ratione. Aliquid!
                 </p>
+                <a href="/">
+                    <button class="btn transparent" id="sign-in-btn">
+                        <i class="fas fa-solid fa-home"></i>
+                        <span>Главная</span>
+                    </button>
+                </a>
                 <a href="/register">
                     <button class="btn transparent" id="sign-in-btn">
                         Регистрация

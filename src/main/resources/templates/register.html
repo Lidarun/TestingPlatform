@@ -17,6 +17,7 @@
 
             <!--SIGN UP-->
             <form th:action="@{/register}" method="post" th:object="${userForm}" class="sign-in-form">
+                <input type="hidden" th:csrf="true"/>
                 <h2 class="title">Регистрация</h2>
 
                 <p class="error" th:if="${#fields.hasErrors('username')}" th:errorclass="error"
@@ -62,13 +63,19 @@
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
                     ex ratione. Aliquid!
                 </p>
+                <a href="/">
+                    <button class="btn transparent" id="sign-in-btn">
+                        <i class="fas fa-solid fa-home"></i>
+                        <span>Главная</span>
+                    </button>
+                </a>
                 <a href="/login">
                     <button class="btn transparent" id="sign-in-btn">
                         Вход
                     </button>
                 </a>
             </div>
-            <img th:src="@{images/log.svg}" class="image"/>
+            <img th:src="@{images/amico.svg}" class="image"/>
         </div>
     </div>
 </div>
