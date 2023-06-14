@@ -47,11 +47,14 @@
                     <i class="fas fa-lock"></i>
                     <input type="text" th:field="*{confirmPassword}" placeholder="Повторите пароль"/>
                 </div>
-                <label class="globalError">
-                    <label th:if="${#fields.hasErrors('global')}">
-                        <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="global"/>
+
+                <div class="globalError">
+                    <label class="error">
+                        <label th:if="${#fields.hasErrors('global')}">
+                            <p th:each="err : ${#fields.errors('global')}" th:text="${err}"/>
+                        </label>
                     </label>
-                </label>
+                </div>
 
                 <input type="submit" class="btn" value="Подтвердить"/>
             </form>

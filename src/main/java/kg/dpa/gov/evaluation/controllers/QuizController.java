@@ -30,8 +30,6 @@ public class QuizController {
 
     @GetMapping()
     public String showQuestion(Model model) {
-        questions.forEach(System.out::println);
-
         if (currentQuestionIndex > questions.size()) currentQuestionIndex = 0;
         if (currentQuestionIndex < questions.size()) {
             Question currentQuestion = questions.get(currentQuestionIndex);

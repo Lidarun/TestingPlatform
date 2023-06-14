@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService, ValidationService {
         ObjectError error = null;
         if (userRep.existsByEmail(email)) error =
                 new ObjectError("global", "Пользователь с такой почтой существует");
-        System.out.println(error);
+
         return error;
     }
 
@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService, ValidationService {
         if (userRep.existsUserByUsername(username)) error =
                 new ObjectError("global", "Username '"+username+"' занят");
 
-        System.out.println(error.toString());
         return error;
     }
 
