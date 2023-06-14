@@ -25,6 +25,7 @@ public class QuizController {
         this.repository = repository;
         this.questions = repository.findAll();
         currentQuestionIndex = 0;
+        result = 0;
     }
 
     @GetMapping()
@@ -40,7 +41,7 @@ public class QuizController {
             return "question";
         }
 
-        if (questions.isEmpty()) return "redirect:/";
+//        if (questions.isEmpty()) return "redirect:/";
 
         model.addAttribute("result", result);
         model.addAttribute("quizSize", questions.size());
@@ -57,7 +58,6 @@ public class QuizController {
         boolean check = currentQuestion.isCorrect(answer != null ? answer : -1);
 
         currentQuestionIndex++;
-        System.out.println(currentQuestionIndex);
 
         if (check) {
             result++;

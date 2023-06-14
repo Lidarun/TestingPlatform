@@ -5,5 +5,4 @@ import org.springframework.validation.ObjectError;
 
 public interface UserService {
     void save(User user);
-    ObjectError comparePassword(String password, String confirmPassword);
 }

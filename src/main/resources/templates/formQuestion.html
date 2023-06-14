@@ -287,9 +287,12 @@
                           th:object="${formQuestion}">
                         <input type="hidden" th:csrf="true"/>
                         <div class="form-container w-full">
+                            <p class="error" th:if="${#fields.hasErrors('question')}" th:errorclass="error"
+                               th:errors="*{question}"/>
                             <div class="w-full inline-flex">
                                 <!-- Question-->
                                 <div class="flex-grow w-full">
+
                                     <label class="block text-sm">
                                         <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                type="text" th:field="*{question}" placeholder="Вопрос"/>
@@ -331,6 +334,7 @@
                                                placeholder="г)"/>
                                     </label>
 
+                                    <!-- Correct var-->
                                     <div class="inline-block" style="color: grey">
                                         <label class="checkbox-button">
                                             <input class="hidden" type="radio" name="correctAnswer" value="0"

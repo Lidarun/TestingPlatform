@@ -1,9 +1,9 @@
 package kg.dpa.gov.evaluation.controllers;
 
 import jakarta.validation.Valid;
-import kg.dpa.gov.evaluation.enums.Role;
 import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.services.UserService;
+import kg.dpa.gov.evaluation.services.ValidationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private final UserService userService;
+    private final ValidationService validationService;
 
-    public RegistrationController(UserService userService) {
+    public RegistrationController(UserService userService, ValidationService validationService) {
         this.userService = userService;
+        this.validationService = validationService;
     }
 
     @GetMapping()
@@ -31,14 +33,17 @@ public class RegistrationController {
                                BindingResult bindingResult , Model model){
         model.addAttribute(user);
 
-//        ObjectError errorEmail = employeeService.existEmployee(employee.getEmail());
-//        if (errorEmail != null) bindingResult.addError(errorEmail);
-//
-        ObjectError errorConfirmPassword = userService
+        ObjectError errorUsername = validationService.existUserByUsername(user.getUsername());
+        if (errorUsername != null) bindingResult.addError(errorUsername);
+
+        ObjectError errorEmail = validationService.existUserByEmail(user.getEmail());
+        if (errorEmail != null) bindingResult.addError(errorEmail);
+
+        ObjectError errorConfirmPassword = validationService
                 .comparePassword(user.getPassword(), user.getConfirmPassword());
         if (errorConfirmPassword != null) bindingResult.addError(errorConfirmPassword);
-//
-//        ObjectError errorPassword = employeeService.validPassword(employee.getPassword());
+
+//        ObjectError errorPassword = validationService.validPassword(user.getPassword());
 //        if (errorPassword != null) bindingResult.addError(errorPassword);
 
         if(bindingResult.hasErrors()) return "register";

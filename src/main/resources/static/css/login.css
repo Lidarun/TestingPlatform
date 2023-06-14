@@ -285,6 +285,12 @@ form.sign-in-form {
     right: 17%;
 }
 
+.error{
+    font-size: 13px;
+    color: #ff0000;
+    font-family: Apple;
+}
+
 @media (max-width: 870px) {
     .container {
         min-height: 800px;

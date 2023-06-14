@@ -35,7 +35,6 @@ public class QuestionController {
 
     @PostMapping()
     public String newQuestion(@ModelAttribute("formQuestion") Question question) {
-        System.out.println("OPT" + question.getOptions());
         questionRepository.save(question);
         return "redirect:/questions";
     }
@@ -46,6 +45,9 @@ public class QuestionController {
                                @ModelAttribute("varB") String b,
                                @ModelAttribute("varC") String c,
                                @ModelAttribute("varD") String d) {
+        List<Question> list = questionRepository.findAll();
+        model.addAttribute("listQuestions", list);
+
         Optional<Question> questionOptional = questionRepository.findById(id);
         if (questionOptional.isPresent()) {
             Question question = questionOptional.get();
@@ -54,23 +56,20 @@ public class QuestionController {
             question.getOptions().add(b);
             question.getOptions().add(c);
             question.getOptions().add(d);
+
             return "edit-question";
 
-        } else {
-            return "redirect:/questions";
-        }
+        } else return "redirect:/questions";
+
     }
 
     @PostMapping("/edit/{id}")
     public String updateQuestion(@PathVariable("id") int id,
-                                 @ModelAttribute("question") Question updatedQuestion) {
+                                 @ModelAttribute("formQuestion") Question updatedQuestion) {
         Optional<Question> questionOptional = questionRepository.findById(id);
-        if (questionOptional.isPresent()) {
-            Question question = questionOptional.get();
-            question.setQuestion(updatedQuestion.getQuestion());
+        if (questionOptional.isPresent())
+            questionRepository.save(updatedQuestion);
 
-            questionRepository.save(question);
-        }
         return "redirect:/questions";
     }
 
