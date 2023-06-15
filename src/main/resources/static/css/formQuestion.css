@@ -61,3 +61,11 @@
     background-color: green;
     color: white;
 }
+.error-border {
+    border-color: red !important;
+}
+.error{
+    color: rgba(234, 44, 44, 0.91);
+    font-size: 13px;
+    font-family: Bahnschrift;
+}

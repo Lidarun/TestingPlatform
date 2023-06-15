@@ -23,19 +23,21 @@ public class QuizController {
 
     public QuizController(QuestionRepository repository) {
         this.repository = repository;
-        this.questions = repository.findAll();
+        this.questions = new ArrayList<>();
         currentQuestionIndex = 0;
         result = 0;
     }
 
     @GetMapping()
     public String showQuestion(Model model) {
+        questions = repository.findAll();
         if (currentQuestionIndex > questions.size()) currentQuestionIndex = 0;
         if (currentQuestionIndex < questions.size()) {
             Question currentQuestion = questions.get(currentQuestionIndex);
+            model.addAttribute("question", currentQuestion);
             model.addAttribute("result", result);
             model.addAttribute("quizSize", questions.size());
-            model.addAttribute("question", currentQuestion);
+
             return "question";
         }
 

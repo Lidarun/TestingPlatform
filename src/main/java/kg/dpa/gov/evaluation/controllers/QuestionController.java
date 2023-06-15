@@ -1,10 +1,14 @@
 package kg.dpa.gov.evaluation.controllers;
 
+import jakarta.validation.Valid;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
+import kg.dpa.gov.evaluation.services.QuestionValidationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +19,11 @@ import java.util.Optional;
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class QuestionController {
     private final QuestionRepository questionRepository;
+    private final QuestionValidationService service;
 
-    public QuestionController(QuestionRepository questionRepository) {
+    public QuestionController(QuestionRepository questionRepository, QuestionValidationService service) {
         this.questionRepository = questionRepository;
+        this.service = service;
     }
 
     @GetMapping()
@@ -31,12 +37,6 @@ public class QuestionController {
         List<Question> list = questionRepository.findAll();
         model.addAttribute("listQuestions", list);
         return "formQuestion";
-    }
-
-    @PostMapping()
-    public String newQuestion(@ModelAttribute("formQuestion") Question question) {
-        questionRepository.save(question);
-        return "redirect:/questions";
     }
 
     @GetMapping("/edit/{id}")
@@ -61,6 +61,21 @@ public class QuestionController {
 
         } else return "redirect:/questions";
 
+    }
+
+    @PostMapping()
+    public String newQuestion(@ModelAttribute("formQuestion") @Valid Question question,
+                              BindingResult result, Model model) {
+        model.addAttribute(question);
+        List<Question> list = questionRepository.findAll();
+        model.addAttribute("listQuestions", list);
+        ObjectError error = service.checkFields(question);
+        if (error != null) result.addError(error);
+
+        if (result.hasErrors()) return "formQuestion";
+
+        questionRepository.save(question);
+        return "redirect:/questions";
     }
 
     @PostMapping("/edit/{id}")

@@ -249,7 +249,8 @@
                                 class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
                                 aria-label="submenu">
                                 <div class="flex">
-                                    <form th:action="@{/logout}" class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                    <form th:action="@{/logout}"
+                                          class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                           method="post">
                                         <input type="hidden" th:csrf="true"/>
                                         <svg class="w-4 h-4 mr-3"
@@ -287,15 +288,14 @@
                           th:object="${formQuestion}">
                         <input type="hidden" th:csrf="true"/>
                         <div class="form-container w-full">
-                            <p class="error" th:if="${#fields.hasErrors('question')}" th:errorclass="error"
-                               th:errors="*{question}"/>
                             <div class="w-full inline-flex">
                                 <!-- Question-->
                                 <div class="flex-grow w-full">
 
                                     <label class="block text-sm">
                                         <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               type="text" th:field="*{question}" placeholder="Вопрос"/>
+                                               type="text" th:field="*{question}" placeholder="Вопрос"
+                                               th:classappend="${#fields.hasErrors('question')} ? 'error-border' : ''"/>
                                     </label>
                                     <!--Explain-->
                                     <label class="block text-sm">
@@ -303,7 +303,8 @@
                                             <textarea
                                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                     type="text" th:field="*{answerExplain}" placeholder="Обьяснение"
-                                                    style="height: 168px;"></textarea>
+                                                    style="height: 168px;"
+                                                    th:classappend="${#fields.hasErrors('answerExplain')} ? 'error-border' : ''"></textarea>
                                         </div>
                                     </label>
                                 </div>
@@ -312,33 +313,34 @@
                                     <!--Options1-->
                                     <label class="block text-sm">
                                         <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               type="text" th:field="*{options[0]}" th:value="${varA}"
-                                               placeholder="а)"/>
+                                               type="text" th:field="*{options[0]}" th:value="${varA}" placeholder="а)"
+                                               th:classappend="${#fields.hasErrors('options[0]')} ? 'error-border' : ''"/>
                                     </label>
                                     <!--Options2-->
                                     <label class="block text-sm">
                                         <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               type="text" th:field="*{options[1]}" th:value="${varB}"
-                                               placeholder="б)"/>
+                                               type="text" th:field="*{options[1]}" th:value="${varB}" placeholder="б)"
+                                               th:classappend="${#fields.hasErrors('options[1]')} ? 'error-border' : ''"/>
                                     </label>
                                     <!--Options3-->
                                     <label class="block text-sm">
                                         <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               type="text" th:field="*{options[2]}" th:value="${varC}"
-                                               placeholder="в)"/>
+                                               type="text" th:field="*{options[2]}" th:value="${varC}" placeholder="в)"
+                                               th:classappend="${#fields.hasErrors('options[2]')} ? 'error-border' : ''"/>
                                     </label>
                                     <!--Options4-->
                                     <label class="block text-sm">
                                         <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               type="text" th:field="*{options[3]}" th:value="${varD}"
-                                               placeholder="г)"/>
+                                               type="text" th:field="*{options[3]}" th:value="${varD}" placeholder="г)"
+                                               th:classappend="${#fields.hasErrors('options[3]')} ? 'error-border' : ''"/>
                                     </label>
 
                                     <!-- Correct var-->
                                     <div class="inline-block" style="color: grey">
                                         <label class="checkbox-button">
                                             <input class="hidden" type="radio" name="correctAnswer" value="0"
-                                                   th:checked="*{correctAnswer}"/>
+                                                   th:checked="${formQuestion.correctAnswer}"
+                                                   th:classappend="${#fields.hasErrors('correctAnswer')} ? 'error-border' : ''"/>
                                             <span class="checkbox-label">а</span>
                                         </label>
                                         <label class="checkbox-button">
@@ -356,6 +358,11 @@
                                                    th:checked="*{correctAnswer}"/>
                                             <span class="checkbox-label">г</span>
                                         </label>
+                                            <label class="error text-center">
+                                                <label th:if="${#fields.hasErrors('global')}">
+                                                    <p th:each="err : ${#fields.errors('global')}" th:text="${err}"/>
+                                                </label>
+                                            </label>
                                     </div>
                                 </div>
                             </div>

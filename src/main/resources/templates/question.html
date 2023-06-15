@@ -15,8 +15,10 @@
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="cardTXT" th:text="${question.question}"></h5>
-                    <div class="currentRes">
+                    <div class="question" style="display: block;">
+                        <p class="cardTXT" th:text="${question.question}" style="word-wrap: break-word; word-break-wrap: 5%"></p>
+                    </div>
+                    <div class="currentRes" style="clear: both;">
                         <i class="fas fa-light fa-star"></i>
                         <h4 class="cardTXT" th:text="${result}"/><h4>/</h4>
                         <h4 class="cardTXT" th:text="${quizSize}"/>
@@ -27,8 +29,7 @@
                         <form id="quiz-form" th:action="@{/quiz}" th:object="${question}" method="post">
                             <input type="hidden" th:csrf="true"/>
                             <div class="form-check" th:each="option, index : ${question.options}">
-                                <input class="form-check-input" type="radio" th:field="*{correctAnswer}"
-                                       th:value="${index.index}" th:id="${index.index}"/>
+                                <input class="form-check-input" type="radio" th:name="correctAnswer" th:value="${index.index}" th:id="${index.index}" />
                                 <label class="form-check-label" th:for="${index.index}" th:text="${option}"></label>
                                 <br/>
                             </div>
