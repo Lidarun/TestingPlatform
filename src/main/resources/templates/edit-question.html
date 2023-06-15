@@ -331,22 +331,22 @@
                                     <div class="inline-block" style="color: grey">
                                         <label class="checkbox-button">
                                             <input class="hidden" type="radio" name="correctAnswer" value="0"
-                                                   th:checked="*{correctAnswer}"/>
+                                                   th:checked="*{correctAnswer == 0}"/>
                                             <span class="checkbox-label">а</span>
                                         </label>
                                         <label class="checkbox-button">
                                             <input class="hidden" type="radio" name="correctAnswer" value="1"
-                                                   th:checked="*{correctAnswer}"/>
+                                                   th:checked="*{correctAnswer == 1}"/>
                                             <span class="checkbox-label">б</span>
                                         </label>
                                         <label class="checkbox-button">
                                             <input class="hidden" type="radio" name="correctAnswer" value="2"
-                                                   th:checked="*{correctAnswer}"/>
+                                                   th:checked="*{correctAnswer == 2}"/>
                                             <span class="checkbox-label">в</span>
                                         </label>
                                         <label class="checkbox-button">
                                             <input class="hidden" type="radio" name="correctAnswer" value="3"
-                                                   th:checked="*{correctAnswer}"/>
+                                                   th:checked="*{correctAnswer == 3}"/>
                                             <span class="checkbox-label">г</span>
                                         </label>
                                     </div>
@@ -362,13 +362,12 @@
 
                 <!-- List Questions-->
                 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                    <table class="w-full whitespace-no-wrap">
+                    <table class="w-full whitespace-no-wrap table">
                         <thead>
                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                             <th class="px-4 py-3" style="width: 30%;">Вопрос</th>
                             <th class="px-4 py-3" style="width: 30%;">Ответы</th>
                             <th class="px-4 py-3" style="width: 30%;">Обьяснение</th>
-                            <th class="px-4 py-3" style="width: 1%;"><i class="fas fa-solid fa-check"></i></th>
                             <th class="px-4 py-3" style="width: 3%;"></th>
                         </tr>
                         </thead>
@@ -378,25 +377,26 @@
                                 <div class="flex items-center text-sm">
                                     <div>
                                         <p class="font-semibold"
-                                           th:text="${question.getQuestion()}"/>
+                                           th:text="${question.getQuestion()}" style="font-size: 12px"/>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <ul>
-                                    <li th:each="option : ${question.options}" th:text="${option}"></li>
+                                    <li th:each="option, optionIndex : ${question.options}"
+                                        th:class="${optionIndex.index == question.correctAnswer} ?
+                                         'green-cell' : ''">
+                                        <span th:text="${option}"></span>
+                                    </li>
                                 </ul>
                             </td>
                             <td th:text="${question.answerExplain}"></td>
-                            <td class="text-center" th:text="${question.correctAnswer+1}"></td>
-                            <td class="text-center edit">
+                            <td class="text-center">
                                 <form th:action="@{/questions/edit/{id}(id=${question.getId()})}" th:method="get">
-                                    <button type="submit" class="btn btn-warning delete-button">
+                                    <button type="submit" class="btn btn-warning edit-button">
                                         <i class="fas fa-solid fa-pen"></i>
                                     </button>
                                 </form>
-                            </td>
-                            <td class="text-center delete">
                                 <form th:action="@{/questions/delete/{id}(id=${question.getId()})}" th:method="delete">
                                     <button type="submit" class="btn btn-warning delete-button">
                                         <i class="fas fa-solid fa-trash"></i>

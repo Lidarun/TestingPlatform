@@ -1,48 +1,50 @@
-create table tb_questions
+CREATE SCHEMA IF NOT EXISTS public;
+
+SET search_path TO public;
+
+CREATE TABLE tb_questions
 (
-    id             integer       not null auto_increment,
-    answer_explain varchar(2048),
-    correct_answer integer       not null,
-    question       varchar(2048) not null,
-    primary key (id)
+    id             SERIAL PRIMARY KEY,
+    answer_explain VARCHAR(2048),
+    correct_answer INTEGER       NOT NULL,
+    question       VARCHAR(2048) NOT NULL
 );
 
-create table tb_questions_options
+CREATE TABLE tb_questions_options
 (
-    tb_questions_id integer not null,
-    options         varchar(2048)
+    tb_questions_id INTEGER NOT NULL,
+    options         VARCHAR(2048)
 );
 
-create table user_role
+CREATE TABLE user_role
 (
-    user_id bigint not null,
-    role    varchar(255)
+    user_id BIGINT NOT NULL,
+    role    VARCHAR(255)
 );
 
-create table users
+CREATE TABLE users
 (
-    user_id  bigint       not null auto_increment,
-    email    varchar(255) not null,
-    password varchar(255) not null,
-    username varchar(255) not null,
-    primary key (user_id)
+    user_id  BIGSERIAL PRIMARY KEY,
+    email    VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL
 );
 
-alter table users
-    add constraint user_unique_email unique (email);
+ALTER TABLE users
+    ADD CONSTRAINT user_unique_email UNIQUE (email);
+ALTER TABLE users
+    ADD CONSTRAINT user_unique_username UNIQUE (username);
 
-alter table users
-    add constraint user_unique_username unique (username);
+ALTER TABLE tb_questions_options
+    ADD CONSTRAINT tb_questions_options_fk FOREIGN KEY (tb_questions_id) REFERENCES tb_questions (id);
+ALTER TABLE user_role
+    ADD CONSTRAINT user_role_kf FOREIGN KEY (user_id) REFERENCES users (user_id);
 
-alter table tb_questions_options
-    add constraint tb_questions_options_fk foreign key (tb_questions_id) references tb_questions (id);
+INSERT INTO users (user_id, username, email, password)
+VALUES (1, 'admin', 'admin@dpa.kg', '$2a$10$Q8Xf77QowRLT42by43xXL.M8jjrAKt6JMCM.x./Q.NjFaLaS8sBoe'),
+       (2, 'lidarun', 'nur@g.com', '$2a$10$Q8Xf77QowRLT42by43xXL.M8jjrAKt6JMCM.x./Q.NjFaLaS8sBoe');
 
-alter table user_role
-    add constraint user_role_kf foreign key (user_id) references users (user_id);
-
--- INSERT INTO users(user_id, username, email, password)
--- values (1, admin, admin@dpa.kg, admindpa);
---
--- INSERT INTO user_role(user_id, role)
--- values (1, ROLE_ADMIN),
---        (1, ROLE_USER);
+INSERT INTO user_role (user_id, role)
+VALUES (1, 'ROLE_ADMIN'),
+       (1, 'ROLE_USER'),
+       (2, 'ROLE_ADMIN');
