@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -57,18 +56,24 @@ public class QuizController {
         Question currentQuestion = questions.get(currentQuestionIndex);
         boolean check = currentQuestion.isCorrect(answer != null ? answer : -1);
 
-        currentQuestionIndex++;
+            currentQuestionIndex++;
 
         if (check) {
             result++;
-            return "redirect:/quiz";
-
-        }else {
             model.addAttribute("rightAnswer",
                     currentQuestion.getOptions().get(currentQuestion.getCorrectAnswer()));
             model.addAttribute("why",
                     currentQuestion.getAnswerExplain());
-            return "checker";
+            return "right-checker";
+
+        }else {
+            model.addAttribute("rightAnswer",
+                    currentQuestion.getOptions().get(currentQuestion.getCorrectAnswer()));
+            model.addAttribute("wrongAnswer",
+                    currentQuestion.getOptions().get(answer));
+            model.addAttribute("why",
+                    currentQuestion.getAnswerExplain());
+            return "wrong-checker";
         }
     }
 }
