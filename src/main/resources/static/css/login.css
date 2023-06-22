@@ -290,6 +290,7 @@ form.sign-in-form {
     color: #000000;
     font-style: oblique;
     font-family: Apple;
+    text-align: center;
 }
 
 .globalError{
