@@ -1,7 +1,9 @@
 package kg.dpa.gov.evaluation.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
+import kg.dpa.gov.evaluation.utils.LanguageUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,11 @@ public class QuizController {
     }
 
     @GetMapping()
-    public String showQuestion(Model model) {
+    public String showQuestion(Model model, HttpServletRequest request) {
+        String acceptLanguage = request.getHeader("Accept-Language");
+        String activeLanguage = LanguageUtils.getActiveLanguage(acceptLanguage);
+        System.out.println(activeLanguage);
+
         questions = repository.findAll();
         if (currentQuestionIndex > questions.size()) currentQuestionIndex = 0;
         if (currentQuestionIndex < questions.size()) {
@@ -56,7 +62,7 @@ public class QuizController {
         Question currentQuestion = questions.get(currentQuestionIndex);
         boolean check = currentQuestion.isCorrect(answer != null ? answer : -1);
 
-            currentQuestionIndex++;
+        currentQuestionIndex++;
 
         if (check) {
             result++;
@@ -66,7 +72,7 @@ public class QuizController {
                     currentQuestion.getAnswerExplain());
             return "right-checker";
 
-        }else {
+        } else {
             model.addAttribute("rightAnswer",
                     currentQuestion.getOptions().get(currentQuestion.getCorrectAnswer()));
             model.addAttribute("wrongAnswer",
@@ -77,3 +83,4 @@ public class QuizController {
         }
     }
 }
+
