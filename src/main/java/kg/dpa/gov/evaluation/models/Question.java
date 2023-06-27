@@ -2,7 +2,9 @@ package kg.dpa.gov.evaluation.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import kg.dpa.gov.evaluation.enums.Language;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -31,14 +33,12 @@ public class Question {
     @NotEmpty
     private String answerExplain;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Language lang;
+
     public Question() {
         this.options = new ArrayList<>();
-    }
-    public Question(String question, List<String> options, int correctAnswer, String answerExplain) {
-        this.question = question;
-        this.options = options;
-        this.correctAnswer = correctAnswer;
-        this.answerExplain = answerExplain;
     }
 
     public boolean isCorrect(Integer answer) {

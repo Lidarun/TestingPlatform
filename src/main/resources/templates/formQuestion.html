@@ -252,7 +252,8 @@
                                     <form th:action="@{/logout}"
                                           class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                           method="post">
-                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                        <input type="hidden" th:name="${_csrf.parameterName}"
+                                               th:value="${_csrf.token}"/>
                                         <svg class="w-4 h-4 mr-3"
                                              aria-hidden="true"
                                              fill="none"
@@ -286,7 +287,7 @@
                           role="form" method="post"
                           th:action="@{/questions}"
                           th:object="${formQuestion}">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <div class="form-container w-full">
                             <div class="w-full inline-flex">
                                 <!-- Question-->
@@ -358,11 +359,22 @@
                                                    th:checked="*{correctAnswer}"/>
                                             <span class="checkbox-label">г</span>
                                         </label>
-                                            <label class="error text-center">
-                                                <label th:if="${#fields.hasErrors('global')}">
-                                                    <p th:each="err : ${#fields.errors('global')}" th:text="${err}"/>
-                                                </label>
+                                        <label class="error text-center">
+                                            <label th:if="${#fields.hasErrors('global')}">
+                                                <p th:each="err : ${#fields.errors('global')}" th:text="${err}"/>
                                             </label>
+                                        </label>
+                                    </div>
+
+                                    <!-- Lang-->
+                                    <div class="wrapLang">
+                                        <div class="radio-group" th:each="lang : ${lang}">
+                                            <label class="radio-label">
+                                                <input type="radio" th:name="lang" th:value="${lang}"
+                                                       class="radio-input"/>
+                                                <span th:text="${lang.lang}" class="radio-text"></span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

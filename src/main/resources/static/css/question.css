@@ -3,27 +3,28 @@
 .row{
     padding-top: 7%;
 }
-.card-header{
-    display: inline-flex;
-}
+/*.card-header{*/
+/*    display: inline-flex;*/
+/*}*/
 .cardTXT{
     color: #0d3a65;
 }
 .btn{
     margin: 3% 0 0 3.5%;
 }
-
+.question{
+    float: left;
+    display: inline-block;
+}
 .currentRes {
-    right: 3%;
-    display: flex;
+    float: right;
+    display: inline-flex;
     align-items: center;
 }
-
 .currentRes i {
     margin: 3% 5px 0 0;
     color: #0d3a65;
 }
-
 .currentRes h4 {
     flex: 0 0 auto;
     margin: 0 1px;

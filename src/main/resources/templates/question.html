@@ -15,10 +15,10 @@
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
-                    <div class="question" style="display: block;">
-                        <p class="cardTXT" th:text="${question.question}" style="word-wrap: break-word; word-break-wrap: 5%"></p>
+                    <div class="question">
+                        <p class="cardTXT" th:text="${question.question}" style="word-wrap: break-word;"></p>
                     </div>
-                    <div class="currentRes" style="clear: both;">
+                    <div class="currentRes">
                         <i class="fas fa-light fa-star"></i>
                         <h4 class="cardTXT" th:text="${result}"/><h4>/</h4>
                         <h4 class="cardTXT" th:text="${quizSize}"/>
@@ -61,6 +61,27 @@
 
         return true; // Продолжение отправки формы
     }
+    function getCookieValue(cookieName) {
+        const name = cookieName + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const cookieArray = decodedCookie.split(';');
+
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i];
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+
+        return null;
+    }
+
+    const langCookieValue = getCookieValue("lang");
+    console.log(langCookieValue);
+
 </script>
 </body>
 </html>

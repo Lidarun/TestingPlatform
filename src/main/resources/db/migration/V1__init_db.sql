@@ -4,16 +4,18 @@ SET search_path TO public;
 
 CREATE TABLE tb_questions
 (
-    id             SERIAL PRIMARY KEY,
-    answer_explain VARCHAR(2048),
-    correct_answer INTEGER       NOT NULL,
-    question       VARCHAR(2048) NOT NULL
+    correct_answer INTEGER,
+    id             SERIAL       NOT NULL,
+    answer_explain TEXT,
+    lang           VARCHAR(255) NOT NULL,
+    question       TEXT,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE tb_questions_options
 (
     tb_questions_id INTEGER NOT NULL,
-    options         VARCHAR(2048)
+    options         TEXT
 );
 
 CREATE TABLE user_role
@@ -38,7 +40,7 @@ ALTER TABLE users
 ALTER TABLE tb_questions_options
     ADD CONSTRAINT tb_questions_options_fk FOREIGN KEY (tb_questions_id) REFERENCES tb_questions (id);
 ALTER TABLE user_role
-    ADD CONSTRAINT user_role_kf FOREIGN KEY (user_id) REFERENCES users (user_id);
+    ADD CONSTRAINT user_role_fk FOREIGN KEY (user_id) REFERENCES users (user_id);
 
 INSERT INTO users (user_id, username, email, password)
 VALUES (1, 'admin', 'admin@dpa.kg', '$2a$10$Q8Xf77QowRLT42by43xXL.M8jjrAKt6JMCM.x./Q.NjFaLaS8sBoe'),

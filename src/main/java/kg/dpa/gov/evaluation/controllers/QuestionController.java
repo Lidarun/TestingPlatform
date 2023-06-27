@@ -1,6 +1,7 @@
 package kg.dpa.gov.evaluation.controllers;
 
 import jakarta.validation.Valid;
+import kg.dpa.gov.evaluation.enums.Language;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
 import kg.dpa.gov.evaluation.services.QuestionValidationService;
@@ -33,6 +34,7 @@ public class QuestionController {
         model.addAttribute("varB", new String());
         model.addAttribute("varC", new String());
         model.addAttribute("varD", new String());
+        model.addAttribute("lang", Language.values());
 
         List<Question> list = questionRepository.findAll();
         model.addAttribute("listQuestions", list);
