@@ -1,17 +1,20 @@
 /*HEADER*/
-.navbar{
+.navbar {
     color: #0064bd;
 }
-.navbar-brand{
+
+.navbar-brand {
     padding-left: 1%;
 }
-.userName{
+
+.userName {
     color: #073967;
     font-size: 1.4rem;
     text-transform: capitalize;
     font-family: Bahnschrift, serif;
 }
-.headButton{
+
+.headButton {
     width: 38px;
     height: 35px;
     color: #073967;
@@ -21,14 +24,36 @@
     text-align: center;
     margin: 0 30px 0 30px;
 }
-.headButton:hover{
+
+.headButton:hover {
     transition: 0.2s ease-in-out;
     width: 40px;
     height: 37px;
     color: #278ff3;
 }
 
-.home-logo{
+.home-logo {
     width: 35px;
     height: 35px;
+}
+
+.languages {
+    position: absolute;
+    font-size: 16px;
+    font-family: Bahnschrift;
+    margin-left: 4%;
+    display: flex;
+    padding-top: 1.5%;
+}
+.lang {
+    display: inline;
+    margin-right: 10px;
+}
+.lang:hover, .lang a:hover{
+    font-size: 18px;
+    color: #09aeec;
+}
+.lang a {
+    text-decoration: none;
+    color: #0d3a65
 }
