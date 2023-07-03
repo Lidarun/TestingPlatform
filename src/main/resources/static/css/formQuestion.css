@@ -7,7 +7,6 @@
     margin-right: 10px;
     cursor: pointer;
 }
-
 .checkbox-button:hover {
     transition: 1s;
     background-color: #00cc00;
@@ -67,7 +66,7 @@
 .error{
     color: rgba(234, 44, 44, 0.91);
     font-size: 13px;
-    font-family: Bahnschrift;
+    font-family: Bahnschrift, serif;
 }
 .wrapLang{
     margin-left: 8%;
@@ -77,26 +76,51 @@
     display: inline-block;
     margin-right: 10px;
     font-size: 18px;
-    font-family: "Lucida Sans Unicode";
+    font-family: "Lucida Sans Unicode", serif;
     color: #7ab3ed;
 }
-
+.mb-8{
+    margin-bottom: 1rem;
+}
 .radio-label {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
     margin-right: 5px;
 }
-
 .radio-input {
     opacity: 0;
     position: absolute;
 }
-
 .radio-text {
     padding-left: 5px;
 }
 .radio-input:checked + .radio-text {
     font-weight: bold;
     color: blue;
+}
+.pagination {
+    display: flex;
+    margin: 0 0 1% 1%;
+    border-radius: 5px;
+}
+.page-item {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+.page-link {
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    padding: 6px 12px;
+}
+.page-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+.page-link.disabled {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
 }

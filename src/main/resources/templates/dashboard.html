@@ -47,7 +47,7 @@
             <ul>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                       th:href="@{/questions}">
+                       th:href="@{/questions/0}">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"
@@ -136,7 +136,7 @@
             <ul>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                       th:href="@{/questions}">
+                       th:href="@{/questions/0}">
                         <svg class="w-5 h-5"
                              aria-hidden="true"
                              fill="none"
@@ -301,7 +301,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200" th:text="${users.size()}"/>
+                            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200" th:text="${countUsers}"/>
                         </div>
                     </div>
                 </div>
@@ -321,20 +321,20 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <tr class="text-gray-700 dark:text-gray-400" th:each="user: ${users}">
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center text-sm">
-                                        <div>
-                                            <p class="font-semibold"
-                                               th:text="${user.getUsername()}"/>
-                                            <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                Singer
-                                            </p>
-                                        </div>
-                                    </div>
-                                </td>
+<!--                            <tr class="text-gray-700 dark:text-gray-400" th:each="user: ${users}">-->
+<!--                                <td class="px-4 py-3">-->
+<!--                                    <div class="flex items-center text-sm">-->
+<!--                                        <div>-->
+<!--                                            <p class="font-semibold"-->
+<!--                                               th:text="${user.getUsername()}"/>-->
+<!--                                            <p class="text-xs text-gray-600 dark:text-gray-400">-->
+<!--                                                Singer-->
+<!--                                            </p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
 
-                                <td class="px-4 py-3 text-sm" th:text="${user.getEmail()}"/>
+<!--                                <td class="px-4 py-3 text-sm" th:text="${user.getEmail()}"/>-->
                                 <!--                                <td th:text="${employee.getPassword()}"/>-->
                                 <!--                                <td class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"-->
                                 <!--                                    th:text="${employee.birthday}" />-->

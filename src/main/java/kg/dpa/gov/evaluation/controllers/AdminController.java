@@ -23,7 +23,8 @@ public class AdminController {
     @GetMapping()
     public String showPage(Model model) {
         List<User> userList = userRepository.findAll();
-        model.addAttribute("users", userList);
+        model.addAttribute("countUsers", userList.size());
+//        model.addAttribute("users", userList);
         return "dashboard";
     }
 }

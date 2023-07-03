@@ -47,7 +47,8 @@
                 <div class="next">
                     <a href="/quiz">
                         <button class="btn btn-primary btn-sm">
-                            Следующий вопрос
+                            <span th:text="#{${next}}" th:if="${next != null}"></span>
+                            <span th:text="#{${result}}" th:if="${result != null}"></span>
                         </button>
                     </a>
                 </div>

@@ -3,8 +3,10 @@ package kg.dpa.gov.evaluation.controllers;
 import jakarta.validation.Valid;
 import kg.dpa.gov.evaluation.enums.Language;
 import kg.dpa.gov.evaluation.models.Question;
-import kg.dpa.gov.evaluation.repository.QuestionRepository;
+import kg.dpa.gov.evaluation.services.QuestionService;
 import kg.dpa.gov.evaluation.services.QuestionValidationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +21,17 @@ import java.util.Optional;
 @RequestMapping("/questions")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class QuestionController {
-    private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
     private final QuestionValidationService service;
 
-    public QuestionController(QuestionRepository questionRepository, QuestionValidationService service) {
-        this.questionRepository = questionRepository;
+    public QuestionController(QuestionService questionService, QuestionValidationService service) {
+        this.questionService = questionService;
         this.service = service;
     }
 
-    @GetMapping()
-    public String showPage(Model model) {
+    @GetMapping("/{pageNum}")
+    public String showPage(Model model,
+                           @PathVariable(name = "pageNum") int pageNum) {
         model.addAttribute("formQuestion", new Question());
         model.addAttribute("varA", new String());
         model.addAttribute("varB", new String());
@@ -36,9 +39,40 @@ public class QuestionController {
         model.addAttribute("varD", new String());
         model.addAttribute("lang", Language.values());
 
-        List<Question> list = questionRepository.findAll();
+        Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
+
+        List<Question> list = page.getContent();
         model.addAttribute("listQuestions", list);
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
         return "formQuestion";
+    }
+
+    @PostMapping("/{pageNum}")
+    public String newQuestion(@PathVariable("pageNum") int pageNum,
+                              @ModelAttribute("formQuestion") @Valid Question question,
+                              BindingResult result, Model model) {
+        Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
+
+        List<Question> list = page.getContent();
+        model.addAttribute("listQuestions", list);
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("lang", Language.values());
+        model.addAttribute("formQuestion", question);
+
+        ObjectError error = service.checkFields(question);
+        if (error != null)
+            result.addError(error);
+
+        if (result.hasErrors())
+            return "formQuestion";
+
+        questionService.create(question);
+        return "redirect:/questions/" + pageNum;
     }
 
     @GetMapping("/edit/{id}")
@@ -47,10 +81,17 @@ public class QuestionController {
                                @ModelAttribute("varB") String b,
                                @ModelAttribute("varC") String c,
                                @ModelAttribute("varD") String d) {
-        List<Question> list = questionRepository.findAll();
-        model.addAttribute("listQuestions", list);
+        Page<Question> page = questionService.getItems(PageRequest.of(0, 5));
 
-        Optional<Question> questionOptional = questionRepository.findById(id);
+        List<Question> list = page.getContent();
+        model.addAttribute("listQuestions", list);
+        model.addAttribute("currentPage", 0);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("lang", Language.values());
+
+
+        Optional<Question> questionOptional = questionService.findById(id);
         if (questionOptional.isPresent()) {
             Question question = questionOptional.get();
             model.addAttribute("formQuestion", question);
@@ -61,38 +102,24 @@ public class QuestionController {
 
             return "edit-question";
 
-        } else return "redirect:/questions";
-
+        } else
+            return "redirect:/questions/0";
     }
 
-    @PostMapping()
-    public String newQuestion(@ModelAttribute("formQuestion") @Valid Question question,
-                              BindingResult result, Model model) {
-        model.addAttribute(question);
-        List<Question> list = questionRepository.findAll();
-        model.addAttribute("listQuestions", list);
-        ObjectError error = service.checkFields(question);
-        if (error != null) result.addError(error);
-
-        if (result.hasErrors()) return "formQuestion";
-
-        questionRepository.save(question);
-        return "redirect:/questions";
-    }
 
     @PostMapping("/edit/{id}")
     public String updateQuestion(@PathVariable("id") int id,
                                  @ModelAttribute("formQuestion") Question updatedQuestion) {
-        Optional<Question> questionOptional = questionRepository.findById(id);
+        Optional<Question> questionOptional = questionService.findById(id);
         if (questionOptional.isPresent())
-            questionRepository.save(updatedQuestion);
+            questionService.create(updatedQuestion);
 
-        return "redirect:/questions";
+        return "redirect:/questions/0";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteQuestion(@PathVariable("id") int id) {
-        questionRepository.deleteById(id);
-        return "redirect:/questions";
+        questionService.deleteById(id);
+        return "redirect:/questions/0";
     }
 }

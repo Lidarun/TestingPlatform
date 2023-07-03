@@ -14,7 +14,7 @@ public class QuestionValidationServiceImpl implements QuestionValidationService 
         Integer correctAnswer = question.getCorrectAnswer();
         System.out.println("NURi"+correctAnswer);
         if (correctAnswer == null) error =
-                new ObjectError("global", "Укажите правильный вариант");
+                new ObjectError("global", "Укажите правильный вариант и язык вопроса");
 
         return error;
     }
