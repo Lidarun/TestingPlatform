@@ -22,10 +22,10 @@
                 </h2>
 
                 <div th:if="${param.error}">
-                    Invalid username and password.
+                    <span th:text="#{'invalidPassOrUsername'}"></span>
                 </div>
                 <div th:if="${param.logout}">
-                    You have been logged out.
+                    <span th:text="#{'loggedOut'}"></span>
                 </div>
 
                 <div class="input-field">

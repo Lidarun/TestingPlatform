@@ -29,7 +29,7 @@
     <div class="row justify-content-center">
         <div class="col-md-7">
             <div class="card">
-                <div class="card-header text-center text-primary"><h5 class="cardTXT"> Неверно: </h5></div>
+                <div class="card-header text-center text-primary"><h5 class="cardTXT" th:text="#{'incorrect'}"></h5></div>
                 <div class="card-body">
                     <div class="alert alert-danger d-flex align-items-center" role="alert">
                         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
@@ -37,7 +37,7 @@
                             <h7 th:text="${wrongAnswer}"></h7>
                         </div>
                     </div>
-                    <h6>Правильно ответом будет: </h6>
+                    <h6 th:text="#{'correctAnswer'}"></h6>
                     <div class="alert alert-success d-flex align-items-center" role="alert">
                         <svg class="bi flex-shrink-0 me-2" width="20" height="20" role="img" aria-label="Success:">
                             <use xlink:href="#check-circle-fill"/>
@@ -46,7 +46,7 @@
                             <h7 th:text="${rightAnswer}"></h7>
                         </div>
                     </div>
-                    <h6>Потому что... </h6>
+                    <h6 th:text="#{'because'}"></h6>
                     <div>
                         <h7 th:text="${why}"></h7>
                     </div>

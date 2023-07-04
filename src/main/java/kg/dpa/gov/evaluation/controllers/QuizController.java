@@ -1,6 +1,7 @@
 package kg.dpa.gov.evaluation.controllers;
 
 import jakarta.validation.constraints.NotNull;
+import kg.dpa.gov.evaluation.enums.Language;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.services.QuestionService;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ public class QuizController {
     private final QuestionService service;
     private List<Question> questions;
     private int currentQuestionIndex;
-    private int result;
+    private int result; //Кол.во правильных ответов
     private int listSize;
 
     public QuizController(QuestionService service) {
@@ -27,9 +28,12 @@ public class QuizController {
     @GetMapping()
     public String showQuestion(@CookieValue("lang") String langCookieValue,
                                Model model) {
+
         questions = service.findAllByLang(langCookieValue);
         listSize = questions.size();
+
         if (currentQuestionIndex > questions.size()) currentQuestionIndex = 0;
+
         if (currentQuestionIndex < questions.size()) {
             Question currentQuestion = questions.get(currentQuestionIndex);
             model.addAttribute("question", currentQuestion);
@@ -51,6 +55,9 @@ public class QuizController {
             model.addAttribute("resMsg2", "resMsg2");
         else
             model.addAttribute("resMsg3", "resMsg3");
+
+        if (langCookieValue.equals(Language.KYR.getLang()))
+            model.addAttribute("resMsgKy", "resMsgKy");
 
         result = 0;
         currentQuestionIndex = 0;
@@ -98,17 +105,18 @@ public class QuizController {
         }
     }
 
+//   Определение ключа по итогам результата
     private String calculate(int result, int size) {
         if (result ==  size)
-            return "Поздравляем! Вы достигли отличного результата!";
+            return "bestRes";
 
         else if (result >= size - (size * 20 / 100))
-            return "Хорошая работа! Ваши знания впечатляют!";
+            return "goodRes";
 
         else if (result >= size - (size * 30 / 100))
-            return "Неплохо, но есть возможность улучшиться!";
+            return "notBadRes";
 
-        return "Вам стоит поработать над своими знаниями.";
+        return "badRes";
     }
 }
 

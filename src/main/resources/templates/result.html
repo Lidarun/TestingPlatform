@@ -24,21 +24,22 @@
                         <h6 style="display: inline;" th:text="#{${resMsg2}}" th:if="${resMsg2 != null}"></h6>
                         <h6 style="display: inline;" th:text="#{${resMsg3}}" th:if="${resMsg3 != null}"></h6>
                         <h5 th:text="${quizSize}" style="display: inline; margin-left: 8px"/>
+                        <h6 style="display: inline;" th:text="#{${resMsgKy}}" th:if="${resMsgKy != null}"></h6>
                         <hr>
-                        <p class="mb-0" th:text="${resultInfo}"></p>
+                        <p class="mb-0" th:text="#{${resultInfo}}"></p>
                     </div>
                 </div>
                 <div class="resultBtn">
                     <a href="/">
                         <button class="btn btn-primary btn-sm">
                             <i class="fas fa-solid fa-home"></i>
-                            Главная
+                            <span th:text="#{'homePage'}"></span>
                         </button>
                     </a>
                     <a href="/quiz">
                         <button class="btn btn-primary btn-sm">
                             <i class="fas fa-solid fa-circle-play"></i>
-                            Новая игра
+                            <span th:text="#{'newGame'}"></span>
                         </button>
                     </a>
                 </div>
@@ -59,11 +60,11 @@
 
     //  Stop
 
-    // const stop = () => {
-    //     setTimeout(function() {
-    //         confetti.stop()
-    //     }, 5000); // 5000 is time that after 5 second stop the confetti ( 5000 = 5 sec)
-    // };
+    const stop = () => {
+        setTimeout(function() {
+            confetti.stop()
+        }, 8000); // 5000 is time that after 5 second stop the confetti ( 5000 = 5 sec)
+    };
 
     start();
     stop();

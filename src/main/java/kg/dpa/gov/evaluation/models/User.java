@@ -19,11 +19,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Column(unique = true)
     @NotEmpty(message = "Обязательное поле")
     String username;
 
-    @Column(unique = true)
     @NotEmpty(message = "Обязательное поле")
     @Email(message = "Пожалуйста, введите действительный e-mail адрес")
     String email;
