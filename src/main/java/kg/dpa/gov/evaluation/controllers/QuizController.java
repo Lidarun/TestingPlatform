@@ -73,8 +73,8 @@ public class QuizController {
 
         currentQuestionIndex++;
 
-        System.out.println(listSize);
-        System.out.println(currentQuestionIndex);
+//        System.out.println(listSize);
+//        System.out.println(currentQuestionIndex);
 
         if (check) {
             result++;
