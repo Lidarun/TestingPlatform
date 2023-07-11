@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/formQuestion.css}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -361,15 +362,15 @@
                                     </div>
 
                                     <!-- Lang-->
-                                    <div class="wrapLang">
-                                        <div class="radio-group" th:each="lang : ${lang}">
-                                            <label class="radio-label">
-                                                <input type="radio" th:name="lang" th:value="${lang}"
-                                                       class="radio-input"/>
-                                                <span th:text="${lang.lang}" class="radio-text"></span>
-                                            </label>
-                                        </div>
-                                    </div>
+                                    <!--                                    <div class="wrapLang">-->
+                                    <!--                                        <div class="radio-group" th:each="lang : ${lang}">-->
+                                    <!--                                            <label class="radio-label">-->
+                                    <!--                                                <input type="radio" th:name="lang" th:value="${lang}"-->
+                                    <!--                                                       class="radio-input"/>-->
+                                    <!--                                                <span th:text="${lang.lang}" class="radio-text"></span>-->
+                                    <!--                                            </label>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
                                     <label class="error">
                                         <label th:if="${#fields.hasErrors('global')}">
                                             <p th:each="err : ${#fields.errors('global')}" th:text="${err}"/>
@@ -377,6 +378,15 @@
                                     </label>
                                 </div>
                             </div>
+                            <!-- Course-->
+                            <div class="wrapLang">
+                                <label>
+                                    <select name="course" class="radio-group select2">
+                                        <option th:each="course : ${courses}" th:value="${course.getId()}" th:text="${course.getName()}"></option>
+                                    </select>
+                                </label>
+                            </div>
+
                             <button class="flex items-center justify-between w-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                                     style="margin-top: 1%">
                                 Создать
@@ -385,16 +395,18 @@
                     </form>
                 </div>
 
-<!--                Пагинация-->
+                <!--                Пагинация-->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" th:if="${currentPage > 0}" th:href="@{'/questions/' + ${currentPage - 1}}" aria-label="Previous">
+                            <a class="page-link" th:if="${currentPage > 0}"
+                               th:href="@{'/questions/' + ${currentPage - 1}}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" th:if="${currentPage < totalPages - 1}" th:href="@{'/questions/' + ${currentPage + 1}}" aria-label="Next">
+                            <a class="page-link" th:if="${currentPage < totalPages - 1}"
+                               th:href="@{'/questions/' + ${currentPage + 1}}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -456,6 +468,10 @@
         $('.checkbox-button').click(function () {
             $(this).toggleClass('selected');
         });
+    });
+
+    $(document).ready(function() {
+        $('.select2').select2();
     });
 </script>
 </body>

@@ -1,11 +1,7 @@
 package kg.dpa.gov.evaluation.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
@@ -16,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 public class Course {
 
     @Id
+    @Column(name = "course_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

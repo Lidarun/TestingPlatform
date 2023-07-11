@@ -29,7 +29,7 @@ public class QuizController {
     public String showQuestion(@CookieValue("lang") String langCookieValue,
                                Model model) {
 
-        questions = service.findAllByLang(langCookieValue);
+//        questions = service.findAllByLang(langCookieValue);
         listSize = questions.size();
 
         if (currentQuestionIndex > questions.size()) currentQuestionIndex = 0;

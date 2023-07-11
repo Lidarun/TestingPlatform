@@ -2,10 +2,11 @@ package kg.dpa.gov.evaluation.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import kg.dpa.gov.evaluation.enums.Language;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @Entity(name = "tb_questions")
 public class Question {
@@ -39,9 +41,9 @@ public class Question {
     @NotEmpty
     private String answerExplain;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Language lang;
+//    @NotNull
+//    @Enumerated(EnumType.STRING)
+//    private Language lang;
 
     public Question() {
         this.options = new ArrayList<>();

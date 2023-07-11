@@ -3,11 +3,11 @@ package kg.dpa.gov.evaluation.controllers;
 import jakarta.validation.Valid;
 import kg.dpa.gov.evaluation.enums.Language;
 import kg.dpa.gov.evaluation.models.Question;
+import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.QuestionService;
 import kg.dpa.gov.evaluation.services.QuestionValidationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,10 +23,12 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final QuestionValidationService service;
+    private final CourseService courseService;
 
-    public QuestionController(QuestionService questionService, QuestionValidationService service) {
+    public QuestionController(QuestionService questionService, QuestionValidationService service, CourseService courseService) {
         this.questionService = questionService;
         this.service = service;
+        this.courseService = courseService;
     }
 
     @GetMapping("/{pageNum}")
@@ -37,9 +39,9 @@ public class QuestionController {
         model.addAttribute("varB", new String());
         model.addAttribute("varC", new String());
         model.addAttribute("varD", new String());
-        model.addAttribute("lang", Language.values());
+        model.addAttribute("courses", courseService.findAll());
+//        model.addAttribute("lang", Language.values());
 
-        System.out.println("!!!!!!!"+questionService);
 
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
 
@@ -49,7 +51,7 @@ public class QuestionController {
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
 
-        return "dashboard/formQuestion";
+        return "dashboard/question";
     }
 
     @PostMapping("/{pageNum}")
@@ -58,12 +60,16 @@ public class QuestionController {
                               BindingResult result, Model model) {
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
 
+        System.out.println(question);
+
         List<Question> list = page.getContent();
         model.addAttribute("listQuestions", list);
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("lang", Language.values());
+        model.addAttribute("courses", courseService.findAll());
+
+//        model.addAttribute("lang", Language.values());
         model.addAttribute("formQuestion", question);
 
         ObjectError error = service.checkFields(question);
@@ -71,7 +77,7 @@ public class QuestionController {
             result.addError(error);
 
         if (result.hasErrors())
-            return "dashboard/formQuestion";
+            return "dashboard/question";
 
         questionService.create(question);
         return "redirect:/questions/" + pageNum;

@@ -69,15 +69,17 @@
     font-family: Bahnschrift, serif;
 }
 .wrapLang{
-    margin-left: 8%;
+    margin: 0.5% 0 1% 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     display: inline-block;
 }
 .radio-group {
     display: inline-block;
     margin-right: 10px;
-    font-size: 18px;
+    font-size: 14px;
     font-family: "Lucida Sans Unicode", serif;
-    color: #7ab3ed;
+    color: #000000;
 }
 .mb-8{
     margin-bottom: 1rem;
