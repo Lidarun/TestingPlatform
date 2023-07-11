@@ -1,0 +1,13 @@
+@import "header.css";
+
+.row{
+    padding-top: 7%;
+}
+
+.groupImg{
+    width: 300px;
+}
+
+.under-row{
+    padding-top: 3%;
+}

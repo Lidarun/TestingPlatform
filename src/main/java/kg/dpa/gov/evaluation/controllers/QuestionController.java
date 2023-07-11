@@ -19,8 +19,8 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/questions")
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class QuestionController {
+
     private final QuestionService questionService;
     private final QuestionValidationService service;
 
@@ -39,6 +39,8 @@ public class QuestionController {
         model.addAttribute("varD", new String());
         model.addAttribute("lang", Language.values());
 
+        System.out.println("!!!!!!!"+questionService);
+
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
 
         List<Question> list = page.getContent();
@@ -47,11 +49,11 @@ public class QuestionController {
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
 
-        return "formQuestion";
+        return "dashboard/formQuestion";
     }
 
     @PostMapping("/{pageNum}")
-    public String newQuestion(@PathVariable("pageNum") int pageNum,
+    public String createQuestion(@PathVariable("pageNum") int pageNum,
                               @ModelAttribute("formQuestion") @Valid Question question,
                               BindingResult result, Model model) {
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
@@ -69,7 +71,7 @@ public class QuestionController {
             result.addError(error);
 
         if (result.hasErrors())
-            return "formQuestion";
+            return "dashboard/formQuestion";
 
         questionService.create(question);
         return "redirect:/questions/" + pageNum;
@@ -100,7 +102,7 @@ public class QuestionController {
             question.getOptions().add(c);
             question.getOptions().add(d);
 
-            return "edit-question";
+            return "dashboard/edit-question";
 
         } else
             return "redirect:/questions/0";

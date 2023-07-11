@@ -3,6 +3,7 @@ package kg.dpa.gov.evaluation.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableGlobalAuthentication
 public class WebSecurityConfig {
 
     private final UserDetailsService userDetailsService;
@@ -34,8 +36,10 @@ public class WebSecurityConfig {
         return http
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/", "/**").permitAll()
+                        .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**")
+                        .permitAll()
+                        .requestMatchers("/", "/course-group").permitAll()
+                        .requestMatchers("/dashboard","/questions","/courses").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -44,7 +48,6 @@ public class WebSecurityConfig {
                 )
                 .logout(LogoutConfigurer::permitAll)
                 .userDetailsService(userDetailsService)
-//                .headers(h -> h.frameOptions().sameOrigin())
                 .httpBasic(Customizer.withDefaults()).build();
     }
 

@@ -12,8 +12,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/dashboard")
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AdminController {
+
     private final UserRepository userRepository;
 
     public AdminController(UserRepository userRepository) {
@@ -25,6 +25,6 @@ public class AdminController {
         List<User> userList = userRepository.findAll();
         model.addAttribute("countUsers", userList.size());
 //        model.addAttribute("users", userList);
-        return "dashboard";
+        return "dashboard/dashboard";
     }
 }

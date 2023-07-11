@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
+
     private final QuestionRepository repository;
 
     public QuestionServiceImpl(QuestionRepository repository) {

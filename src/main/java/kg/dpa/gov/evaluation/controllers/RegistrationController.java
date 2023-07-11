@@ -25,7 +25,7 @@ public class RegistrationController {
     @GetMapping()
     public String showPage(Model model){
         model.addAttribute("userForm", new User());
-        return "register";
+        return "pages/register";
     }
 
     @PostMapping
@@ -46,7 +46,7 @@ public class RegistrationController {
 //        ObjectError errorPassword = validationService.validPassword(user.getPassword());
 //        if (errorPassword != null) bindingResult.addError(errorPassword);
 
-        if(bindingResult.hasErrors()) return "register";
+        if(bindingResult.hasErrors()) return "pages/register";
 
         userService.save(user);
         return "redirect:/login";

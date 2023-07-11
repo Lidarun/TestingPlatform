@@ -40,7 +40,7 @@ public class QuizController {
             model.addAttribute("result", result);
             model.addAttribute("quizSize", questions.size());
 
-            return "question";
+            return "pages/question";
         }
 
 //        if (questions.isEmpty()) return "redirect:/";
@@ -62,7 +62,7 @@ public class QuizController {
         result = 0;
         currentQuestionIndex = 0;
 
-        return "result";
+        return "pages/result";
     }
 
     @PostMapping()
@@ -88,7 +88,7 @@ public class QuizController {
             else
                 model.addAttribute("next", "next");
 
-            return "right-checker";
+            return "pages/right-checker";
 
         } else {
             model.addAttribute("rightAnswer",
@@ -101,7 +101,7 @@ public class QuizController {
                 model.addAttribute("result", "result");
             else
                 model.addAttribute("next", "next");
-            return "wrong-checker";
+            return "pages/wrong-checker";
         }
     }
 

@@ -50,9 +50,9 @@
 .edit-button:hover{
     color: #00cc00;
 }
-.delete-button{
-    padding-top: 10px;
-}
+/*.delete-button{*/
+/*    padding-top: 10px;*/
+/*}*/
 .delete-button:hover{
     color: red;
 }

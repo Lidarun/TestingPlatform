@@ -10,8 +10,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 public class MVCConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/cards").setViewName("cards");
+        registry.addViewController("/login").setViewName("pages/login");
     }
 
     @Override
