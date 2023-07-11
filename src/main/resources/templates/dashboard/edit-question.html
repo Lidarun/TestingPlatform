@@ -299,6 +299,15 @@
 <!--                                    </div>-->
                                 </div>
                             </div>
+                            <!-- Course-->
+                            <div class="wrapLang">
+                                <label>
+                                    <select name="course" class="radio-group select2">
+                                        <option th:each="course : ${courses}" th:value="${course.getId()}" th:text="${course.getName()}"></option>
+                                    </select>
+                                </label>
+                            </div>
+
                             <button class="flex items-center justify-between w-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                                     style="margin-top: 1%">
                                 Сохранить

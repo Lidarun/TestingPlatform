@@ -42,7 +42,6 @@ public class QuestionController {
         model.addAttribute("courses", courseService.findAll());
 //        model.addAttribute("lang", Language.values());
 
-
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
 
         List<Question> list = page.getContent();
@@ -60,15 +59,12 @@ public class QuestionController {
                               BindingResult result, Model model) {
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
 
-        System.out.println(question);
-
         List<Question> list = page.getContent();
         model.addAttribute("listQuestions", list);
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("courses", courseService.findAll());
-
 //        model.addAttribute("lang", Language.values());
         model.addAttribute("formQuestion", question);
 
@@ -96,8 +92,8 @@ public class QuestionController {
         model.addAttribute("currentPage", 0);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("lang", Language.values());
-
+//        model.addAttribute("lang", Language.values());
+        model.addAttribute("courses", courseService.findAll());
 
         Optional<Question> questionOptional = questionService.findById(id);
         if (questionOptional.isPresent()) {
