@@ -53,7 +53,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void update(Question updatedQuestion) {
-        if (questionRepository.existsById(updatedQuestion.getId()))
+        if (questionRepository.existsById((int) updatedQuestion.getId()))
             questionRepository.saveAndFlush(updatedQuestion);
     }
 

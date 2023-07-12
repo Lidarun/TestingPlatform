@@ -1,7 +1,6 @@
 package kg.dpa.gov.evaluation.controllers;
 
 import jakarta.validation.Valid;
-import kg.dpa.gov.evaluation.enums.Language;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.QuestionService;
@@ -76,6 +75,7 @@ public class QuestionController {
             return "dashboard/question";
 
         questionService.create(question);
+
         return "redirect:/questions/" + pageNum;
     }
 
