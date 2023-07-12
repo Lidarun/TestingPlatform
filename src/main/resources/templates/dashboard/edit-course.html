@@ -241,7 +241,7 @@
                                 aria-label="Account"
                                 aria-haspopup="true">
                             <img class="object-cover w-8 h-8 rounded-full"
-                                 th:src="@{images/adminlogo.png}"
+                                 th:src="@{/images/adminlogo.png}"
                                  alt=""
                                  aria-hidden="true"/>
                         </button>
@@ -305,14 +305,27 @@
                                     </label>
 
                                     <!-- Image-->
-                                    <div class="flex-grow md:w-1/2">
-                                        <label class="block text-sm">
-                                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                   type="file" name="imageFile" accept="image/*"
-                                                   onchange="previewImage(event)">
-                                            <img id="imagePreview" src="#" alt="Preview"
-                                                 style="display: none; max-width: 100%; max-height: 100px;">
-                                        </label>
+                                    <div class="flex items-center">
+                                        <!-- Image -->
+                                        <div class="flex-grow md:w-1/2">
+                                            <label class="block text-sm">
+                                                <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                       type="file" name="imageFile" accept="image/*" onchange="previewImage(event)">
+                                                <img id="imagePreview" src="#" alt="Preview" style="display: none; max-width: 100%; max-height: 100px;">
+                                            </label>
+                                        </div>
+
+                                        <!-- States -->
+                                        <div class="states ml-4 flex">
+                                            <label class="block text-sm">
+                                                <input type="radio" class="form-radio h-4 w-4 text-green-500" name="state" value="true"
+                                                       th:checked="${state} == true" />
+                                            </label>
+                                            <label class="block text-sm">
+                                                <input type="radio" class="form-radio h-4 w-4 text-red-500" style="color: red"  name="state" value="false"
+                                                       th:checked="${state} == false" />
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Lang-->
@@ -341,7 +354,8 @@
                     <table class="w-full whitespace-no-wrap">
                         <thead>
                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th class="px-4 py-3" style="width: 30%;">Курс</th>
+                            <th class="px-4 py-3" style="width: 50%;">Курс</th>
+                            <th class="px-4 py-3" style="width: 10%;">Cтатус</th>
                             <th class="px-4 py-3" style="width: 3%;"></th>
                         </tr>
                         </thead>
@@ -349,9 +363,23 @@
                         <tr class="text-gray-700 dark:text-gray-400" th:each="course: ${courses}">
                             <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
+                                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                        <img class="object-cover w-full h-full rounded-full"
+                                             th:src="@{${course.getPathImage()}}" loading="eager" alt=""/>
+                                        <div class="absolute inset-0 rounded-full shadow-inner"
+                                             aria-hidden="true"></div>
+                                    </div>
                                     <div>
                                         <p class="font-semibold"
-                                           th:text="${course.getName()}"/>
+                                           th:text="${course.getName()}" style="font-size: 12px"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <div class="flex items-center text-sm">
+                                    <div>
+                                        <p class="font-semibold" th:class="${course.isState() ? 'greenLamp' : 'redLamp'}">
+                                            <i class="fas fa-sharp fa-solid fa-circle" ></i></p>
                                     </div>
                                 </div>
                             </td>

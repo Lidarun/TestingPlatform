@@ -13,10 +13,10 @@ public class MVCConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("pages/login");
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("lang"); // Параметр запроса, который будет определять язык
-        registry.addInterceptor(localeChangeInterceptor);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+//        localeChangeInterceptor.setParamName("lang"); // Параметр запроса, который будет определять язык
+//        registry.addInterceptor(localeChangeInterceptor);
+//    }
 }

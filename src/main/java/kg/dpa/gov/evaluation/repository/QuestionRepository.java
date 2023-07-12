@@ -2,6 +2,7 @@ package kg.dpa.gov.evaluation.repository;
 
 import io.micrometer.common.lang.NonNullApi;
 import kg.dpa.gov.evaluation.enums.Language;
+import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.models.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,5 +15,6 @@ import java.util.List;
 @NonNullApi
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 //    List<Question> findAllByLang(Language lang);
+    List<Question> findAllByCourse(Course course);
     Page<Question> findAll(Pageable pageable);
 }

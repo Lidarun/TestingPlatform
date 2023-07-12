@@ -12,11 +12,10 @@ import lombok.*;
 public class Course {
 
     @Id
-    @Column(name = "course_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String pathImage;
     private String name;
-
+    private boolean state = false;
 }

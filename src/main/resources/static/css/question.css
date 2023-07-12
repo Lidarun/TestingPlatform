@@ -1,7 +1,10 @@
 @import "header.css";
 
 .row{
-    padding-top: 7%;
+    padding-top: 4%;
+}
+.card{
+    margin-bottom: 2%;
 }
 /*.card-header{*/
 /*    display: inline-flex;*/

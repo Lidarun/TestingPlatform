@@ -18,14 +18,17 @@
             <form th:action="@{/login}" method="post" class="sign-in-form">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <h2 class="title">
-                    <span th:text="#{'signIn'}"></span>
+<!--                    <span th:text="#{'signIn'}"></span>-->
+                    <span>Вход</span>
                 </h2>
 
                 <div th:if="${param.error}">
-                    <span th:text="#{'invalidPassOrUsername'}"></span>
+<!--                    <span th:text="#{'invalidPassOrUsername'}"></span>-->
+                    <span>Неправильный логин или пароль</span>
                 </div>
                 <div th:if="${param.logout}">
-                    <span th:text="#{'loggedOut'}"></span>
+<!--                    <span th:text="#{'loggedOut'}"></span>-->
+                    <span>Вы успешно вышли из аккаунта</span>
                 </div>
 
                 <div class="input-field">
@@ -34,9 +37,11 @@
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" name="password" th:placeholder="#{'password'}"/>
+<!--                    <input type="password" name="password" th:placeholder="#{'password'}"/>-->
+                    <input type="password" name="password" th:placeholder="password"/>
                 </div>
-                <input type="submit" th:value="#{'signInBtn'}" class="btn solid"/>
+<!--                <input type="submit" th:value="#{'signInBtn'}" class="btn solid"/>-->
+                <input type="submit" th:value="Войти" class="btn solid"/>
             </form>
         </div>
 
@@ -50,20 +55,24 @@
         <div class="panel left-panel">
             <div class="content">
                 <h4>
-                    <span th:text="#{'welcomeSignInMsg'}"></span>
+<!--                    <span th:text="#{'welcomeSignInMsg'}"></span>-->
+                    <span>Добро пожаловать на страницу входа!</span>
                 </h4>
                 <p style="font-size: 13px">
-                    <span th:text="#{'infoMsgSignIn'}"></span>
+<!--                    <span th:text="#{'infoMsgSignIn'}"></span>-->
+                    <span>Если вы впервые здесь, мы приглашаем вас зарегистрироваться и создать свою учетную запись.</span>
                 </p>
                 <a href="/">
                     <button class="btn transparent" id="sign-in-btn">
                         <i class="fas fa-solid fa-home"></i>
-                        <span th:text="#{'homePage'}"></span>
+<!--                        <span th:text="#{'homePage'}"></span>-->
+                        <span>Главная</span>
                     </button>
                 </a>
                 <a href="/register">
                     <button class="btn transparent" id="sign-in-btn">
-                        <span th:text="#{'singUpPage'}"></span>
+<!--                        <span th:text="#{'singUpPage'}"></span>-->
+                        <span>Регистрация</span>
                     </button>
                 </a>
             </div>

@@ -43,4 +43,9 @@ public class CourseServiceImpl implements CourseService {
         if (courseRep.findById(id).isPresent())
             courseRep.save(updatedCourse);
     }
+
+    @Override
+    public List<Course> findAllByState(boolean state) {
+        return courseRep.findAllByState(true);
+    }
 }
