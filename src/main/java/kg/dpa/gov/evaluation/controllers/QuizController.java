@@ -1,74 +1,61 @@
 package kg.dpa.gov.evaluation.controllers;
 
-import jakarta.validation.constraints.NotNull;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.services.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/quiz")
 public class QuizController {
     private final QuestionService questionService;
+    private int currentIndexQuestionList = 0;
+    private int result = 0;
 
     public QuizController(QuestionService questionService) {
         this.questionService = questionService;
     }
 
     @GetMapping("/{id}")
-    public String showQuestion(@PathVariable("id") long id,
+    public String showQuestion(@PathVariable("id") int id,
                                Model model) {
+        List<Question> questionList = questionService.findAllByCourseID(id);
+        if (currentIndexQuestionList > questionList.size()) currentIndexQuestionList = 0;
 
-        List<Question> questions = questionService.findAllByCourseID(id);
+        if (currentIndexQuestionList < questionList.size()) {
+            Question question = questionList.get(currentIndexQuestionList);
+            model.addAttribute("id", id);
+            model.addAttribute("question", question);
 
-        model.addAttribute("questions", questions);
+            return "pages/quiz";
+        }
 
-        return "pages/quiz";
+        model.addAttribute("result", result);
+        model.addAttribute("quizSize", questionList.size());
+
+        result = 0;
+        currentIndexQuestionList = 0;
+
+        return "pages/result";
     }
 
-//    @PostMapping()
-//    public String submitAnswer(@RequestParam("correctAnswer") @NotNull Integer answer,
-//                               Model model) {
-//        Question currentQuestion = questions.get(currentQuestionIndex);
-//        boolean check = currentQuestion.isCorrect(answer);
-//
-//        currentQuestionIndex++;
-//
-////        System.out.println(listSize);
-////        System.out.println(currentQuestionIndex);
-//
-//        if (check) {
-//            result++;
-//            model.addAttribute("rightAnswer",
-//                    currentQuestion.getOptions().get(currentQuestion.getCorrectAnswer()));
-//            model.addAttribute("why",
-//                    currentQuestion.getAnswerExplain());
-//
-//            if (listSize == currentQuestionIndex)
-//                model.addAttribute("result", "result");
-//            else
-//                model.addAttribute("next", "next");
-//
-//            return "pages/right-checker";
-//
-//        } else {
-//            model.addAttribute("rightAnswer",
-//                    currentQuestion.getOptions().get(currentQuestion.getCorrectAnswer()));
-//            model.addAttribute("wrongAnswer",
-//                    currentQuestion.getOptions().get(answer));
-//            model.addAttribute("why",
-//                    currentQuestion.getAnswerExplain());
-//            if (listSize == currentQuestionIndex)
-//                model.addAttribute("result", "result");
-//            else
-//                model.addAttribute("next", "next");
-//            return "pages/wrong-checker";
-//        }
-//    }
+    @PostMapping("/{id}")
+    public String submitAnswer(@RequestParam("answer") int answer,
+                               @PathVariable("id") int id,
+                               Model model) {
+        List<Question> questions = questionService.findAllByCourseID(id);
 
+        if (currentIndexQuestionList < questions.size()) {
+            if (answer == questions.get(currentIndexQuestionList).getCorrectAnswer())
+                result++;
+
+            currentIndexQuestionList++;
+        }
+
+        return "redirect:/quiz/" + id;
+    }
 }
 

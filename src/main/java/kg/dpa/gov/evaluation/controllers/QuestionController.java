@@ -39,7 +39,6 @@ public class QuestionController {
         model.addAttribute("varC", new String());
         model.addAttribute("varD", new String());
         model.addAttribute("courses", courseService.findAll());
-//        model.addAttribute("lang", Language.values());
 
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
 
@@ -64,7 +63,6 @@ public class QuestionController {
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("courses", courseService.findAll());
-//        model.addAttribute("lang", Language.values());
         model.addAttribute("formQuestion", question);
 
         ObjectError error = service.checkFields(question);
@@ -92,7 +90,6 @@ public class QuestionController {
         model.addAttribute("currentPage", 0);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-//        model.addAttribute("lang", Language.values());
         model.addAttribute("courses", courseService.findAll());
 
         Optional<Question> questionOptional = questionService.findById(id);

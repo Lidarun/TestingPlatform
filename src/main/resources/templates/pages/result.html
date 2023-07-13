@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Викторина</title>
-    <link rel="stylesheet" th:href="@{css/result.css}"/>
+    <link rel="stylesheet" th:href="@{/css/result.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -16,32 +16,32 @@
     <div class="row justify-content-center">
         <div class="col-md-7">
             <div class="card">
-                <div class="card-header text-center text-primary"><h5 class="cardTXT" th:text="#{'result'}"></h5></div>
+                <div class="card-header text-center text-primary"><h5 class="cardTXT">Результат</h5></div>
                 <div class="card-body">
                     <div class="alert alert-success" role="alert">
-                        <h6 style="display: inline;" th:text="#{'resMsg'}"></h6>
+                        <h6 style="display: inline;">Вы ответили правильно на </h6>
                         <h5 th:text="${result}" style="display: inline; margin-right: 8px; margin-left: 8px;"/>
-                        <h6 style="display: inline;" th:text="#{${resMsg2}}" th:if="${resMsg2 != null}"></h6>
-                        <h6 style="display: inline;" th:text="#{${resMsg3}}" th:if="${resMsg3 != null}"></h6>
+                        <h6 style="display: inline;"> вопрос(a) из </h6>
                         <h5 th:text="${quizSize}" style="display: inline; margin-left: 8px"/>
-                        <h6 style="display: inline;" th:text="#{${resMsgKy}}" th:if="${resMsgKy != null}"></h6>
-                        <hr>
-                        <p class="mb-0" th:text="#{${resultInfo}}"></p>
+                        <h6 style="display: inline;"> вопросов</h6>
+<!--                        <hr>-->
+<!--                        <p class="mb-0" th:text="#{${resultInfo}}"></p>-->
                     </div>
                 </div>
                 <div class="resultBtn">
                     <a href="/">
                         <button class="btn btn-primary btn-sm">
                             <i class="fas fa-solid fa-home"></i>
-                            <span th:text="#{'homePage'}"></span>
+<!--                            <span th:text="#{'homePage'}"></span>-->
+                            <span>Главная</span>
                         </button>
                     </a>
-                    <a href="/quiz">
-                        <button class="btn btn-primary btn-sm">
-                            <i class="fas fa-solid fa-circle-play"></i>
-                            <span th:text="#{'newGame'}"></span>
-                        </button>
-                    </a>
+<!--                    <a href="/quiz">-->
+<!--                        <button class="btn btn-primary btn-sm">-->
+<!--                            <i class="fas fa-solid fa-circle-play"></i>-->
+<!--                            <span th:text="#{'newGame'}"></span>-->
+<!--                        </button>-->
+<!--                    </a>-->
                 </div>
             </div>
         </div>

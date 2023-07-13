@@ -12,8 +12,6 @@ public interface QuestionService {
     void create(Question question);
     Optional<Question> findById(int id);
     void update(Question updatedQuestion);
-//    List<Question> findAllByLang(String lang);
     Page<Question> getItems(Pageable pageable);
-
     List<Question> findAllByCourseID(long id);
 }

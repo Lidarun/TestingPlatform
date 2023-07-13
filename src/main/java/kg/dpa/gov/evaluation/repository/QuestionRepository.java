@@ -14,7 +14,6 @@ import java.util.List;
 @Repository
 @NonNullApi
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
-//    List<Question> findAllByLang(Language lang);
     List<Question> findAllByCourse(Course course);
     Page<Question> findAll(Pageable pageable);
 }

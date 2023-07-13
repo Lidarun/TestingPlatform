@@ -8,12 +8,8 @@ import java.util.Optional;
 public interface CourseService {
     void create(Course course);
     List<Course> findAll();
-
     void deleteById(long id);
-
     Optional<Course> findById(long id);
-
     void update(long id, Course updatedCourse);
-
     List<Course> findAllByState(boolean state);
 }

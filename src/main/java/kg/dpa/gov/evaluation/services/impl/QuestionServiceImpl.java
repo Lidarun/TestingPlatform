@@ -33,13 +33,6 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findById(id);
     }
 
-//    @Override
-//    public List<Question> findAllByLang(String lang) {
-//        if (lang.equals(Language.KYR.getLang()))
-//            return repository.findAllByLang(Language.KYR);
-//        else return repository.findAllByLang(Language.RUS);
-//    }
-
     @Override
     public Page<Question> getItems(Pageable pageable) {
         return questionRepository.findAll(pageable);
