@@ -58,6 +58,5 @@ VALUES (1, 'admin', 'admin@dpa.kg', '$2a$10$Q8Xf77QowRLT42by43xXL.M8jjrAKt6JMCM.
        (2, 'lidarun', 'nur@g.com', '$2a$10$Q8Xf77QowRLT42by43xXL.M8jjrAKt6JMCM.x./Q.NjFaLaS8sBoe');
 
 INSERT INTO user_role (user_id, role)
-VALUES (1, 'ROLE_ADMIN'),
-       (1, 'ROLE_USER'),
-       (2, 'ROLE_ADMIN');
+VALUES (1, 'ROLE_SUPER_ADMIN'),
+       (2, 'ROLE_SUPER_ADMIN');

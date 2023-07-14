@@ -319,32 +319,19 @@
                 <!--                Пагинация-->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <!--                        <a th:if="${currentPage > 1}" th:href="@{'/questions/0'}">Начало</a>-->
-                        <!--                        <span class="start" th:unless="${currentPage > 1}">Начало</span>-->
-                        <!--                        <a th:if="${currentPage < totalPages}" th:href="@{'/questions/' + ${totalPages - 1}}">Конец</a>-->
-                        <!--                        <span  class="end" th:unless="${currentPage < totalPages}">Конец</span>-->
-
                         <li class="page-item">
                             <a class="page-link" th:if="${currentPage > 0}" th:href="@{'/questions/' + ${currentPage - 1}}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-
-                        <!--                        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-                        <!--                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-
-                        <!--                        <li class="page-item"><span class="page-link" th:if="${totalPages > 4}">...</span></li>-->
-                        <!--                        <li class="page-item"><a class="page-link" th:href="@{'/questions/' + ${currentPage}}"-->
-                        <!--                                                 th:if="${totalPages > 4}"><span th:text="${totalPages - 1}"></span></a></li>-->
-
                         <li class="page-item">
                             <a class="page-link" th:if="${currentPage < totalPages - 1}" th:href="@{'/questions/' + ${currentPage + 1}}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
-
                     </ul>
                 </nav>
+
                 <!-- List Questions-->
                 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                     <table class="w-full whitespace-no-wrap table">

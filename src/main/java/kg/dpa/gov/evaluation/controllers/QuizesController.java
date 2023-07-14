@@ -10,12 +10,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/quiz")
-public class QuizController {
+public class QuizesController {
     private final QuestionService questionService;
     private int currentIndexQuestionList = 0;
     private int result = 0;
 
-    public QuizController(QuestionService questionService) {
+    public QuizesController(QuestionService questionService) {
         this.questionService = questionService;
     }
 

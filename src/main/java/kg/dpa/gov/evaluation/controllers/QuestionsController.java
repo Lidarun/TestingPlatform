@@ -18,13 +18,13 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/questions")
-public class QuestionController {
+public class QuestionsController {
 
     private final QuestionService questionService;
     private final QuestionValidationService service;
     private final CourseService courseService;
 
-    public QuestionController(QuestionService questionService, QuestionValidationService service, CourseService courseService) {
+    public QuestionsController(QuestionService questionService, QuestionValidationService service, CourseService courseService) {
         this.questionService = questionService;
         this.service = service;
         this.courseService = courseService;

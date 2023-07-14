@@ -59,8 +59,9 @@ public class CoursesController {
                 String fileName = System.currentTimeMillis() + "-"
                         + imageFile.getOriginalFilename();
 
-                String uploadDir = System.getProperty("user.home")
-                        + "/Desktop/dpa-training";
+//                String uploadDir = System.getProperty("user.home")
+//                        + "/Desktop/dpa-training";
+                String uploadDir = "uploads";
 
                 Path dirPath = Paths.get(uploadDir);
                 if (!Files.exists(dirPath))

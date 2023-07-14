@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**")
                         .permitAll()
                         .requestMatchers("/", "/courses-group", "/register").permitAll()
-                        .requestMatchers("/dashboard","/questions","/courses").hasRole("ADMIN")
+                        .requestMatchers("/dashboard","/questions","/courses").hasAnyRole("SUPER_ADMIN", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.ObjectError;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +29,43 @@ public class UserServiceImpl implements UserService, ValidationService {
         user.setPassword(password);
         user.setRole(Set.of(Role.ROLE_USER));
         userRep.save(user);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRep.findAll();
+    }
+
+    @Override
+    public boolean changeRole(long id, Role role) {
+
+        Optional<User> user = userRep.findById(id);
+
+        if (user.isPresent()) {
+            if (user.get().getRole().contains(role)) {
+                user.get().getRole().remove(role);
+                userRep.save(user.get());
+                return true;
+            }
+
+            if (!user.get().getRole().contains(role)) {
+                user.get().getRole().add(role);
+                userRep.save(user.get());
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public void deleteByID(long id) {
+        userRep.deleteById(id);
+    }
+
+    @Override
+    public User findById(long id) {
+        return userRep.findById(id).orElse(null);
     }
 
     @Override
