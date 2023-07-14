@@ -69,6 +69,16 @@ public class UserServiceImpl implements UserService, ValidationService {
     }
 
     @Override
+    public List<User> findAllByRole(Role role) {
+        return userRep.findAllByRoleContains(role);
+    }
+
+    @Override
+    public List<User> findAllByRoleAndCourse(Role role) {
+        return null;
+    }
+
+    @Override
     public ObjectError comparePassword(String password, String confirmPassword) {
         ObjectError error = null;
         if (!password.equals(confirmPassword)) error =

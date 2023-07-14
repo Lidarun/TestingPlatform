@@ -309,40 +309,32 @@
                                     </label>
 
                                     <!-- Image-->
-                                    <div class="flex items-center">
-                                        <!-- Image -->
-                                        <div class="flex-grow md:w-1/2">
-                                            <label class="block text-sm">
-                                                <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                       type="file" name="imageFile" accept="image/*" onchange="previewImage(event)">
-                                                <img id="imagePreview" src="#" alt="Preview" style="display: none; max-width: 100%; max-height: 100px;">
-                                            </label>
-                                        </div>
-
+                                    <div class="flex state items-center">
                                         <!-- States -->
                                         <div class="states ml-4 flex">
                                             <label class="block text-sm">
-                                                <input type="radio" class="form-radio h-4 w-4 text-green-500" name="state" value="true"
+                                                <input type="radio" class="form-radio text-green-500" name="state" value="true"
                                                        th:checked="${state} == true" />
                                             </label>
-                                            <label class="block text-sm">
-                                                <input type="radio" class="form-radio h-4 w-4 text-red-500" style="color: red"  name="state" value="false"
+                                            <label class="block text-sm" style="margin-left: 28px">
+                                                <input type="radio" class="form-radio text-red-500" style="color: red;"  name="state" value="false"
                                                        th:checked="${state} == false" />
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Lang-->
-                                <!--                                    <div class="wrapLang">-->
-                                <!--                                        <div class="radio-group" th:each="lang : ${lang}">-->
-                                <!--                                            <label class="radio-label">-->
-                                <!--                                                <input type="radio" th:name="lang" th:value="${lang}"-->
-                                <!--                                                       class="radio-input"/>-->
-                                <!--                                                <span th:text="${lang.lang}" class="radio-text"></span>-->
-                                <!--                                            </label>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
+                                <div class="flex-grow md:w-1/2">
+                                    <label class="block text-sm">
+                                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                               type="text" th:field="*{key}" placeholder="Ключ к курсу"/>
+                                    </label>
+                                    <label class="block text-sm">
+                                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                               type="file" name="imageFile" accept="image/*" onchange="previewImage(event)">
+                                        <img id="imagePreview" src="#" alt="Preview"
+                                             style="display: none; max-width: 100%; max-height: 100px;">
+                                    </label>
+                                </div>
                             </div>
                             <button class="flex items-center justify-between w-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                                     style="margin-top: 1%">
@@ -388,7 +380,7 @@
                                 </div>
                             </td>
                             <td class="text-center">
-                                <form th:action="@{/courses/{id}(id=${course.getId()})}" th:method="get">
+                                <form th:action="@{/courses/edit/{id}(id=${course.getId()})}" th:method="get">
                                     <button type="submit" class="btn btn-warning edit-button">
                                         <i class="fas fa-solid fa-pen"></i>
                                     </button>

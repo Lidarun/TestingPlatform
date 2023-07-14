@@ -2120,3 +2120,8 @@ img, video {
 .roles{
     text-align: left;
 }
+.filter-dropdown{
+    width: 88px;
+    margin-bottom: 1%;
+    border-radius: 11px;
+}

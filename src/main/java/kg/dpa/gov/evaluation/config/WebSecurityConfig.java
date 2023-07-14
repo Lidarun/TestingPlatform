@@ -36,10 +36,10 @@ public class WebSecurityConfig {
         return http
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**")
+                        .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/uploads/**")
                         .permitAll()
                         .requestMatchers("/", "/courses-group", "/register").permitAll()
-                        .requestMatchers("/dashboard","/questions","/courses").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                        .requestMatchers("/dashboard","/questions","/courses","/dashboard/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "TEACHER")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

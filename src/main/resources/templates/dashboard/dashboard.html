@@ -309,11 +309,20 @@
                     </div>
                 </div>
 
+                <div class="filter-dropdown">
+                    <select id="rolePage" class="rolePage" onchange="filterUsers(this.value)">
+                        <option value="ROLE_SUPER_ADMIN">Администрация</option>
+                        <option value="ROLE_ADMIN">Помощники</option>
+                        <option value="ROLE_TEACHER">Учителя</option>
+                        <option value="ROLE_USER">Пользователи</option>
+                    </select>
+                </div>
+
                 <!-- New Table -->
                 <div class="w-full overflow-hidden rounded-lg shadow-xs">
-
                     <!-- Eployees List-->
                     <div class="w-full overflow-x-auto">
+                        <div id="user-list">
                         <table class="w-full whitespace-no-wrap">
                             <thead>
                             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
@@ -357,11 +366,37 @@
                             </tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 </div>
+<SCRIPT>
+    function filterUsers(rolePage) {
+        var url = "/dashboard/" + rolePage;
+        var userList = document.getElementById("user-list");
+
+        userList.innerHTML = "Loading...";
+
+        var request = new XMLHttpRequest();
+        request.open("GET", url, true);
+
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                userList.innerHTML = request.responseText;
+            } else {
+                userList.innerHTML = "Error loading users.";
+            }
+        };
+
+        request.onerror = function() {
+            userList.innerHTML = "Error loading users.";
+        };
+
+        request.send();
+    }
+</SCRIPT>
 </body>
 </html>

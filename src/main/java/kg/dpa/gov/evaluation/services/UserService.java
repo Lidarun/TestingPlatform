@@ -12,4 +12,8 @@ public interface UserService {
     void deleteByID(long id);
 
     User findById(long id);
+
+    List<User> findAllByRole(Role role);
+
+    List<User> findAllByRoleAndCourse(Role role);
 }

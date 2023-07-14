@@ -33,8 +33,8 @@ public class RegistrationController {
                                BindingResult bindingResult , Model model){
         model.addAttribute(user);
 
-        ObjectError errorUsername = validationService.existUserByUsername(user.getUsername());
-        if (errorUsername != null) bindingResult.addError(errorUsername);
+//        ObjectError errorUsername = validationService.existUserByUsername(user.getUsername());
+//        if (errorUsername != null) bindingResult.addError(errorUsername);
 
         ObjectError errorEmail = validationService.existUserByEmail(user.getEmail());
         if (errorEmail != null) bindingResult.addError(errorEmail);
@@ -48,6 +48,7 @@ public class RegistrationController {
 
         if(bindingResult.hasErrors()) return "pages/register";
 
+        user.setUsername(user.getEmail());
         userService.save(user);
         return "redirect:/login";
     }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:x-transition="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Dashboard</title>
+    <script th:src="@{js/ap.charts-pie.js}"></script>
+    <script th:src="@{js/ap.init-alpine.js}"></script>
+    <script th:src="@{js/ap.charts-lines.js}"></script>
+    <link th:href="@{css/admin-panel.output.css}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+    <div class="flex flex-col flex-1 w-full">
+        <main class="h-full pb-16 overflow-y-auto">
+            <div class="container px-1 mx-auto grid">
+                <!-- New Table -->
+                <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                    <!-- Eployees List-->
+                    <div class="w-full overflow-x-auto">
+                        <div id="user-list">
+                            <table class="w-full whitespace-no-wrap">
+                                <thead>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3">Пользователь</th>
+                                    <th class="px-4 py-3">email</th>
+                                    <th class="px-4 py-3" style="width: 3%;"></th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                <tr class="text-gray-700 dark:text-gray-400" th:each="user: ${users}">
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <div>
+                                                <p class="font-semibold"
+                                                   th:text="${user.getUsername()}"/>
+                                                <div th:each="role: ${user.getRole()}">
+                                                    <p class="text-xs text-gray-600 dark:text-gray-400"
+                                                       th:text="${role.getName()}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm" th:text="${user.getEmail()}"/>
+                                    <td class="text-center">
+                                        <form th:if="${!user.getRole().contains(role)}"
+                                              th:action="@{/dashboard/update/{id}(id=${user.getId()})}"
+                                              th:method="get">
+                                            <button type="submit" class="btn btn-warning edit-button">
+                                                <i class="fas fa-solid fa-pen"></i>
+                                            </button>
+                                        </form>
+
+                                        <form th:if="${!user.getRole().contains(role)}"
+                                              th:action="@{/dashboard/delete/{id}(id=${user.getId()})}"
+                                              th:method="post">
+                                            <button type="submit" class="btn btn-warning delete-button">
+                                                <i class="fas fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

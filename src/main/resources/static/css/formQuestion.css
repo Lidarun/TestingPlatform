@@ -135,3 +135,9 @@
     font-family: "Lucida Sans Unicode", serif;
     color: #000000;
 }
+.state{
+    margin-top: 1.5%;
+}
+.form-radio{
+    font-size: 22px;
+}

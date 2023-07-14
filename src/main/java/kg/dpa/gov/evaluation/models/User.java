@@ -1,21 +1,22 @@
 package kg.dpa.gov.evaluation.models;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import kg.dpa.gov.evaluation.enums.Role;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 
 @Getter
 @Setter
-@Entity
-@Table(name = "users")
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "tb_users")
 public class User {
 
     @Id
@@ -23,7 +24,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty(message = "Обязательное поле")
+    @NotEmpty(message = "Укажите полное имя")
+    String fullName;
+
     private String username;
 
     @NotEmpty(message = "Обязательное поле")
@@ -42,4 +45,7 @@ public class User {
 
     @Transient
     private String confirmPassword;
+
+    @ManyToMany
+    private Set<Course> courses;
 }
