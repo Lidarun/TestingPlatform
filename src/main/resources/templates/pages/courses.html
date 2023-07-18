@@ -17,8 +17,8 @@
 
 <div class="container text-center">
     <div class="project_card">
-        <div class="card" th:each="course: ${courses}">
-            <div th:if="${access}">
+        <div class="card" th:each="course, courseIndex : ${courses}">
+            <div th:if="${course.isAccess()}">
                 <a th:href="@{/quiz/{id}(id=${course.getId()})}">
                     <div class="image-container">
                         <img class="blog-image" th:src="@{${course.getPathImage()}}" loading="eager" alt=""/>
@@ -28,7 +28,9 @@
                     </div>
                 </a>
             </div>
-            <div th:unless="${access}">
+
+            <div th:unless="${course.isAccess()}">
+                <!-- Остальной код для курсов без доступа -->
                 <div class="image-container">
                     <img class="blog-image" th:src="@{${course.getPathImage()}}" loading="eager" alt=""/>
                 </div>
@@ -37,11 +39,12 @@
                 </div>
 
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">Доступ
+                        th:data-bs-target="'#staticBackdrop-' + ${courseIndex.index}">Доступ
                 </button>
 
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" th:id="'staticBackdrop-' + ${courseIndex.index}" data-bs-backdrop="static"
+                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">

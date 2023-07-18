@@ -12,4 +12,6 @@ public interface CourseService {
     Optional<Course> findById(long id);
     void update(long id, Course updatedCourse);
     List<Course> findAllByState(boolean state);
+
+    List<Course> findAllByUserAccess(String username);
 }

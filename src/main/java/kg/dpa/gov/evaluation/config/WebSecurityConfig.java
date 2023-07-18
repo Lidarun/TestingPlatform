@@ -38,12 +38,13 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/uploads/**")
                         .permitAll()
-                        .requestMatchers("/", "/courses-group", "/register").permitAll()
+                        .requestMatchers("/", "/register").permitAll()
                         .requestMatchers("/dashboard","/questions","/courses","/dashboard/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "TEACHER")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)

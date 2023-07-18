@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -23,26 +25,48 @@ public class CoursesGroupController {
     }
 
     @GetMapping
-    private String showPage(Model model) {
-        model.addAttribute("courses", service.findAllByState(true));
-        model.addAttribute("access", userService.coursePresent());
+    private String showPage(Model model,
+                            Authentication authentication) {
+        List<Course> courses = new ArrayList<>();
+        String username = null;
+        if (authentication != null)
+            username = authentication.getName();
+//        System.out.println("USER: "+username);
+
+
+        courses = service.findAllByUserAccess(username);
+
+//        courses.forEach(System.out::println);
+//        System.out.println("CHECK: "+courses.isEmpty());
+//        System.out.println("CHECK: "+courses.size());
+
+        model.addAttribute("courses", courses);
         return "pages/courses";
+    }
+
+    @GetMapping("/{id}")
+    private String showModulesPage( @PathVariable String id,
+                                    Model model) {
+        return "pages/module";
     }
 
     @PostMapping("/{id}")
     public String redirectToQuiz(@PathVariable("id") long courseId,
                                  @RequestParam String keyCourse,
                                  Authentication authentication) {
-        String username = authentication.getName();
+        Optional<Course> course = service.findById(courseId);
+        String username = null;
+
+        if (authentication != null) {
+            username = authentication.getName();
 
         System.out.println("COURSE: "+courseId);
         System.out.println("USER: "+username);
         System.out.println("KEY: "+keyCourse);
-
-        Optional<Course> course = service.findById(courseId);
+        }
 
         if (course.isPresent() && course.get().getKey().equals(keyCourse)) {
-//            userService.addCourse(course);
+            userService.addCourse(username, courseId);
             return "redirect:/quiz/" + courseId;
 
         } else {

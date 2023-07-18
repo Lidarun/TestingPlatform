@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "tb_users")
@@ -46,6 +45,34 @@ public class User {
     @Transient
     private String confirmPassword;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinTable(
+            name = "tb_users_courses",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
     private Set<Course> courses;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                '}';
+    }
+
+    public void addCourse(Course course) {
+        courses.add(course);
+        course.getUsers().add(this);
+    }
+
+    public void removeCourse(Course course) {
+        courses.remove(course);
+        course.getUsers().remove(this);
+    }
 }

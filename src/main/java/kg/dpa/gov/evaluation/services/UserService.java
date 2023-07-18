@@ -18,4 +18,5 @@ public interface UserService {
     List<User> findAllByRoleAndCourse(Role role);
 
     boolean coursePresent();
+    void addCourse(String username, long course);
 }

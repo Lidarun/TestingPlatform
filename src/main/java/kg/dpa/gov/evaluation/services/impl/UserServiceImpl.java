@@ -1,7 +1,9 @@
 package kg.dpa.gov.evaluation.services.impl;
 
 import kg.dpa.gov.evaluation.enums.Role;
+import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.models.User;
+import kg.dpa.gov.evaluation.repository.CourseRepository;
 import kg.dpa.gov.evaluation.repository.UserRepository;
 import kg.dpa.gov.evaluation.services.UserService;
 import kg.dpa.gov.evaluation.services.ValidationService;
@@ -17,10 +19,11 @@ import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements UserService, ValidationService {
-    private  final UserRepository userRep;
-
-    public UserServiceImpl(UserRepository userRep) {
+    private final UserRepository userRep;
+    private final CourseRepository courseRep;
+    public UserServiceImpl(UserRepository userRep, CourseRepository courseRep) {
         this.userRep = userRep;
+        this.courseRep = courseRep;
     }
 
     @Override
@@ -83,6 +86,23 @@ public class UserServiceImpl implements UserService, ValidationService {
         return false;
     }
 
+    @Override
+    public void addCourse(String username, long courseID) {
+        Optional<User> userOptional = userRep.findByUsernameOrEmail(username, username);
+        Optional<Course> courseOptional = courseRep.findById(courseID);
+
+        if (userOptional.isPresent() && courseOptional.isPresent()) {
+            User user = userOptional.get();
+            Course course = courseOptional.get();
+
+            user.getCourses().add(course);
+            userRep.save(user);
+        }
+    }
+
+
+
+//    VALIDATION
     @Override
     public ObjectError comparePassword(String password, String confirmPassword) {
         ObjectError error = null;
