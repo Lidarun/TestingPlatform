@@ -18,14 +18,53 @@
 <div class="container text-center">
     <div class="project_card">
         <div class="card" th:each="course: ${courses}">
-            <a th:href="@{/quiz/{id}(id=${course.getId()})}">
+            <div th:if="${access}">
+                <a th:href="@{/quiz/{id}(id=${course.getId()})}">
+                    <div class="image-container">
+                        <img class="blog-image" th:src="@{${course.getPathImage()}}" loading="eager" alt=""/>
+                    </div>
+                    <div class="course_name">
+                        <h6 th:text="${course.getName()}"></h6>
+                    </div>
+                </a>
+            </div>
+            <div th:unless="${access}">
                 <div class="image-container">
                     <img class="blog-image" th:src="@{${course.getPathImage()}}" loading="eager" alt=""/>
                 </div>
                 <div class="course_name">
-                <h6 th:text="${course.getName()}"></h6>
+                    <h6 th:text="${course.getName()}"></h6>
                 </div>
-            </a>
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">Доступ
+                </button>
+
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Введите ключ для доступа к курсу</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/courses-group/{id}(id=${course.getId()})}" method="post">
+                                    <label class="block text-sm">
+                                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                               type="text" name="keyCourse" placeholder="Ключ"/>
+                                    </label>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Свернуть</button>
+                                        <button type="submit" class="btn btn-primary">Доступ</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

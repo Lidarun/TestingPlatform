@@ -2,41 +2,51 @@ package kg.dpa.gov.evaluation.controllers;
 
 import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.services.CourseService;
+import kg.dpa.gov.evaluation.services.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/courses-group")
 public class CoursesGroupController {
     private final CourseService service;
+    private final UserService userService;
 
-    public CoursesGroupController(CourseService service) {
+    public CoursesGroupController(CourseService service, UserService userService) {
         this.service = service;
+        this.userService = userService;
     }
 
     @GetMapping
     private String showPage(Model model) {
         model.addAttribute("courses", service.findAllByState(true));
+        model.addAttribute("access", userService.coursePresent());
         return "pages/courses";
     }
 
-    @GetMapping("/check/{id}")
+    @PostMapping("/{id}")
     public String redirectToQuiz(@PathVariable("id") long courseId,
-                                 @RequestParam("key") String key) {
+                                 @RequestParam String keyCourse,
+                                 Authentication authentication) {
+        String username = authentication.getName();
+
+        System.out.println("COURSE: "+courseId);
+        System.out.println("USER: "+username);
+        System.out.println("KEY: "+keyCourse);
+
         Optional<Course> course = service.findById(courseId);
 
-        if (course.isPresent() && course.get().getKey().equals(key)) {
-            // Ключ верный, перенаправить пользователя на страницу курса
-            return "redirect:/quiz/" + courseId; // Замените "/quiz/" на URL вашей страницы курса
+        if (course.isPresent() && course.get().getKey().equals(keyCourse)) {
+//            userService.addCourse(course);
+            return "redirect:/quiz/" + courseId;
+
         } else {
-            return "redirect:/";
-//            return "access_denied";
+            return "pages/access-denied";
         }
     }
 }

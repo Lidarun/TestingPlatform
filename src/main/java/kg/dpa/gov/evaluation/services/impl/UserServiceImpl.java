@@ -79,6 +79,11 @@ public class UserServiceImpl implements UserService, ValidationService {
     }
 
     @Override
+    public boolean coursePresent() {
+        return false;
+    }
+
+    @Override
     public ObjectError comparePassword(String password, String confirmPassword) {
         ObjectError error = null;
         if (!password.equals(confirmPassword)) error =
