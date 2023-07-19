@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -31,6 +32,9 @@ public class Course {
     )
     private Set<User> users;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    List<Module> modules;
+
     @Override
     public String toString() {
         return "Course{" +
@@ -52,4 +56,5 @@ public class Course {
         users.remove(user);
         user.getCourses().remove(this);
     }
+
 }

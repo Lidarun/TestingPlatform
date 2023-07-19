@@ -19,7 +19,7 @@
     <div class="project_card">
         <div class="card" th:each="course, courseIndex : ${courses}">
             <div th:if="${course.isAccess()}">
-                <a th:href="@{/quiz/{id}(id=${course.getId()})}">
+                <a th:href="@{/courses-group/{id}/modules(id=${course.getId()})}">
                     <div class="image-container">
                         <img class="blog-image" th:src="@{${course.getPathImage()}}" loading="eager" alt=""/>
                     </div>

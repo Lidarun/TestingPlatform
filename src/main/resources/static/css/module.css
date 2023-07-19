@@ -1,0 +1,13 @@
+@import "header.css";
+body{
+    background-color: black;
+}
+.row{
+    padding-top: 4%;
+}
+.image-container img{
+    border-radius: 12px;
+}
+.under-row{
+    padding-top: 3%;
+}
