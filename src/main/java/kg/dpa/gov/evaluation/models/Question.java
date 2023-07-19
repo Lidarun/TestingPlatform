@@ -43,10 +43,6 @@ public class Question {
     @NotEmpty
     private String answerExplain;
 
-//    @NotNull
-//    @Enumerated(EnumType.STRING)
-//    private Language lang;
-
     public Question() {
         this.options = new ArrayList<>();
     }

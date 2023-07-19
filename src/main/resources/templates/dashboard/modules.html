@@ -330,14 +330,16 @@
                                 <div class="flex-grow w-full">
                                     <label class="block text-sm">
                                         <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               type="text" th:field="*{name}" placeholder="Название модуля"/>
+                                               type="text" th:field="*{name}" placeholder="Название модуля"
+                                               th:classappend="${#fields.hasErrors('name')} ? 'error-border' : ''"/>
                                     </label>
                                 </div>
                             </div>
                             <div class="wrapLang">
                                 <label>
                                     <select name="course" class="radio-group select2">
-                                        <option th:each="course : ${courses}" th:value="${course.getId()}" th:text="${course.getName()}"></option>
+                                        <option th:each="course : ${courses}" th:value="${course.getId()}"
+                                                th:text="${course.getName()}"></option>
                                     </select>
                                 </label>
                             </div>
@@ -352,77 +354,61 @@
 
                 <!--  Courses-->
                 <div class="w-full overflow-x-auto">
-                    <!--                    <table class="w-full whitespace-no-wrap">-->
-                    <!--                        <thead>-->
-                    <!--                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">-->
-                    <!--                            <th class="px-4 py-3" style="width: 50%;">Курс</th>-->
-                    <!--                            <th class="px-4 py-3" style="width: 10%;">Статус</th>-->
-                    <!--                            <th class="px-4 py-3" style="width: 3%;"></th>-->
-                    <!--                        </tr>-->
-                    <!--                        </thead>-->
-                    <!--                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">-->
-                    <!--                        <tr class="text-gray-700 dark:text-gray-400" th:each="course: ${courses}">-->
-                    <!--                            <td class="px-4 py-3">-->
-                    <!--                                <div class="flex items-center text-sm">-->
-                    <!--                                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">-->
-                    <!--                                        <img class="object-cover w-full h-full rounded-full"-->
-                    <!--                                             th:src="@{${course.getPathImage()}}" loading="eager" alt=""/>-->
-                    <!--                                        <div class="absolute inset-0 rounded-full shadow-inner"-->
-                    <!--                                             aria-hidden="true"></div>-->
-                    <!--                                    </div>-->
-                    <!--                                    <div>-->
-                    <!--                                        <p class="font-semibold"-->
-                    <!--                                           th:text="${course.getName()}" style="font-size: 12px"/>-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                            <td class="px-4 py-3">-->
-                    <!--                                <div class="flex items-center text-sm">-->
-                    <!--                                    <div>-->
-                    <!--                                        <p class="font-semibold" th:class="${course.isState() ? 'greenLamp' : 'redLamp'}">-->
-                    <!--                                            <i class="fas fa-sharp fa-solid fa-circle" ></i></p>-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                            <td class="text-center">-->
-                    <!--                                <form th:action="@{/courses/edit/{id}(id=${course.getId()})}" th:method="get">-->
-                    <!--                                    <button type="submit" class="btn btn-warning edit-button">-->
-                    <!--                                        <i class="fas fa-solid fa-pen"></i>-->
-                    <!--                                    </button>-->
-                    <!--                                </form>-->
-                    <!--                                <form th:action="@{/courses/{id}(id=${course.getId()})}" th:method="delete">-->
-                    <!--                                    <button type="submit" class="btn btn-warning delete-button">-->
-                    <!--                                        <i class="fas fa-solid fa-trash"></i>-->
-                    <!--                                    </button>-->
-                    <!--                                </form>-->
-                    <!--                            </td>-->
-                    <!--                        </tr>-->
-                    <!--                        </tbody>-->
-                    <!--                    </table>-->
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3" style="width: 50%;">Модуль</th>
+                            <th class="px-4 py-3" style="width: 50%;">Курс</th>
+                            <th class="px-4 py-3" style="width: 10%;">Статус</th>
+                            <th class="px-4 py-3" style="width: 3%;"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        <tr class="text-gray-700 dark:text-gray-400" th:each="module: ${modules}">
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <div>
+                                        <p class="font-semibold"
+                                           th:text="${module.getName()}" style="font-size: 12px"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <div>
+                                        <p class="font-semibold"
+                                           th:text="${module.getCourse().getName()}" style="font-size: 12px"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <div>
+                                        <p class="font-semibold"
+                                           th:class="${module.isState() ? 'greenLamp' : 'redLamp'}">
+                                            <i class="fas fa-sharp fa-solid fa-circle"></i></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <form th:action="@{/modules/edit/{id}(id=${module.getId()})}" th:method="get">
+                                    <button type="submit" class="btn btn-warning edit-button">
+                                        <i class="fas fa-solid fa-pen"></i>
+                                    </button>
+                                </form>
+                                <form th:action="@{/modules/{id}(id=${module.getId()})}" th:method="post">
+                                    <button type="submit" class="btn btn-warning delete-button">
+                                        <i class="fas fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
     </div>
 </div>
-<script>
-    function previewImage(event) {
-        var input = event.target;
-        var imagePreview = document.getElementById('imagePreview');
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        } else {
-            imagePreview.src = '#';
-            imagePreview.style.display = 'none';
-        }
-    }
-</script>
 </body>
 </html>

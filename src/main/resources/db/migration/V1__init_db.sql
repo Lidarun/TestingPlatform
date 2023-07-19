@@ -29,7 +29,7 @@ CREATE TABLE tb_questions_options
     options         TEXT
 );
 
-CREATE TABLE user_role
+CREATE TABLE tb_users_roles
 (
     user_id BIGINT NOT NULL,
     role    VARCHAR(255)
@@ -65,6 +65,6 @@ INSERT INTO tb_users (user_id, username, email, password)
 VALUES (1, 'admin', 'admin@dpa.kg', '$2a$10$Q8Xf77QowRLT42by43xXL.M8jjrAKt6JMCM.x./Q.NjFaLaS8sBoe'),
        (2, 'lidarun', 'nur@g.com', '$2a$10$Q8Xf77QowRLT42by43xXL.M8jjrAKt6JMCM.x./Q.NjFaLaS8sBoe');
 
-INSERT INTO user_role (user_id, role)
+INSERT INTO tb_users_roles (user_id, role)
 VALUES (1, 'ROLE_SUPER_ADMIN'),
        (2, 'ROLE_SUPER_ADMIN');

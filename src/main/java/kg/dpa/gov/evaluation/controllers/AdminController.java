@@ -5,7 +5,6 @@ import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.services.UserService;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -81,8 +80,6 @@ public class AdminController {
     public String setRole(@PathVariable("id") long id,
                           @RequestParam("role") Role role) {
         boolean res = userService.changeRole(id, role);
-
-        System.out.println(role.getName());
 
         return "redirect:/dashboard";
     }

@@ -34,7 +34,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "tb_users_roles", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Role> role;
 
     @NotEmpty(message = "Обязательное поле")

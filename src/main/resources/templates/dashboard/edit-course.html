@@ -308,17 +308,16 @@
                                                type="text" th:field="*{pathImage}" placeholder="Ссылка на картинку"/>
                                     </label>
 
-                                    <!-- Image-->
                                     <div class="flex state items-center">
                                         <!-- States -->
                                         <div class="states ml-4 flex">
                                             <label class="block text-sm">
                                                 <input type="radio" class="form-radio text-green-500" name="state" value="true"
-                                                       th:checked="${state} == true" />
+                                                       th:checked="${formCourse.state} == true" />
                                             </label>
                                             <label class="block text-sm" style="margin-left: 28px">
                                                 <input type="radio" class="form-radio text-red-500" style="color: red;"  name="state" value="false"
-                                                       th:checked="${state} == false" />
+                                                       th:checked="${formCourse.state} == false" />
                                             </label>
                                         </div>
                                     </div>

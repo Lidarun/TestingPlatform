@@ -1,9 +1,11 @@
 package kg.dpa.gov.evaluation.models;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +34,7 @@ public class Course {
     )
     private Set<User> users;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
     List<Module> modules;
 
     @Override
@@ -55,6 +57,11 @@ public class Course {
     public void removeUser(User user) {
         users.remove(user);
         user.getCourses().remove(this);
+    }
+
+    public void addModule(Module module) {
+        modules.add(module);
+        module.setCourse(this);
     }
 
 }

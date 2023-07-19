@@ -44,8 +44,7 @@ public class QuizesController {
 
     @PostMapping("/{id}")
     public String submitAnswer(@RequestParam("answer") int answer,
-                               @PathVariable("id") int id,
-                               Model model) {
+                               @PathVariable("id") int id) {
         List<Question> questions = questionService.findAllByCourseID(id);
 
         if (currentIndexQuestionList < questions.size()) {

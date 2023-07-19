@@ -29,11 +29,6 @@ public class CoursesGroupController {
         String username = null;
         if (authentication != null)
             username = authentication.getName();
-//        System.out.println("USER: "+username);
-
-//        courses.forEach(System.out::println);
-//        System.out.println("CHECK: "+courses.isEmpty());
-//        System.out.println("CHECK: "+courses.size());
 
         List<Course> courses = service.findAllByUserAccess(username);
 
@@ -72,7 +67,7 @@ public class CoursesGroupController {
 
         if (course.isPresent() && course.get().getKey().equals(keyCourse)) {
             userService.addCourse(username, courseId);
-            return "redirect:/quiz/" + courseId;
+            return "redirect:/courses-group/"+ courseId +"/modules";
 
         } else {
             return "pages/access-denied";
