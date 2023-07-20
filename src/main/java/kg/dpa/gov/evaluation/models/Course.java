@@ -65,5 +65,4 @@ public class Course {
         modules.add(module);
         module.setCourse(this);
     }
-
 }

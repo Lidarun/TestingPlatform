@@ -44,8 +44,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findAllByModuleID(long id) {
         Optional<Module> module = moduleRep.findById(id);
-        return null;
-//        return module.map(questionRep::findAllByModule).orElse(null);
+        return module.map(questionRep::findAllByModule).orElse(null);
     }
 
     @Override

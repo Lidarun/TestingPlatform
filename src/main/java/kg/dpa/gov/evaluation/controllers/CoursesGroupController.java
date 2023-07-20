@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/courses-group")
@@ -41,10 +42,14 @@ public class CoursesGroupController {
         Course course = service.findById(courseId);
 
         if (course != null) {
-            List<Module> modules = course.getModules();
+            List<Module> modules = course.getModules().stream()
+                    .filter(Module::isState)
+                    .collect(Collectors.toList());
             model.addAttribute("course", course);
             model.addAttribute("modules", modules);
         }
+
+        model.addAttribute("courseId", courseId);
 
         return "pages/module";
     }

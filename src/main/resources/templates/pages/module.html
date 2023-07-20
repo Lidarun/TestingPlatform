@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Викторина</title>
     <link th:href="@{/css/module.css}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -19,8 +20,9 @@
             <img alt="" th:src="@{${course.getPathImage()}}" width="555px" height="252px">
         </div>
 
+        <!-- Ваш HTML-код для списка модулей -->
         <div th:each="module : ${modules}">
-            <a th:href="@{/quiz/{courseId}/module/{moduleId}(courseId=${course.getId()}, moduleId=${module.getId()})}">
+            <a href="#" th:data-module-id="${module.getId()}" class="module-link">
                 <button type="button" class="btn btn-outline-primary">
                     <span th:text="${module.getName()}"></span>
                 </button>
@@ -29,5 +31,48 @@
 
     </div>
 </div>
+<input type="hidden" id="courseId" th:value="${courseId}"/>
 </body>
+<script>
+    $(document).ready(function () {
+
+        $(document).on("click", ".module-link", function (event) {
+            event.preventDefault(); // Отменяем переход по ссылке
+
+            // Получаем moduleId из атрибута data-module-id
+            var moduleId = $(this).data("module-id");
+            // Вызываем функцию загрузки вопросов, передавая moduleId
+            console.log(moduleId);
+
+            loadQuestions(moduleId);
+        });
+        var courseId = $("#courseId").val();
+        function loadQuestions(moduleId) {
+            $.ajax({
+                url: "/quiz/" + courseId + "/module/" + moduleId,
+                type: "GET",
+                dataType: "json",
+                success: function (questions) {
+                    // Обработка ответа успешной загрузки вопросов
+                    console.log(questions);
+                    // В этом месте вы можете обработать массив вопросов и отобразить их на странице
+                },
+                error: function (error) {
+                    // Обработка ошибки загрузки вопросов
+                    console.log("Ошибка при загрузке вопросов: ", error);
+                }
+            });
+        }
+
+        // Обработчик события нажатия на ссылку
+        $(document).on("click", ".module-link", function (event) {
+            event.preventDefault(); // Отменяем переход по ссылке
+
+            // Получаем moduleId из атрибута data-module-id
+            var moduleId = $(this).data("module-id");
+            // Вызываем функцию загрузки вопросов, передавая moduleId
+            loadQuestions(moduleId);
+        });
+    });
+</script>
 </html>

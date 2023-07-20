@@ -1,5 +1,6 @@
 package kg.dpa.gov.evaluation.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import lombok.ToString;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +21,13 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @Entity(name = "tb_questions")
-public class Question {
+public class Question implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull
+    @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "module_id")
