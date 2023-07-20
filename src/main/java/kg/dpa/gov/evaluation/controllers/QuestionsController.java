@@ -3,6 +3,7 @@ package kg.dpa.gov.evaluation.controllers;
 import jakarta.validation.Valid;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.services.CourseService;
+import kg.dpa.gov.evaluation.services.ModuleService;
 import kg.dpa.gov.evaluation.services.QuestionService;
 import kg.dpa.gov.evaluation.services.QuestionValidationService;
 import org.springframework.data.domain.Page;
@@ -23,11 +24,13 @@ public class QuestionsController {
     private final QuestionService questionService;
     private final QuestionValidationService service;
     private final CourseService courseService;
+    private final ModuleService moduleService;
 
-    public QuestionsController(QuestionService questionService, QuestionValidationService service, CourseService courseService) {
+    public QuestionsController(QuestionService questionService, QuestionValidationService service, CourseService courseService, ModuleService moduleService) {
         this.questionService = questionService;
         this.service = service;
         this.courseService = courseService;
+        this.moduleService = moduleService;
     }
 
     @GetMapping("/{pageNum}")
@@ -38,7 +41,7 @@ public class QuestionsController {
         model.addAttribute("varB", new String());
         model.addAttribute("varC", new String());
         model.addAttribute("varD", new String());
-        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("modules", moduleService.findAll());
 
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
 
@@ -62,8 +65,10 @@ public class QuestionsController {
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("modules", moduleService.findAll());
         model.addAttribute("formQuestion", question);
+
+        System.out.println(question);
 
         ObjectError error = service.checkFields(question);
         if (error != null)
@@ -90,7 +95,7 @@ public class QuestionsController {
         model.addAttribute("currentPage", 0);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("modules", moduleService.findAll());
 
         Optional<Question> questionOptional = questionService.findById(id);
         if (questionOptional.isPresent()) {

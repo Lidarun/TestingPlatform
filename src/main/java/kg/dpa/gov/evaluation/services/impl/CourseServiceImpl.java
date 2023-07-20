@@ -68,8 +68,8 @@ public class CourseServiceImpl implements CourseService {
 
             return courses.stream().peek(c -> userCourses.forEach(n -> {
                 if (n.getId() == c.getId()) c.setAccess(true);
-            })).collect(Collectors.toList());
-
+            }
+            )).collect(Collectors.toList());
         }
 
         return null;

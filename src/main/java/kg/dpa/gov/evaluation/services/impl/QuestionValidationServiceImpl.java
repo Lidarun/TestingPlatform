@@ -12,7 +12,7 @@ public class QuestionValidationServiceImpl implements QuestionValidationService 
     public ObjectError checkFields(Question question) {
         ObjectError error = null;
         Integer correctAnswer = question.getCorrectAnswer();
-        System.out.println("NURi"+correctAnswer);
+
         if (correctAnswer == null) error =
                 new ObjectError("global", "Укажите правильный вариант и язык вопроса");
 

@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService, ValidationService {
     }
 
     @Override
-    public void save(User user) {
+    public void create(User user) {
         String password = new BCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(password);
         user.setRole(Set.of(Role.ROLE_USER));

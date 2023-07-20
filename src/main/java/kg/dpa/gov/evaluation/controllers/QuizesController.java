@@ -19,42 +19,62 @@ public class QuizesController {
         this.questionService = questionService;
     }
 
-    @GetMapping("/{id}")
-    public String showQuestion(@PathVariable("id") int id,
+    @GetMapping("/{courseId}/modules/{moduleId}")
+    public String showQuestion(@PathVariable("courseId") long courseId,
+                               @PathVariable("moduleId") long moduleId,
                                Model model) {
-        List<Question> questionList = questionService.findAllByCourseID(id);
-        if (currentIndexQuestionList > questionList.size()) currentIndexQuestionList = 0;
-
-        if (currentIndexQuestionList < questionList.size()) {
-            Question question = questionList.get(currentIndexQuestionList);
-            model.addAttribute("id", id);
-            model.addAttribute("question", question);
-
-            return "pages/quiz";
-        }
-
-        model.addAttribute("result", result);
-        model.addAttribute("quizSize", questionList.size());
-
-        result = 0;
-        currentIndexQuestionList = 0;
-
-        return "pages/result";
+//        List<Question> questions = questionService.findAllByModuleID(moduleId);
+//
+//        if (currentIndexQuestionList > questions.size()) currentIndexQuestionList = 0;
+//
+//        if (currentIndexQuestionList < questions.size()) {
+//            Question question = questions.get(currentIndexQuestionList);
+//            model.addAttribute("id", courseId);
+//            model.addAttribute("question", question);
+//
+//            return "pages/quiz";
+//        }
+//
+//        model.addAttribute("questions", questions);
+        return "pages/quiz";
     }
 
     @PostMapping("/{id}")
     public String submitAnswer(@RequestParam("answer") int answer,
                                @PathVariable("id") int id) {
-        List<Question> questions = questionService.findAllByCourseID(id);
-
-        if (currentIndexQuestionList < questions.size()) {
-            if (answer == questions.get(currentIndexQuestionList).getCorrectAnswer())
-                result++;
-
-            currentIndexQuestionList++;
-        }
-
+//        List<Question> questions = questionService.findAllByCourseID(id);
+//
+//        if (currentIndexQuestionList < questions.size()) {
+//            if (answer == questions.get(currentIndexQuestionList).getCorrectAnswer())
+//                result++;
+//
+//            currentIndexQuestionList++;
+//        }
+//
         return "redirect:/quiz/" + id;
     }
 }
+
+//    @GetMapping("/{id}/modules/{id}")
+//    public String showQuestion(@PathVariable("id") int id,
+//                               Model model) {
+//        List<Question> questionList = questionService.findAllByCourseID(id);
+//        if (currentIndexQuestionList > questionList.size()) currentIndexQuestionList = 0;
+//
+//        if (currentIndexQuestionList < questionList.size()) {
+//            Question question = questionList.get(currentIndexQuestionList);
+//            model.addAttribute("id", id);
+//            model.addAttribute("question", question);
+//
+//            return "pages/quiz";
+//        }
+//
+//        model.addAttribute("result", result);
+//        model.addAttribute("quizSize", questionList.size());
+//
+//        result = 0;
+//        currentIndexQuestionList = 0;
+//
+//        return "pages/result";
+//    }
 

@@ -397,17 +397,6 @@
                                             <span class="checkbox-label">г</span>
                                         </label>
                                     </div>
-
-                                    <!-- Lang-->
-                                    <!--                                    <div class="wrapLang">-->
-                                    <!--                                        <div class="radio-group" th:each="lang : ${lang}">-->
-                                    <!--                                            <label class="radio-label">-->
-                                    <!--                                                <input type="radio" th:name="lang" th:value="${lang}"-->
-                                    <!--                                                       class="radio-input"/>-->
-                                    <!--                                                <span th:text="${lang.lang}" class="radio-text"></span>-->
-                                    <!--                                            </label>-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
                                     <label class="error">
                                         <label th:if="${#fields.hasErrors('global')}">
                                             <p th:each="err : ${#fields.errors('global')}" th:text="${err}"/>
@@ -418,8 +407,8 @@
                             <!-- Course-->
                             <div class="wrapLang">
                                 <label>
-                                    <select name="course" class="radio-group select2">
-                                        <option th:each="course : ${courses}" th:value="${course.getId()}" th:text="${course.getName()}"></option>
+                                    <select name="module" class="radio-group select2">
+                                        <option th:each="module : ${modules}" th:value="${module.getId()}" th:text="${module.getName()}"></option>
                                     </select>
                                 </label>
                             </div>

@@ -1,8 +1,10 @@
 package kg.dpa.gov.evaluation.services.impl;
 
 import kg.dpa.gov.evaluation.models.Course;
+import kg.dpa.gov.evaluation.models.Module;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.repository.CourseRepository;
+import kg.dpa.gov.evaluation.repository.ModuleRepository;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
 import kg.dpa.gov.evaluation.services.QuestionService;
 import org.springframework.data.domain.Page;
@@ -15,43 +17,45 @@ import java.util.Optional;
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
-    private final QuestionRepository questionRepository;
-    private final CourseRepository courseRepository;
+    private final QuestionRepository questionRep;
+    private final ModuleRepository moduleRep;
 
-    public QuestionServiceImpl(QuestionRepository questionRepository, CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-        this.questionRepository = questionRepository;
+    public QuestionServiceImpl(QuestionRepository questionRep, ModuleRepository moduleRep) {
+        this.questionRep = questionRep;
+        this.moduleRep = moduleRep;
     }
+
 
     @Override
     public void create(Question question) {
-        questionRepository.save(question);
+        questionRep.save(question);
     }
 
     @Override
     public Optional<Question> findById(int id) {
-        return questionRepository.findById(id);
+        return questionRep.findById(id);
     }
 
     @Override
     public Page<Question> getItems(Pageable pageable) {
-        return questionRepository.findAll(pageable);
+        return questionRep.findAll(pageable);
     }
 
     @Override
-    public List<Question> findAllByCourseID(long id) {
-        Optional<Course> course = courseRepository.findById(id);
-        return course.map(questionRepository::findAllByCourse).orElse(null);
+    public List<Question> findAllByModuleID(long id) {
+        Optional<Module> module = moduleRep.findById(id);
+        return null;
+//        return module.map(questionRep::findAllByModule).orElse(null);
     }
 
     @Override
     public void update(Question updatedQuestion) {
-        if (questionRepository.existsById((int) updatedQuestion.getId()))
-            questionRepository.saveAndFlush(updatedQuestion);
+        if (questionRep.existsById((int) updatedQuestion.getId()))
+            questionRep.saveAndFlush(updatedQuestion);
     }
 
     @Override
     public void deleteById(int id) {
-        questionRepository.deleteById(id);
+        questionRep.deleteById(id);
     }
 }

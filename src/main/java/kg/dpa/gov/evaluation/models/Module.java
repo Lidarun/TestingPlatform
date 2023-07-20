@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity(name = "tb_modules")
@@ -19,8 +21,11 @@ public class Module {
 
     private boolean state = false;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "module")
+    List<Question> question;
+
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER,
+    @ManyToOne(optional = false, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "course_id")
     Course course;

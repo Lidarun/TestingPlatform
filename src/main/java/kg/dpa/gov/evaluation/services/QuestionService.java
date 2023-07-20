@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QuestionService {
-    void deleteById(int id);
     void create(Question question);
+    void deleteById(int id);
     Optional<Question> findById(int id);
     void update(Question updatedQuestion);
     Page<Question> getItems(Pageable pageable);
-    List<Question> findAllByCourseID(long id);
+    List<Question> findAllByModuleID(long id);
 }

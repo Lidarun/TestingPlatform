@@ -6,7 +6,7 @@ import kg.dpa.gov.evaluation.models.User;
 import java.util.List;
 
 public interface UserService {
-    void save(User user);
+    void create(User user);
     List<User> findAll();
     boolean changeRole(long id, Role role);
     void deleteByID(long id);

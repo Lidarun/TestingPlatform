@@ -1,35 +1,29 @@
 <div th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
 
-            <nav class="navbar bg-body-tertiary">
-                <form th:action="@{/}">
-                    <button class="headButton" type="submit"><i class="fas fa-solid fa-home"></i></button>
-                </form>
-            </nav>
+      <nav class="navbar bg-body-tertiary">
+        <form th:action="@{/}">
+          <button class="headButton" type="submit"><i class="fas fa-solid fa-home"></i></button>
+        </form>
+      </nav>
 
-            <ul class="languages">
-                <li class="lang"><a th:href="@{/(lang='ky')}">КЫР</a></li>
-                <li class="lang">|</li>
-                <li class="lang"><a th:href="@{/(lang='ru')}">РУС</a></li>
-            </ul>
-
-            <a class="navbar-brand mx-auto" href="https://dpa.gov.kg/ru">
-                <img th:src="@{images/logo.png}" height="55px"></a>
+      <a class="navbar-brand mx-auto" href="https://dpa.gov.kg/ru">
+        <img th:src="@{/images/logo.png}" height="55px"></a>
 
 
-            <div class="d-flex" sec:authorize="isAnonymous()">
-                <form th:action="@{/login}">
-                    <button class="headButton" type="submit"><i class="fas fa-regular fa-user"></i></button>
-                </form>
-            </div>
+      <div class="d-flex" sec:authorize="isAnonymous()">
+        <form th:action="@{/login}">
+          <button class="headButton" type="submit"><i class="fas fa-regular fa-user"></i></button>
+        </form>
+      </div>
 
-            <div class="d-flex" sec:authorize="isAuthenticated()">
-                <form th:action="@{/logout}" method="post">
-                    <span class="userName" sec:authentication="name"></span>
-                    <button class="headButton" type="submit"><i class="fas fa-sign-out-alt"></i></button>
-                </form>
-            </div>
-        </div>
-    </nav>
+      <div class="d-flex" sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+          <span class="userName" sec:authentication="name"></span>
+          <button class="headButton" type="submit"><i class="fas fa-sign-out-alt"></i></button>
+        </form>
+      </div>
+    </div>
+  </nav>
 </div>

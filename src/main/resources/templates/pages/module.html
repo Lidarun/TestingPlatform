@@ -11,17 +11,17 @@
 </head>
 
 <body>
-<div th:replace="~{parts/header_quiz :: header}"></div>
+<div th:replace="~{parts/header :: header}"></div>
 
 <div class="container text-center">
     <div class="row">
         <div class="image-container">
-            <img alt="" th:src="@{${course.getPathImage()}}" width="404px">
+            <img alt="" th:src="@{${course.getPathImage()}}" width="555px" height="252px">
         </div>
 
         <div th:each="module : ${modules}">
             <a th:href="@{/quiz/{courseId}/module/{moduleId}(courseId=${course.getId()}, moduleId=${module.getId()})}">
-                <button type="button" class="w-full btn btn-outline-primary">
+                <button type="button" class="btn btn-outline-primary">
                     <span th:text="${module.getName()}"></span>
                 </button>
             </a>

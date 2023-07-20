@@ -25,9 +25,10 @@ public class Question {
     private long id;
 
     @NotNull
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "course_id")
-    Course course;
+    @ManyToOne(optional = false, fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "module_id")
+    Module module;
 
     @NotEmpty
     private String question;

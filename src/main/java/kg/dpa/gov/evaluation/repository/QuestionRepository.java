@@ -2,6 +2,7 @@ package kg.dpa.gov.evaluation.repository;
 
 import io.micrometer.common.lang.NonNullApi;
 import kg.dpa.gov.evaluation.models.Course;
+import kg.dpa.gov.evaluation.models.Module;
 import kg.dpa.gov.evaluation.models.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,6 @@ import java.util.List;
 @Repository
 @NonNullApi
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
-    List<Question> findAllByCourse(Course course);
     Page<Question> findAll(Pageable pageable);
+//    List<Question> findAll(Module module);
 }
