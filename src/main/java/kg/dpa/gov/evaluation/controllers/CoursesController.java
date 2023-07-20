@@ -39,12 +39,12 @@ public class CoursesController {
     private String editCourse(@PathVariable("id") long id,
                               Model model) {
         List<Course> courseList = service.findAll();
-        Optional<Course> course = service.findById(id);
+        Course course = service.findById(id);
 
         model.addAttribute("courses", courseList);
 
-        if (course.isPresent()) {
-            model.addAttribute("formCourse", course.get());
+        if (course != null) {
+            model.addAttribute("formCourse", course);
             return "dashboard/edit-course";
 
         }else

@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/courses-group")
@@ -39,11 +38,11 @@ public class CoursesGroupController {
     @GetMapping("/{id}/modules")
     private String showModulesPage( @PathVariable("id") long courseId,
                                     Model model) {
-        Optional<Course> course = service.findById(courseId);
+        Course course = service.findById(courseId);
 
-        if (course.isPresent()) {
-            List<Module> modules = course.get().getModules();
-            model.addAttribute("course", course.get());
+        if (course != null) {
+            List<Module> modules = course.getModules();
+            model.addAttribute("course", course);
             model.addAttribute("modules", modules);
         }
 
@@ -54,7 +53,7 @@ public class CoursesGroupController {
     public String redirectToQuiz(@PathVariable("id") long courseId,
                                  @RequestParam String keyCourse,
                                  Authentication authentication) {
-        Optional<Course> course = service.findById(courseId);
+        Course course = service.findById(courseId);
         String username = null;
 
         if (authentication != null) {
@@ -65,7 +64,7 @@ public class CoursesGroupController {
         System.out.println("KEY: "+keyCourse);
         }
 
-        if (course.isPresent() && course.get().getKey().equals(keyCourse)) {
+        if (course != null && course.getKey().equals(keyCourse)) {
             userService.addCourse(username, courseId);
             return "redirect:/courses-group/"+ courseId +"/modules";
 

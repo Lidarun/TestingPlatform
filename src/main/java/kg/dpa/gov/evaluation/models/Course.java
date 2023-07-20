@@ -1,5 +1,6 @@
 package kg.dpa.gov.evaluation.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class Course {
     )
     private Set<User> users;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
     List<Module> modules;
 

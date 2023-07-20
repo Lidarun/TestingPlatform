@@ -40,8 +40,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Optional<Course> findById(long id) {
-        return courseRep.findById(id);
+    public Course findById(long id) {
+        return courseRep.findById(id).orElse(null);
     }
 
     @Override

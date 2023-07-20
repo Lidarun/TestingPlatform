@@ -53,4 +53,9 @@ public class ModuleServiceImpl implements ModuleService {
         if (moduleRep.findById(id).isPresent())
             moduleRep.save(updatedModule);
     }
+
+    @Override
+    public List<Module> getModulesByCourseId(Long courseId) {
+        return moduleRep.findAllByCourse(courseService.findById(courseId));
+    }
 }

@@ -4,12 +4,15 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Dashboard</title>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <script th:src="@{/js/ap.init-alpine.js}"></script>
     <link rel="stylesheet" th:href="@{/css/admin-panel.output.css}"/>
     <link rel="stylesheet" th:href="@{/css/formQuestion.css}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -324,7 +327,7 @@
                           role="form" method="post"
                           th:action="@{/questions/0}"
                           th:object="${formQuestion}">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<!--                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
                         <div class="form-container w-full">
                             <div class="w-full inline-flex">
                                 <!-- Question-->
@@ -407,11 +410,30 @@
                             <!-- Course-->
                             <div class="wrapLang">
                                 <label>
-                                    <select name="module" class="radio-group select2">
-                                        <option th:each="module : ${modules}" th:value="${module.getId()}" th:text="${module.getName()}"></option>
+                                    <select name="course" class="radio-group select2" onchange="loadModules()">
+                                        <option value="">Выберите курс</option>
+                                        <option th:each="course : ${courses}" th:value="${course.getId()}"
+                                                th:text="${course.getName()}"></option>
                                     </select>
                                 </label>
                             </div>
+
+                            <div class="wrapLang">
+                                <label>
+                                    <select name="module" class="radio-group select2" id="moduleSelect" disabled>
+                                        <option value="">Выберите модуль</option>
+                                        <!-- Модули будут загружены через AJAX и добавлены сюда -->
+                                    </select>
+                                </label>
+                            </div>
+                            <!--                            <div class="wrapLang">-->
+                            <!--                                <label>-->
+                            <!--                                    <select name="module" class="radio-group select2">-->
+                            <!--                                        <option th:each="module : ${modules}" th:value="${module.getId()}"-->
+                            <!--                                                th:text="${module.getName()}"></option>-->
+                            <!--                                    </select>-->
+                            <!--                                </label>-->
+                            <!--                            </div>-->
 
                             <button class="flex items-center justify-between w-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                                     style="margin-top: 1%">
@@ -489,16 +511,42 @@
         </main>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('.checkbox-button').click(function () {
-            $(this).toggleClass('selected');
-        });
-    });
-
-    $(document).ready(function() {
-        $('.select2').select2();
-    });
+<script th:inline="javascript">
+    function loadModules() {
+        var courseId = $("select[name='course']").val();
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        console.log(courseId);
+        console.log(csrfToken);
+        console.log(csrfHeader);
+        if (courseId !== "") {
+            $("#moduleSelect").prop("disabled", true);
+            $.ajax({
+                url: "/questions/loadModules",
+                type: "GET",
+                data: {courseId: courseId},
+                dataType: "json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
+                success: function (modules) {
+                    var moduleSelect = $("#moduleSelect");
+                    moduleSelect.empty().append("<option value=''>Выберите модуль</option>");
+                    $.each(modules, function (index, module) {
+                        moduleSelect.append("<option value='" + module.id + "'>" + module.name + "</option>");
+                    });
+                    $("#moduleSelect").prop("disabled", false);
+                },
+                error: function (error) {
+                    console.log("Ошибка при загрузке модулей: ", error);
+                    $("#moduleSelect").prop("disabled", true);
+                }
+            });
+        } else {
+            $("#moduleSelect").prop("disabled", true);
+        }
+    }
 </script>
+
 </body>
 </html>

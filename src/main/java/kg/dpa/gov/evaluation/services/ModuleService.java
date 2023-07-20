@@ -14,4 +14,5 @@ public interface ModuleService {
     Module findById(long id);
 
     void update(long id, Module updatedModule);
-}
+
+    List<Module> getModulesByCourseId(Long courseId);}

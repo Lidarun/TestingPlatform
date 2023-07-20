@@ -1,17 +1,19 @@
 package kg.dpa.gov.evaluation.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity(name = "tb_modules")
-public class Module {
+public class Module implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,9 +23,11 @@ public class Module {
 
     private boolean state = false;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "module")
     List<Question> question;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})

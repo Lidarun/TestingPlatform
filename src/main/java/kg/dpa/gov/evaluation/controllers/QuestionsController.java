@@ -1,6 +1,7 @@
 package kg.dpa.gov.evaluation.controllers;
 
 import jakarta.validation.Valid;
+import kg.dpa.gov.evaluation.models.Module;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.ModuleService;
@@ -8,6 +9,8 @@ import kg.dpa.gov.evaluation.services.QuestionService;
 import kg.dpa.gov.evaluation.services.QuestionValidationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +44,7 @@ public class QuestionsController {
         model.addAttribute("varB", new String());
         model.addAttribute("varC", new String());
         model.addAttribute("varD", new String());
+        model.addAttribute("courses", courseService.findAll());
         model.addAttribute("modules", moduleService.findAll());
 
         Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
@@ -52,6 +56,15 @@ public class QuestionsController {
         model.addAttribute("totalItems", page.getTotalElements());
 
         return "dashboard/question";
+    }
+
+    @ResponseBody
+    @GetMapping("/loadModules")
+    public ResponseEntity<List<Module>> loadModulesForCourse(@RequestParam Long courseId) {
+        List<Module> modules = moduleService.getModulesByCourseId(courseId);
+        System.out.println("COURSE" + courseId);
+        modules.forEach(System.out::println);
+        return new ResponseEntity<>(modules, HttpStatus.OK);
     }
 
     @PostMapping("/{pageNum}")
