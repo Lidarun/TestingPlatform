@@ -1,9 +1,7 @@
 package kg.dpa.gov.evaluation.services.impl;
 
-import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.models.Module;
 import kg.dpa.gov.evaluation.models.Question;
-import kg.dpa.gov.evaluation.repository.CourseRepository;
 import kg.dpa.gov.evaluation.repository.ModuleRepository;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
 import kg.dpa.gov.evaluation.services.QuestionService;
@@ -28,6 +26,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void create(Question question) {
+        question.getOptions().remove(question.getCorrectAnswer());
         questionRep.save(question);
     }
 

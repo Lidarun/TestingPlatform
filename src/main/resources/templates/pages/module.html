@@ -33,46 +33,5 @@
 </div>
 <input type="hidden" id="courseId" th:value="${courseId}"/>
 </body>
-<script>
-    $(document).ready(function () {
-
-        $(document).on("click", ".module-link", function (event) {
-            event.preventDefault(); // Отменяем переход по ссылке
-
-            // Получаем moduleId из атрибута data-module-id
-            var moduleId = $(this).data("module-id");
-            // Вызываем функцию загрузки вопросов, передавая moduleId
-            console.log(moduleId);
-
-            loadQuestions(moduleId);
-        });
-        var courseId = $("#courseId").val();
-        function loadQuestions(moduleId) {
-            $.ajax({
-                url: "/quiz/" + courseId + "/module/" + moduleId,
-                type: "GET",
-                dataType: "json",
-                success: function (questions) {
-                    // Обработка ответа успешной загрузки вопросов
-                    console.log(questions);
-                    // В этом месте вы можете обработать массив вопросов и отобразить их на странице
-                },
-                error: function (error) {
-                    // Обработка ошибки загрузки вопросов
-                    console.log("Ошибка при загрузке вопросов: ", error);
-                }
-            });
-        }
-
-        // Обработчик события нажатия на ссылку
-        $(document).on("click", ".module-link", function (event) {
-            event.preventDefault(); // Отменяем переход по ссылке
-
-            // Получаем moduleId из атрибута data-module-id
-            var moduleId = $(this).data("module-id");
-            // Вызываем функцию загрузки вопросов, передавая moduleId
-            loadQuestions(moduleId);
-        });
-    });
-</script>
+<script th:src="@{/js/quiz/module.js}"></script>
 </html>
