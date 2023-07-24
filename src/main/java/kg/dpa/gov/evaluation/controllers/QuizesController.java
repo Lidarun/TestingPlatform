@@ -1,6 +1,6 @@
 package kg.dpa.gov.evaluation.controllers;
 
-import kg.dpa.gov.evaluation.models.Question;
+import kg.dpa.gov.evaluation.models.dto.QuestionDto;
 import kg.dpa.gov.evaluation.services.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +19,10 @@ public class QuizesController {
     }
 
     @GetMapping("/{courseId}/module/{moduleId}")
-    public ResponseEntity<List<Question>> showQuestion(@PathVariable("courseId") long courseId,
+    public ResponseEntity<List<QuestionDto>> showQuestion(@PathVariable("courseId") long courseId,
                                                        @PathVariable("moduleId") long moduleId) {
-        List<Question> questions = questionService.findAllByModuleID(moduleId);
+        List<QuestionDto> questions = questionService.findAllByModuleID(moduleId);
+        questions.forEach(System.out::println);
 
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }

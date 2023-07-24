@@ -1,6 +1,7 @@
 package kg.dpa.gov.evaluation.services;
 
 import kg.dpa.gov.evaluation.models.Question;
+import kg.dpa.gov.evaluation.models.dto.QuestionDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,5 +14,5 @@ public interface QuestionService {
     Optional<Question> findById(int id);
     void update(Question updatedQuestion);
     Page<Question> getItems(Pageable pageable);
-    List<Question> findAllByModuleID(long id);
+    List<QuestionDto> findAllByModuleID(long id);
 }

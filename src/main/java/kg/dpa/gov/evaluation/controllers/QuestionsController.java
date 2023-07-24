@@ -58,12 +58,11 @@ public class QuestionsController {
         return "dashboard/question";
     }
 
+//   Возврщаетя список модулей курсаа в медод AJAX
     @ResponseBody
     @GetMapping("/loadModules")
     public ResponseEntity<List<Module>> loadModulesForCourse(@RequestParam Long courseId) {
         List<Module> modules = moduleService.getModulesByCourseId(courseId);
-        System.out.println("COURSE" + courseId);
-        modules.forEach(System.out::println);
         return new ResponseEntity<>(modules, HttpStatus.OK);
     }
 

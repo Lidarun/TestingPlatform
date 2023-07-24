@@ -1,7 +1,9 @@
 package kg.dpa.gov.evaluation.services.impl;
 
+import kg.dpa.gov.evaluation.mappers.QuestionMapper;
 import kg.dpa.gov.evaluation.models.Module;
 import kg.dpa.gov.evaluation.models.Question;
+import kg.dpa.gov.evaluation.models.dto.QuestionDto;
 import kg.dpa.gov.evaluation.repository.ModuleRepository;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
 import kg.dpa.gov.evaluation.services.QuestionService;
@@ -11,22 +13,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRep;
     private final ModuleRepository moduleRep;
+    private final QuestionMapper mapper;
 
-    public QuestionServiceImpl(QuestionRepository questionRep, ModuleRepository moduleRep) {
+    public QuestionServiceImpl(QuestionRepository questionRep, ModuleRepository moduleRep, QuestionMapper mapper) {
         this.questionRep = questionRep;
         this.moduleRep = moduleRep;
+        this.mapper = mapper;
     }
 
 
     @Override
     public void create(Question question) {
-        question.getOptions().remove(question.getCorrectAnswer());
         questionRep.save(question);
     }
 
@@ -41,9 +45,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> findAllByModuleID(long id) {
+    public List<QuestionDto> findAllByModuleID(long id) {
         Optional<Module> module = moduleRep.findById(id);
-        return module.map(questionRep::findAllByModule).orElse(null);
+        List<Question> questions = questionRep.findAllByModule(module.get());
+
+        return questions.stream()
+                .map(q -> {
+                    QuestionDto dto = null;
+                    dto = mapper.questionToQuestionDto(q);
+                    return dto;
+                }).collect(Collectors.toList());
     }
 
     @Override
