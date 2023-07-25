@@ -12,6 +12,7 @@ public interface UserService {
     void deleteByID(long id);
 
     User findById(long id);
+    User findByUsernameOrEmail(String username, String email);
 
     List<User> findAllByRole(Role role);
 
@@ -19,4 +20,6 @@ public interface UserService {
 
     boolean coursePresent();
     void addCourse(String username, long course);
+
+    List<User> findAllByCourseId(long courseId);
 }

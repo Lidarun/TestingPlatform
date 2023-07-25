@@ -9,10 +9,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QuestionService {
+
     void create(Question question);
+
     void deleteById(int id);
+
     Optional<Question> findById(int id);
+
     void update(Question updatedQuestion);
+
     Page<Question> getItems(Pageable pageable);
+
     List<QuestionDto> findAllByModuleID(long id);
+
 }

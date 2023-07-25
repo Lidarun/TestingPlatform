@@ -1,6 +1,7 @@
 package kg.dpa.gov.evaluation.services;
 
 import kg.dpa.gov.evaluation.models.Module;
+import kg.dpa.gov.evaluation.models.Question;
 
 import java.util.List;
 
@@ -15,4 +16,8 @@ public interface ModuleService {
 
     void update(long id, Module updatedModule);
 
-    List<Module> getModulesByCourseId(Long courseId);}
+    List<Module> getModulesByCourseId(Long courseId);
+
+    Module findByQuestion(Question question);
+
+}

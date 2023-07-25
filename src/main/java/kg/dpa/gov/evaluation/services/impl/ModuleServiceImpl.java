@@ -2,6 +2,7 @@ package kg.dpa.gov.evaluation.services.impl;
 
 import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.models.Module;
+import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.repository.ModuleRepository;
 import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.ModuleService;
@@ -57,5 +58,10 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public List<Module> getModulesByCourseId(Long courseId) {
         return moduleRep.findAllByCourse(courseService.findById(courseId));
+    }
+
+    @Override
+    public Module findByQuestion(Question question) {
+        return moduleRep.findByQuestion(question);
     }
 }

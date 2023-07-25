@@ -4,5 +4,7 @@ import kg.dpa.gov.evaluation.models.Question;
 import org.springframework.validation.ObjectError;
 
 public interface QuestionValidationService {
+
     ObjectError checkFields(Question question);
+
 }

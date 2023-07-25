@@ -72,6 +72,11 @@ public class UserServiceImpl implements UserService, ValidationService {
     }
 
     @Override
+    public User findByUsernameOrEmail(String username, String email) {
+        return userRep.findByUsernameOrEmail(username, email).orElse(null);
+    }
+
+    @Override
     public List<User> findAllByRole(Role role) {
         return userRep.findAllByRoleContains(role);
     }
@@ -100,9 +105,14 @@ public class UserServiceImpl implements UserService, ValidationService {
         }
     }
 
+    @Override
+    public List<User> findAllByCourseId(long courseId) {
+        Optional<Course> course = courseRep.findById(courseId);
+        return course.map(userRep::findAllByCourses).orElse(null);
+    }
 
 
-//    VALIDATION
+    //    VALIDATION
     @Override
     public ObjectError comparePassword(String password, String confirmPassword) {
         ObjectError error = null;
