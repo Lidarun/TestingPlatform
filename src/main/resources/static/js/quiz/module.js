@@ -17,7 +17,7 @@ $(document).ready(function () {
                 questionsArray = questions;
                 sessionStorage.setItem("questionsArray", JSON.stringify(questions));
 
-                window.location.href = "/quiz";
+                window.location.href = "/quizes";
 
                 console.log(questions)
                 console.log(questionsArray[0])

@@ -12,19 +12,20 @@ let array = JSON.parse(sessionStorage.getItem("questionsArray"));
 let correctAnswer = "", correctScore = askedCount = 0;
 const totalQuestion = array.length;
 
+let userAnswer = new Map;
+let questionID;
+
 // load question from API
 async function loadQuestion() {
     let questionsArray = JSON.parse(sessionStorage.getItem("questionsArray"));
     let question;
 
-    console.log(questionsArray)
-
     if (questionsArray && questionsArray.length > 0) {
         question = questionsArray.shift();
+        questionID = question.id;
         sessionStorage.setItem("questionsArray", JSON.stringify(questionsArray));
     }
 
-    console.log(question);
     _result.innerHTML = "";
     showQuestion(question);
 }
@@ -60,7 +61,6 @@ function showQuestion(data){
     selectOption();
 }
 
-
 // options selection
 function selectOption(){
     _options.querySelectorAll('li').forEach(function(option){
@@ -79,7 +79,10 @@ function checkAnswer(){
     _checkBtn.disabled = true;
     if(_options.querySelector('.selected')){
         let selectedAnswer = _options.querySelector('.selected span').textContent;
-        if(selectedAnswer == HTMLDecode(correctAnswer)){
+
+        userAnswer.set(questionID, selectedAnswer);
+
+        if(selectedAnswer === HTMLDecode(correctAnswer)){
             correctScore++;
             _result.innerHTML = `<p><i class = "fas fa-check"></i>Верно!</p>`;
         } else {
@@ -101,7 +104,9 @@ function HTMLDecode(textString) {
 function checkCount(){
     askedCount++;
     setCount();
-    if(askedCount == totalQuestion){
+    if(askedCount === totalQuestion){
+        sendUserAnswersToServer();
+
         setTimeout(function(){
             console.log("");
         }, 5000);
@@ -128,5 +133,33 @@ function restartQuiz(){
     _checkBtn.style.display = "block";
     _checkBtn.disabled = false;
     setCount();
-    loadQuestion();
+    loadQuestion().then(r => loadQuestion());
 }
+
+function sendUserAnswersToServer() {
+    const userAnswerObject = Object.fromEntries(userAnswer);
+
+    // Получение CSRF токена из мета-тегов
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+        },
+        body: JSON.stringify(userAnswerObject)
+    };
+
+    fetch('/quiz', requestOptions)
+        .then(response => response.text()) // Parse the response as text
+        .then(data => {
+            console.log(data); // The response will be the plain text "Ответы приняты успешно"
+        })
+        .catch(error => {
+            console.error('Error sending user answers:', error);
+        });
+}
+
+

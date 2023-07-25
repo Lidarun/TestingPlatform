@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/quiz")
@@ -28,12 +29,21 @@ public class QuizesController {
     }
 
 
-    @PostMapping("/{id}")
-    public String submitAnswer(@RequestParam("answer") int answer,
-                               @PathVariable("id") int id) {
+    @PostMapping()
+    public ResponseEntity<?> submitAnswer(@RequestBody Map<Integer, String> userAnswers) {
+        System.out.println("JSON"+userAnswers);
 
-        return "redirect:/quiz/" + id;
+        for (Map.Entry<Integer, String> entry : userAnswers.entrySet()) {
+            int questionId = entry.getKey();
+            String selectedAnswer = entry.getValue();
+
+            System.out.println("Question ID: " + questionId);
+            System.out.println("Selected Answer: " + selectedAnswer);
+        }
+
+        return new ResponseEntity<>("Ответы приняты успешно", HttpStatus.OK);
     }
+
 }
 
 

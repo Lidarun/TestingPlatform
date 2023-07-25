@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Game - API Project</title>
@@ -33,7 +35,7 @@
         </div>
         <div class="quiz-foot">
             <button type="button" id="check-answer">Ответить</button>
-            <a href="/" class="no-underline">
+            <a href="/courses-group" class="no-underline">
                 <button type="button" id="play-again">Выход!</button>
             </a>
         </div>
