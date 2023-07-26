@@ -29,7 +29,10 @@ public class QuestionsController {
     private final CourseService courseService;
     private final ModuleService moduleService;
 
-    public QuestionsController(QuestionService questionService, QuestionValidationService service, CourseService courseService, ModuleService moduleService) {
+    public QuestionsController(QuestionService questionService,
+                               QuestionValidationService service,
+                               CourseService courseService,
+                               ModuleService moduleService) {
         this.questionService = questionService;
         this.service = service;
         this.courseService = courseService;
@@ -79,6 +82,9 @@ public class QuestionsController {
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("modules", moduleService.findAll());
         model.addAttribute("formQuestion", question);
+
+        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("modules", moduleService.findAll());
 
         System.out.println(question);
 

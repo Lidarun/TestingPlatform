@@ -14,7 +14,7 @@ public interface QuestionService {
 
     void deleteById(int id);
 
-    Optional<Question> findById(int id);
+    Optional<Question> findById(long id);
 
     void update(Question updatedQuestion);
 

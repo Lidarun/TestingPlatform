@@ -18,7 +18,8 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRep;
     private final UserRepository userRep;
 
-    public CourseServiceImpl(CourseRepository courseRep, UserRepository userRep) {
+    public CourseServiceImpl(CourseRepository courseRep,
+                             UserRepository userRep) {
         this.courseRep = courseRep;
         this.userRep = userRep;
     }

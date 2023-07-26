@@ -60,6 +60,12 @@
     background-color: green;
     color: white;
 }
+.user-answer {
+    background-color: white;
+    border: black solid;
+    border-radius: 9px;
+    color: black;
+}
 .error-border {
     border-color: red !important;
 }

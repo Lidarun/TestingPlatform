@@ -371,15 +371,15 @@
                                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                     <tr class="text-gray-700 dark:text-gray-400" th:each="user: ${users}">
                                         <td class="px-4 py-3">
-                                            <a th:href="@{/results/user/{id}(id=${user.getId()})}">
+                                            <a th:href="@{/user/{id}(id=${user.getId()})}">
                                                 <p class="font-semibold"
-                                                   th:text="${user.getUsername()}"/>
+                                                   th:text="${user.fullName}"/>
                                             </a>
                                         </td>
                                         <td>
                                             <a th:href="'mailto:' + ${user.getEmail()}">
                                                 <p class="font-semibold"
-                                                   th:text="${user.getUsername()}"/>
+                                                   th:text="${user.email}"/>
                                             </a>
                                         </td>
                                     </tr>

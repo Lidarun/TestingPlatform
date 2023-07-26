@@ -13,10 +13,12 @@ import java.util.Optional;
 
 @Service
 public class ModuleServiceImpl implements ModuleService {
+
     private final ModuleRepository moduleRep;
     private final CourseService courseService;
 
-    public ModuleServiceImpl(ModuleRepository moduleRep, CourseService courseService) {
+    public ModuleServiceImpl(ModuleRepository moduleRep,
+                             CourseService courseService) {
         this.moduleRep = moduleRep;
         this.courseService = courseService;
     }
@@ -62,6 +64,6 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public Module findByQuestion(Question question) {
-        return moduleRep.findByQuestion(question);
+        return moduleRep.findByQuestions(question);
     }
 }

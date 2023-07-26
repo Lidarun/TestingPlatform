@@ -17,8 +17,20 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long user_id;
-    private long module_id;
-    private long question_id;
-    private long answer_index;
+    private long userId;
+    private long moduleId;
+    private long questionId;
+    private long answerIndex;
+
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", moduleId=" + moduleId +
+                ", questionId=" + questionId +
+                ", answerIndex=" + answerIndex +
+                '}';
+    }
 }

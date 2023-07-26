@@ -29,14 +29,17 @@ public class Module implements Serializable {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "module")
-    List<Question> question;
+    private List<Question> questions;
 
     @JsonIgnore
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "course_id")
-    Course course;
+    private Course course;
+
+    @Transient
+    private String userResult = "-";
 
 
     @Override
@@ -46,6 +49,7 @@ public class Module implements Serializable {
                 ", name='" + name + '\'' +
                 ", state=" + state +
                 ", course=" + course.getName() +
+                ", userResult='" + userResult + '\'' +
                 '}';
     }
 }

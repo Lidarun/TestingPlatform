@@ -17,7 +17,8 @@ public class RegistrationController {
     private final UserService userService;
     private final ValidationService validationService;
 
-    public RegistrationController(UserService userService, ValidationService validationService) {
+    public RegistrationController(UserService userService,
+                                  ValidationService validationService) {
         this.userService = userService;
         this.validationService = validationService;
     }

@@ -12,6 +12,7 @@ import kg.dpa.gov.evaluation.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,7 +24,10 @@ public class ResultHandlerImpl implements ResultHandler {
     private final QuestionService questionService;
     private final ModuleService moduleService;
 
-    public ResultHandlerImpl(ResultRepository resultRepository, UserService userService, QuestionService questionService, ModuleService moduleService) {
+    public ResultHandlerImpl(ResultRepository resultRepository,
+                             UserService userService,
+                             QuestionService questionService,
+                             ModuleService moduleService) {
         this.resultRepository = resultRepository;
         this.userService = userService;
         this.questionService = questionService;
@@ -47,22 +51,46 @@ public class ResultHandlerImpl implements ResultHandler {
                 user = userService.findByUsernameOrEmail(authentication.getName(), authentication.getName());
 
             question = questionService.findById(questionId);
-            System.out.println(question);
+
+            if (resultRepository.existsByUserIdAndQuestionId(user.getId(), questionId))
+                break;
 
             if (question.isPresent()) {
-                result.setUser_id(user.getId());
-                result.setQuestion_id(question.get().getId());
-                result.setAnswer_index(question.get()
+                result.setUserId(user.getId());
+                result.setQuestionId(question.get().getId());
+                result.setAnswerIndex(question.get()
                                                 .getOptions()
                                                 .indexOf(selectedAnswer));
 
                 module = moduleService.findByQuestion(question.get());
 
-                result.setModule_id(module.getId());
+                result.setModuleId(module.getId());
             }
 
             resultRepository.save(result);
         }
+    }
+
+    @Override
+    public List<Question> findAllResultsByUserIdAndModuleId(long userId, long moduleId) {
+        List<Result> resultsList = resultRepository.findAll();
+        List<Result> results = resultsList.stream().filter(r -> r.getUserId() == userId && r.getModuleId() == moduleId).toList();
+
+        return results.stream().map(r -> {
+            Optional<Question> question = questionService.findById(r.getQuestionId());
+
+            if (question.isPresent()) {
+                long userAnswer = r.getAnswerIndex();
+                question.get().setUserAnswer((int) userAnswer);
+            }
+
+            return question.orElse(null);
+        }).toList();
+    }
+
+    @Override
+    public List<Result> findAllResultsByUserId(long id) {
+        return resultRepository.findAllResultsByUserId(id);
     }
 
 }

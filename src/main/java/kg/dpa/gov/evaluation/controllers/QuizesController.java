@@ -18,7 +18,8 @@ public class QuizesController {
     private final QuestionService questionService;
     private final ResultHandler resultHandler;
 
-    public QuizesController(QuestionService questionService, ResultHandler resultHandler) {
+    public QuizesController(QuestionService questionService,
+                            ResultHandler resultHandler) {
         this.questionService = questionService;
         this.resultHandler = resultHandler;
     }

@@ -18,7 +18,8 @@ public class ModulesController {
     private final CourseService courseService;
     private final ModuleService moduleService;
 
-    public ModulesController(CourseService courseService, ModuleService moduleService) {
+    public ModulesController(CourseService courseService,
+                             ModuleService moduleService) {
         this.courseService = courseService;
         this.moduleService = moduleService;
     }

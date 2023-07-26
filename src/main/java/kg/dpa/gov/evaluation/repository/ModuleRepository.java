@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface ModuleRepository extends JpaRepository<Module, Long> {
     List<Module> findAllByCourse(Course course);
-    Module findByQuestion(Question question);
+    Module findByQuestions(Question question);
 }

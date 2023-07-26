@@ -3,8 +3,8 @@ package kg.dpa.gov.evaluation.services.impl;
 import kg.dpa.gov.evaluation.enums.Role;
 import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.models.User;
-import kg.dpa.gov.evaluation.repository.CourseRepository;
 import kg.dpa.gov.evaluation.repository.UserRepository;
+import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.UserService;
 import kg.dpa.gov.evaluation.services.ValidationService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,12 +19,16 @@ import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements UserService, ValidationService {
+
     private final UserRepository userRep;
-    private final CourseRepository courseRep;
-    public UserServiceImpl(UserRepository userRep, CourseRepository courseRep) {
+    private final CourseService courseService;
+
+    public UserServiceImpl(UserRepository userRep,
+                           CourseService courseService) {
         this.userRep = userRep;
-        this.courseRep = courseRep;
+        this.courseService = courseService;
     }
+
 
     @Override
     public void create(User user) {
@@ -94,12 +98,10 @@ public class UserServiceImpl implements UserService, ValidationService {
     @Override
     public void addCourse(String username, long courseID) {
         Optional<User> userOptional = userRep.findByUsernameOrEmail(username, username);
-        Optional<Course> courseOptional = courseRep.findById(courseID);
+        Course course = courseService.findById(courseID);
 
-        if (userOptional.isPresent() && courseOptional.isPresent()) {
+        if (userOptional.isPresent() && course != null) {
             User user = userOptional.get();
-            Course course = courseOptional.get();
-
             user.getCourses().add(course);
             userRep.save(user);
         }
@@ -107,8 +109,8 @@ public class UserServiceImpl implements UserService, ValidationService {
 
     @Override
     public List<User> findAllByCourseId(long courseId) {
-        Optional<Course> course = courseRep.findById(courseId);
-        return course.map(userRep::findAllByCourses).orElse(null);
+        Course course = courseService.findById(courseId);
+        return userRep.findAllByCourses(course);
     }
 
 

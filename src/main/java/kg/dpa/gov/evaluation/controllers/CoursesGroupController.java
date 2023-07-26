@@ -18,7 +18,8 @@ public class CoursesGroupController {
     private final CourseService service;
     private final UserService userService;
 
-    public CoursesGroupController(CourseService service, UserService userService) {
+    public CoursesGroupController(CourseService service,
+                                  UserService userService) {
         this.service = service;
         this.userService = userService;
     }

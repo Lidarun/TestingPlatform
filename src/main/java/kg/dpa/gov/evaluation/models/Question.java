@@ -44,6 +44,9 @@ public class Question implements Serializable {
 
     private Integer correctAnswer = null;
 
+    @Transient
+    private int userAnswer;
+
     @NotEmpty
     private String answerExplain;
 

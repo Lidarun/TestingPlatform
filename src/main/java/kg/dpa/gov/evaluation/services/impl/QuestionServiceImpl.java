@@ -4,8 +4,8 @@ import kg.dpa.gov.evaluation.mappers.QuestionMapper;
 import kg.dpa.gov.evaluation.models.Module;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.models.dto.QuestionDto;
-import kg.dpa.gov.evaluation.repository.ModuleRepository;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
+import kg.dpa.gov.evaluation.services.ModuleService;
 import kg.dpa.gov.evaluation.services.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,12 +19,14 @@ import java.util.stream.Collectors;
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRep;
-    private final ModuleRepository moduleRep;
+    private final ModuleService moduleService;
     private final QuestionMapper mapper;
 
-    public QuestionServiceImpl(QuestionRepository questionRep, ModuleRepository moduleRep, QuestionMapper mapper) {
+    public QuestionServiceImpl(QuestionRepository questionRep,
+                               ModuleService moduleService,
+                               QuestionMapper mapper) {
         this.questionRep = questionRep;
-        this.moduleRep = moduleRep;
+        this.moduleService = moduleService;
         this.mapper = mapper;
     }
 
@@ -35,8 +37,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Optional<Question> findById(int id) {
-        return questionRep.findById(id);
+    public Optional<Question> findById(long id) {
+        return questionRep.findById((int) id);
     }
 
     @Override
@@ -46,12 +48,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<QuestionDto> findAllByModuleID(long id) {
-        Optional<Module> module = moduleRep.findById(id);
-        List<Question> questions = questionRep.findAllByModule(module.get());
+        Module module = moduleService.findById(id);
+        List<Question> questions = questionRep.findAllByModule(module);
 
         return questions.stream()
                 .map(q -> {
-                    QuestionDto dto = null;
+                    QuestionDto dto;
                     dto = mapper.questionToQuestionDto(q);
                     return dto;
                 }).collect(Collectors.toList());
