@@ -5,6 +5,7 @@ import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.services.UserService;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,6 @@ public class AdminController {
     @GetMapping("/{rolePage}")
     public String showFilterPage(@PathVariable("rolePage") Role role,
                                  Model model) {
-//        System.out.println("ROLE: "+role);
         List<User> userList = userService.findAllByRole(role);
 
         model.addAttribute("countUsers", userList.size());
@@ -60,7 +60,7 @@ public class AdminController {
         return "dashboard/filter-page";
     }
 
-    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @GetMapping("/update/{id}")
     public String updateUser(@PathVariable("id") long id,
                              Model model) {

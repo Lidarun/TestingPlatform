@@ -1,9 +1,7 @@
 package kg.dpa.gov.evaluation.services.impl;
 
+import kg.dpa.gov.evaluation.models.*;
 import kg.dpa.gov.evaluation.models.Module;
-import kg.dpa.gov.evaluation.models.Question;
-import kg.dpa.gov.evaluation.models.Result;
-import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.repository.ResultRepository;
 import kg.dpa.gov.evaluation.services.ModuleService;
 import kg.dpa.gov.evaluation.services.QuestionService;
@@ -15,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Service
 public class ResultHandlerImpl implements ResultHandler {
@@ -59,8 +59,8 @@ public class ResultHandlerImpl implements ResultHandler {
                 result.setUserId(user.getId());
                 result.setQuestionId(question.get().getId());
                 result.setAnswerIndex(question.get()
-                                                .getOptions()
-                                                .indexOf(selectedAnswer));
+                        .getOptions()
+                        .indexOf(selectedAnswer));
 
                 module = moduleService.findByQuestion(question.get());
 
@@ -91,6 +91,41 @@ public class ResultHandlerImpl implements ResultHandler {
     @Override
     public List<Result> findAllResultsByUserId(long id) {
         return resultRepository.findAllResultsByUserId(id);
+    }
+
+    //    TODO
+    @Override
+    public List<Course> countResults(List<Course> courseList, long userId) {
+        List<Result> results = resultRepository.findAllResultsByUserId(userId);
+
+        return courseList.stream().peek(course ->
+
+                course.getModules().stream().peek(
+                        module -> {
+
+                            AtomicInteger countCorrectAnswer = new AtomicInteger();
+
+                            results.forEach(result -> {
+
+                                int sizeQuestions = 0;
+
+                                if (result.getModuleId() == module.getId()) {
+                                    List<Question> questions = questionService
+                                            .findAllQuestionsByModuleID(module.getId());
+
+                                    sizeQuestions = questions.size();
+
+                                    questions.forEach(question -> {
+                                        if (question.getCorrectAnswer() == result.getAnswerIndex())
+                                            countCorrectAnswer.getAndIncrement();
+                                    });
+                                }
+
+                                module.setUserResult(countCorrectAnswer + "/" + sizeQuestions);
+                            });
+
+                        }).collect(Collectors.toList()))
+                .collect(Collectors.toList());
     }
 
 }

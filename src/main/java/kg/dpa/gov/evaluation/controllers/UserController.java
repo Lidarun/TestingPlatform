@@ -6,6 +6,7 @@ import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.ResultHandler;
 import kg.dpa.gov.evaluation.services.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +39,38 @@ public class UserController {
         List<Course> courseList = courseService.findAllByUserAccess(user.getUsername()).stream()
                 .filter(Course::isAccess).collect(Collectors.toList());
 
+        courseList = resultHandler.countResults(courseList, user.getId());
+
         model.addAttribute("user", user);
         model.addAttribute("courses", courseList);
 
         return "pages/user-page";
+    }
+
+    @GetMapping("/username/{username}")
+    private String showPage(@PathVariable String username,
+                            Authentication authentication,
+                            Model model) {
+
+        if (authentication.isAuthenticated()) {
+            String userName = authentication.getName();
+
+            if (userName.equals(username)) {
+                User user = userService.findByUsernameOrEmail(username, username);
+                List<Course> courseList = courseService.findAllByUserAccess(user.getUsername()).stream()
+                        .filter(Course::isAccess).collect(Collectors.toList());
+
+                courseList = resultHandler.countResults(courseList, user.getId());
+
+                model.addAttribute("user", user);
+                model.addAttribute("courses", courseList);
+
+                return "pages/user-page";
+            }
+
+            return "redirect:/";
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/{userId}/module/{moduleId}")

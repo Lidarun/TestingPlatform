@@ -55,20 +55,15 @@ public class CoursesGroupController {
         return "pages/module";
     }
 
-    @PostMapping("/{id}")
-    public String redirectToQuiz(@PathVariable("id") long courseId,
+    @PostMapping("/{courseId}")
+    public String redirectToQuiz(@PathVariable long courseId,
                                  @RequestParam String keyCourse,
                                  Authentication authentication) {
         Course course = service.findById(courseId);
         String username = null;
 
-        if (authentication != null) {
+        if (authentication != null)
             username = authentication.getName();
-
-        System.out.println("COURSE: "+courseId);
-        System.out.println("USER: "+username);
-        System.out.println("KEY: "+keyCourse);
-        }
 
         if (course != null && course.getKey().equals(keyCourse)) {
             userService.addCourse(username, courseId);

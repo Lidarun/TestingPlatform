@@ -47,8 +47,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDto> findAllByModuleID(long id) {
-        Module module = moduleService.findById(id);
+    public List<QuestionDto> findAllByModuleID(long moduleId) {
+        Module module = moduleService.findById(moduleId);
         List<Question> questions = questionRep.findAllByModule(module);
 
         return questions.stream()
@@ -57,6 +57,12 @@ public class QuestionServiceImpl implements QuestionService {
                     dto = mapper.questionToQuestionDto(q);
                     return dto;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Question> findAllQuestionsByModuleID(long moduleId) {
+        Module module = moduleService.findById(moduleId);
+        return questionRep.findAllByModule(module);
     }
 
     @Override

@@ -381,7 +381,7 @@
                             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Пользователь</th>
                                 <th class="px-4 py-3">email</th>
-                                <th class="px-4 py-3" style="width: 3%;"></th>
+                                <th class="px-4 py-3" sec:authorize="hasAnyRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')" style="width: 3%;"></th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -399,7 +399,7 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm" th:text="${user.getEmail()}"/>
-                                <td class="text-center">
+                                <td class="text-center" sec:authorize="hasAnyRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')">
                                     <form th:if="${!user.getRole().contains(role)}"
                                           th:action="@{/dashboard/update/{id}(id=${user.getId()})}"
                                           th:method="get">

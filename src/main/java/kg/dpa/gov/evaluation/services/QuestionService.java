@@ -20,6 +20,8 @@ public interface QuestionService {
 
     Page<Question> getItems(Pageable pageable);
 
-    List<QuestionDto> findAllByModuleID(long id);
+    List<QuestionDto> findAllByModuleID(long moduleId);
+
+    List<Question> findAllQuestionsByModuleID(long moduleId);
 
 }
