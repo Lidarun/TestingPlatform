@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Dashboard</title>
-    <meta name="_csrf" th:content="${_csrf.token}" />
-    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script th:src="@{js/ap.init-alpine.js}"></script>
     <link rel="stylesheet" th:href="@{css/admin-panel.output.css}"/>
     <link rel="stylesheet" th:href="@{css/formQuestion.css}"/>
@@ -353,21 +353,23 @@
 
                 <div class="inline-flex">
                     <div class="filter-dropdown">
-                        <select id="rolePage" class="courses form-select-sm" onchange="filterUsersByCourse(this.value)">
+                        <label for="rolePage"><select id="rolePage" class="form-select"
+                                                      onchange="filterUsersByCourse(this.value)">
                             <option value="all">Курсы</option>
-                            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+                            <option th:each="course : ${courses}" th:value="${course.id}"
+                                    th:text="${course.name}"></option>
                         </select>
+                        </label>
                     </div>
                     <div class="filter-dropdown">
-                        <label>
-                            <select name="course" class="form-select-sm" id="moduleSelect" onchange="filterUsersByCourseAndModule(this.value)">
-                                <option value="">Выберите модуль</option>
-                                <!-- Модули будут загружены через AJAX и добавлены сюда -->
-                            </select>
+                        <label for="moduleSelect"><select name="course" class="form-select" id="moduleSelect"
+                                                          onchange="filterUsersByCourseAndModule(this.value)">
+                            <option value="">Выберите модуль</option>
+                            <!-- Модули будут загружены через AJAX и добавлены сюда -->
+                        </select>
                         </label>
                     </div>
                 </div>
-
 
 
                 <!--  Users-->
@@ -440,7 +442,7 @@
 
 
     function filterUsersByCourseAndModule(moduleId) {
-        var url = "/results/filter/"+ course +"/module/" + moduleId;
+        var url = "/results/filter/" + course + "/module/" + moduleId;
         var userList = document.getElementById("userList");
 
         console.log(course);
@@ -478,7 +480,7 @@
                 type: "GET",
                 data: {courseId: courseId},
                 dataType: "json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader(csrfHeader, csrfToken);
                 },
                 success: function (modules) {

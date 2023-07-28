@@ -113,6 +113,7 @@ public class QuestionsController {
         model.addAttribute("currentPage", 0);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("courses", courseService.findAll());
         model.addAttribute("modules", moduleService.findAll());
 
         Optional<Question> questionOptional = questionService.findById(id);
