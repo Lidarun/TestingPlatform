@@ -369,9 +369,9 @@
                                     </label>
                                 </div>
                             </div>
-                            <div>
+                            <div style="margin-top: 0.5%">
                                 <label>
-                                    <select name="course form-select" class="radio-group select2">
+                                    <select name="course" class="form-select">
                                         <option th:each="course : ${courses}" th:value="${course.getId()}"
                                                 th:text="${course.getName()}"></option>
                                     </select>

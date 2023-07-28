@@ -428,12 +428,12 @@
 </div>
 <SCRIPT>
     function filterUsers(rolePage) {
-        var url = "/dashboard/" + rolePage;
-        var userList = document.getElementById("user-list");
+        const url = "/dashboard/" + rolePage;
+        const userList = document.getElementById("user-list");
 
         userList.innerHTML = "Loading...";
 
-        var request = new XMLHttpRequest();
+        const request = new XMLHttpRequest();
         request.open("GET", url, true);
 
         request.onload = function() {

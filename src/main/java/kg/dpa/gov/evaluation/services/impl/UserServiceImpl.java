@@ -1,8 +1,10 @@
 package kg.dpa.gov.evaluation.services.impl;
 
-import kg.dpa.gov.evaluation.enums.Role;
+import kg.dpa.gov.evaluation.mappers.EntityMapper;
 import kg.dpa.gov.evaluation.models.Course;
 import kg.dpa.gov.evaluation.models.User;
+import kg.dpa.gov.evaluation.models.dto.UserDto;
+import kg.dpa.gov.evaluation.models.enums.Role;
 import kg.dpa.gov.evaluation.repository.UserRepository;
 import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.UserService;
@@ -16,17 +18,20 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService, ValidationService {
 
     private final UserRepository userRep;
     private final CourseService courseService;
+    private final EntityMapper<User, UserDto> mapper;
 
     public UserServiceImpl(UserRepository userRep,
-                           CourseService courseService) {
+                           CourseService courseService, EntityMapper<User, UserDto> mapper) {
         this.userRep = userRep;
         this.courseService = courseService;
+        this.mapper = mapper;
     }
 
 
@@ -44,25 +49,20 @@ public class UserServiceImpl implements UserService, ValidationService {
     }
 
     @Override
-    public boolean changeRole(long id, Role role) {
+    public void changeRole(long id, Role role) {
 
         Optional<User> user = userRep.findById(id);
 
         if (user.isPresent()) {
-            if (user.get().getRole().contains(role)) {
+
+            if (user.get().getRole().contains(role))
                 user.get().getRole().remove(role);
-                userRep.save(user.get());
-                return true;
-            }
 
-            if (!user.get().getRole().contains(role)) {
+            else
                 user.get().getRole().add(role);
-                userRep.save(user.get());
-                return true;
-            }
-        }
 
-        return false;
+            userRep.save(user.get());
+        }
     }
 
     @Override
@@ -76,7 +76,8 @@ public class UserServiceImpl implements UserService, ValidationService {
     }
 
     @Override
-    public User findByUsernameOrEmail(String username, String email) {
+    public User findByUsernameOrEmail(String username,
+                                      String email) {
         return userRep.findByUsernameOrEmail(username, email).orElse(null);
     }
 
@@ -90,10 +91,6 @@ public class UserServiceImpl implements UserService, ValidationService {
         return null;
     }
 
-    @Override
-    public boolean coursePresent() {
-        return false;
-    }
 
     @Override
     public void addCourse(String username, long courseID) {
@@ -111,6 +108,12 @@ public class UserServiceImpl implements UserService, ValidationService {
     public List<User> findAllByCourseId(long courseId) {
         Course course = courseService.findById(courseId);
         return userRep.findAllByCourses(course);
+    }
+
+    @Override
+    public List<UserDto> findAllAsUserDto() {
+        List<User> users = userRep.findAll();
+        return users.stream().map(mapper::map).collect(Collectors.toList());
     }
 
 
@@ -162,4 +165,5 @@ public class UserServiceImpl implements UserService, ValidationService {
 
         return null;
     }
+
 }

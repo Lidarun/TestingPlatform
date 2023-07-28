@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ResultRepository extends JpaRepository<Result, Long> {
+
     boolean existsByUserIdAndQuestionId(long userId, long questionId);
 
     List<Result> findAllResultsByUserId(long id);
