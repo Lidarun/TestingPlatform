@@ -1,17 +1,15 @@
 package kg.dpa.gov.evaluation.mappers.impl;
 
-import kg.dpa.gov.evaluation.mappers.QuestionMapper;
+import kg.dpa.gov.evaluation.mappers.EntityMapper;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.models.dto.QuestionDto;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class QuestionMapperImpl implements QuestionMapper {
+public class QuestionMapperImpl implements EntityMapper<Question, QuestionDto> {
 
     @Override
-    public QuestionDto questionToQuestionDto(Question question) {
+    public QuestionDto map(Question question) {
         QuestionDto dto = new QuestionDto();
 
         dto.setId(question.getId());
@@ -23,4 +21,5 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         return dto;
     }
+
 }

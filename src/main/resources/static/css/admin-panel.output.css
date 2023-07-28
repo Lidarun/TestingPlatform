@@ -35,7 +35,6 @@ abbr[title] {
     border-bottom: none;
     text-decoration: underline;
     -webkit-text-decoration: underline dotted;
-    text-decoration: underline dotted
 }
 
 b, strong {
@@ -165,7 +164,6 @@ button {
 }
 
 button:focus {
-    outline: 1px dotted;
     outline: 5px auto -webkit-focus-ring-color
 }
 
@@ -991,7 +989,7 @@ img, video {
 }
 
 .flex-1 {
-    flex: 1 1 0%
+    flex: 1 1 0
 }
 
 .flex-shrink-0 {
@@ -2121,7 +2119,6 @@ img, video {
     text-align: left;
 }
 .filter-dropdown{
-    width: 88px;
-    margin-bottom: 1%;
-    border-radius: 11px;
+    margin: 1% 1% 1% 0;
+    border-radius: 6px;
 }

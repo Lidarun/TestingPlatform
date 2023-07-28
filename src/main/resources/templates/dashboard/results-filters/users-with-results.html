@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:x-transition="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Dashboard</title>
+    <script th:src="@{js/ap.charts-pie.js}"></script>
+    <script th:src="@{js/ap.init-alpine.js}"></script>
+    <script th:src="@{js/ap.charts-lines.js}"></script>
+    <link th:href="@{css/admin-panel.output.css}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+    <div class="flex flex-col flex-1 w-full">
+        <main class="h-full pb-16 overflow-y-auto">
+            <!--  Users-->
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                <!-- Eployees List-->
+                <div id="userList">
+                    <div class="w-full overflow-x-auto">
+                        <div id="user-list">
+                            <table class="w-full whitespace-no-wrap">
+                                <thead>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3">Пользователь</th>
+                                    <th class="px-4 py-3">email</th>
+                                    <th class="px-4 py-3" style="width: 5%">Результат</th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                <tr class="text-gray-700 dark:text-gray-400" th:each="user: ${users}">
+                                    <td class="px-4 py-3">
+                                        <a th:href="@{/user/{id}(id=${user.getId()})}">
+                                            <p class="font-semibold"
+                                               th:text="${user.getFullName()}"/>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:href="'mailto:' + ${user.getEmail()}">
+                                            <p class="font-semibold"
+                                               th:text="${user.getEmail()}"/>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <p class="font-semibold text-center"
+                                           th:text="${user.getResult()}"/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

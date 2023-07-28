@@ -1,6 +1,7 @@
 package kg.dpa.gov.evaluation.services.impl;
 
-import kg.dpa.gov.evaluation.mappers.QuestionMapper;
+import kg.dpa.gov.evaluation.mappers.EntityMapper;
+import kg.dpa.gov.evaluation.mappers.impl.QuestionMapperImpl;
 import kg.dpa.gov.evaluation.models.Module;
 import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.models.dto.QuestionDto;
@@ -20,11 +21,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRep;
     private final ModuleService moduleService;
-    private final QuestionMapper mapper;
+    private final EntityMapper<Question, QuestionDto> mapper;
 
     public QuestionServiceImpl(QuestionRepository questionRep,
                                ModuleService moduleService,
-                               QuestionMapper mapper) {
+                               QuestionMapperImpl mapper) {
         this.questionRep = questionRep;
         this.moduleService = moduleService;
         this.mapper = mapper;
@@ -54,7 +55,7 @@ public class QuestionServiceImpl implements QuestionService {
         return questions.stream()
                 .map(q -> {
                     QuestionDto dto;
-                    dto = mapper.questionToQuestionDto(q);
+                    dto = mapper.map(q);
                     return dto;
                 }).collect(Collectors.toList());
     }

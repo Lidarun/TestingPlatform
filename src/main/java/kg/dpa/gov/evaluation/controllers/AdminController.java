@@ -60,7 +60,6 @@ public class AdminController {
         return "dashboard/filter-page";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     @GetMapping("/update/{id}")
     public String updateUser(@PathVariable("id") long id,
                              Model model) {
@@ -75,7 +74,6 @@ public class AdminController {
         return "dashboard/edit-user";
     }
 
-    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @PostMapping("/update/{id}")
     public String setRole(@PathVariable("id") long id,
                           @RequestParam("role") Role role) {
@@ -84,7 +82,6 @@ public class AdminController {
         return "redirect:/dashboard";
     }
 
-    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @PostMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userService.deleteByID(id);

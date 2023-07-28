@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Dashboard</title>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <script th:src="@{js/ap.init-alpine.js}"></script>
     <link rel="stylesheet" th:href="@{css/admin-panel.output.css}"/>
     <link rel="stylesheet" th:href="@{css/formQuestion.css}"/>
@@ -72,7 +74,7 @@
                              stroke="currentColor">
                             <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                         </svg>
-                        <span class="ml-4">Результаты</span>
+                        <span class="ml-4">Модуль</span>
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
@@ -349,12 +351,25 @@
                     Результаты
                 </h2>
 
-                <div class="filter-dropdown">
-                    <select id="rolePage" class="courses" onchange="filterUsers(this.value)">
-                        <option value="all">Курсы</option>
-                        <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
-                    </select>
+                <div class="inline-flex">
+                    <div class="filter-dropdown">
+                        <select id="rolePage" class="courses form-select-sm" onchange="filterUsersByCourse(this.value)">
+                            <option value="all">Курсы</option>
+                            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+                        </select>
+                    </div>
+                    <div class="filter-dropdown">
+                        <label>
+                            <select name="course" class="form-select-sm" id="moduleSelect" onchange="filterUsersByCourseAndModule(this.value)">
+                                <option value="">Выберите модуль</option>
+                                <!-- Модули будут загружены через AJAX и добавлены сюда -->
+                            </select>
+                        </label>
+                    </div>
                 </div>
+
+
+
                 <!--  Users-->
                 <div class="w-full overflow-hidden rounded-lg shadow-xs">
                     <!-- Eployees List-->
@@ -389,16 +404,47 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
 </div>
 <script>
-    function filterUsers(courseId) {
+    let course;
+
+    function filterUsersByCourse(courseId) {
         var url = "/results/filter/" + courseId;
-        console.log(courseId);
+        course = courseId;
+
         var userList = document.getElementById("userList");
+
+        userList.innerHTML = "Loading...";
+
+        var request = new XMLHttpRequest();
+        request.open("GET", url, true);
+
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+                userList.innerHTML = request.responseText;
+                loadModules();
+            } else {
+                userList.innerHTML = "Error loading users.";
+            }
+        };
+
+        request.onerror = function () {
+            userList.innerHTML = "Error loading users.";
+        };
+
+        request.send();
+    }
+
+
+    function filterUsersByCourseAndModule(moduleId) {
+        var url = "/results/filter/"+ course +"/module/" + moduleId;
+        var userList = document.getElementById("userList");
+
+        console.log(course);
+        console.log(moduleId);
 
         userList.innerHTML = "Loading...";
 
@@ -419,6 +465,40 @@
 
         request.send();
     }
+
+    function loadModules() {
+        var courseId = course;
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+        if (courseId !== "") {
+            $("#moduleSelect").prop("disabled", true);
+            $.ajax({
+                url: "/questions/loadModules",
+                type: "GET",
+                data: {courseId: courseId},
+                dataType: "json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
+                success: function (modules) {
+                    var moduleSelect = $("#moduleSelect");
+                    moduleSelect.empty().append("<option value=''>Выберите модуль</option>");
+                    $.each(modules, function (index, module) {
+                        moduleSelect.append("<option value='" + module.id + "'>" + module.name + "</option>");
+                    });
+                    $("#moduleSelect").prop("disabled", false);
+                },
+                error: function (error) {
+                    console.log("Ошибка при загрузке модулей: ", error);
+                    $("#moduleSelect").prop("disabled", true);
+                }
+            });
+        } else {
+            $("#moduleSelect").prop("disabled", true);
+        }
+    }
+
 </script>
 </body>
 </html>

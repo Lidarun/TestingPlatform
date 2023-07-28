@@ -11,4 +11,6 @@ public interface ResultRepository extends JpaRepository<Result, Long> {
     boolean existsByUserIdAndQuestionId(long userId, long questionId);
 
     List<Result> findAllResultsByUserId(long id);
+
+    List<Result> findAllByModuleId(long moduleId);
 }

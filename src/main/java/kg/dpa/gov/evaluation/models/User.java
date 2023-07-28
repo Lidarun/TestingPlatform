@@ -24,7 +24,7 @@ public class User {
     private long id;
 
     @NotEmpty(message = "Укажите полное имя")
-    String fullName;
+    private String fullName;
 
     private String username;
 
