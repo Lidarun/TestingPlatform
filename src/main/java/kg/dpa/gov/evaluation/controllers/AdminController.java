@@ -4,6 +4,7 @@ import kg.dpa.gov.evaluation.models.dto.UserDto;
 import kg.dpa.gov.evaluation.models.enums.Role;
 import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.services.UserService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -74,17 +75,13 @@ public class AdminController {
     }
 
 
-//    @Cacheable("users")
     @ResponseBody
     @GetMapping("/search")
     public Optional<UserDto> searchUser(@RequestParam("query") String userInfo) {
-        System.out.println("QUERY: "+userInfo);
         List<UserDto> users = userService.findAllAsUserDto();
+
         return users.stream().filter(user -> user.getEmail().toLowerCase().contains(userInfo.toLowerCase()) ||
                 user.getFullName().toLowerCase().contains(userInfo.toLowerCase())).findFirst();
-
-//        return users.stream().filter(user -> user.getEmail().toLowerCase().contains(userInfo.toLowerCase()) ||
-//                user.getFullName().toLowerCase().contains(userInfo.toLowerCase())).collect(Collectors.toList());
 
     }
 }

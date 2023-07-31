@@ -6,6 +6,7 @@ import kg.dpa.gov.evaluation.models.Question;
 import kg.dpa.gov.evaluation.repository.ModuleRepository;
 import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.ModuleService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
+    @Cacheable("modules")
     public List<Module> findAll() {
         return moduleRep.findAll();
     }

@@ -42,7 +42,8 @@ public class ResultHandlerImpl implements ResultHandler {
     }
 
     @Override
-    public void setResults(Map<Integer, String> results, Authentication authentication) {
+    public void setResults(Map<Integer, String> results,
+                           Authentication authentication) {
 
         for (Map.Entry<Integer, String> entry : results.entrySet()) {
             int questionId = entry.getKey();

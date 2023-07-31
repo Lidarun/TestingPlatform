@@ -5,6 +5,7 @@ import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.repository.CourseRepository;
 import kg.dpa.gov.evaluation.repository.UserRepository;
 import kg.dpa.gov.evaluation.services.CourseService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Cacheable("courses")
     public List<Course> findAll() {
         return courseRep.findAll();
     }
@@ -56,6 +58,8 @@ public class CourseServiceImpl implements CourseService {
         return courseRep.findAllByState(true);
     }
 
+
+    //Получение активных курсов
     @Override
     public List<Course> findAllByUserAccess(String username) {
         List<Course> courses = courseRep.findAllByState(true);
@@ -67,9 +71,11 @@ public class CourseServiceImpl implements CourseService {
 
             Set<Course> userCourses = user.getCourses();
 
-            return courses.stream().peek(c -> userCourses.forEach(n -> {
-                if (n.getId() == c.getId()) c.setAccess(true);
-            }
+            //Ограничение доступа к курсам
+            return courses.stream().peek(course ->
+                    userCourses.forEach(userCourse -> {
+                        if (userCourse.getId() == course.getId()) course.setAccess(true);
+                    }
             )).collect(Collectors.toList());
         }
 

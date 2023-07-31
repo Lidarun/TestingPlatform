@@ -50,7 +50,7 @@ public class QuestionsController {
         model.addAttribute("courses", courseService.findAll());
         model.addAttribute("modules", moduleService.findAll());
 
-        Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 5));
+        Page<Question> page = questionService.getItems(PageRequest.of(pageNum, 10));
 
         List<Question> list = page.getContent();
         model.addAttribute("listQuestions", list);
