@@ -2,8 +2,8 @@ package kg.dpa.gov.evaluation.services.impl;
 
 import kg.dpa.gov.evaluation.mappers.EntityMapper;
 import kg.dpa.gov.evaluation.mappers.impl.UserMapperImpl;
-import kg.dpa.gov.evaluation.models.*;
 import kg.dpa.gov.evaluation.models.Module;
+import kg.dpa.gov.evaluation.models.*;
 import kg.dpa.gov.evaluation.models.dto.UserDto;
 import kg.dpa.gov.evaluation.repository.ResultRepository;
 import kg.dpa.gov.evaluation.services.ModuleService;
@@ -13,7 +13,6 @@ import kg.dpa.gov.evaluation.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -79,10 +78,14 @@ public class ResultHandlerImpl implements ResultHandler {
         }
     }
 
+    //Поиск списка вопросов с выбранными вариантами по конретному модулю, для итогового отображения
     @Override
-    public List<Question> findAllResultsByUserIdAndModuleId(long userId, long moduleId) {
+    public List<Question> findUserResultsByModule(long userId,
+                                                  long moduleId) {
         List<Result> resultsList = resultRepository.findAll();
-        List<Result> results = resultsList.stream().filter(r -> r.getUserId() == userId && r.getModuleId() == moduleId).toList();
+
+        List<Result> results = resultsList.stream()
+                .filter(r -> r.getUserId() == userId && r.getModuleId() == moduleId).toList();
 
         return results.stream().map(r -> {
             Optional<Question> question = questionService.findById(r.getQuestionId());
@@ -96,13 +99,11 @@ public class ResultHandlerImpl implements ResultHandler {
         }).toList();
     }
 
-    @Override
-    public List<Result> findAllResultsByUserId(long id) {
-        return resultRepository.findAllResultsByUserId(id);
-    }
 
+    //Подсчет результатов пользователей курса, по каждому модулю
     @Override
-    public List<Course> countResults(List<Course> courseList, long userId) {
+    public List<Course> countResults(List<Course> courseList,
+                                     long userId) {
         List<Result> results = resultRepository.findAllResultsByUserId(userId);
 
         return courseList.stream().peek(course ->
@@ -130,13 +131,14 @@ public class ResultHandlerImpl implements ResultHandler {
 
                                 module.setUserResult(countCorrectAnswer + "/" + sizeQuestions);
                             });
-
-                        }).collect(Collectors.toList()))
+                        }))
                 .collect(Collectors.toList());
     }
 
+    //Подсчет результа по конкретному модулю, и возврат списка людей по этому модуля
     @Override
-    public List<UserDto> countResultsForUsersByModule(List<User> userList, long moduleId) {
+    public List<UserDto> countResultsForUsersByModule(List<User> userList,
+                                                      long moduleId) {
         List<Result> results = resultRepository.findAllByModuleId(moduleId);
 
         return userList.stream().map(user -> {
@@ -146,7 +148,7 @@ public class ResultHandlerImpl implements ResultHandler {
 
             results.forEach(result -> {
 
-                List<Question> questions = questions = questionService
+                List<Question> questions = questionService
                         .findAllQuestionsByModuleID(result.getModuleId());
                 int sizeQuestions = questions.size();
 

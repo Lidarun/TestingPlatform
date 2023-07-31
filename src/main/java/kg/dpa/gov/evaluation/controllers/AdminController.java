@@ -26,6 +26,7 @@ public class AdminController {
     @GetMapping()
     private String showPage(Model model) {
         List<User> userList = userService.findAll();
+        userService.updateCache();
 
         model.addAttribute("countUsers", userList.size());
         model.addAttribute("users", userList);
@@ -71,16 +72,19 @@ public class AdminController {
     @PostMapping("/delete/{id}")
     private String deleteUser(@PathVariable long id) {
         userService.deleteByID(id);
+
         return "redirect:/dashboard";
     }
 
 
+    //Живой поиск
     @ResponseBody
     @GetMapping("/search")
     public Optional<UserDto> searchUser(@RequestParam("query") String userInfo) {
         List<UserDto> users = userService.findAllAsUserDto();
 
-        return users.stream().filter(user -> user.getEmail().toLowerCase().contains(userInfo.toLowerCase()) ||
+        return users.stream().filter(user ->
+                user.getEmail().toLowerCase().contains(userInfo.toLowerCase()) ||
                 user.getFullName().toLowerCase().contains(userInfo.toLowerCase())).findFirst();
 
     }

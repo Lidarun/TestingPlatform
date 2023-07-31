@@ -44,7 +44,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @Cacheable("questions")
     public Page<Question> getItems(Pageable pageable) {
         return questionRep.findAll(pageable);
     }

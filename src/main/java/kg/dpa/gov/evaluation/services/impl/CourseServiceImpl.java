@@ -31,7 +31,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    @Cacheable("courses")
     public List<Course> findAll() {
         return courseRep.findAll();
     }
@@ -53,13 +52,7 @@ public class CourseServiceImpl implements CourseService {
             courseRep.save(updatedCourse);
     }
 
-    @Override
-    public List<Course> findAllByState(boolean state) {
-        return courseRep.findAllByState(true);
-    }
-
-
-    //Получение активных курсов
+    //Получение списка курсов, с установкой доступа для конкретного пользователя
     @Override
     public List<Course> findAllByUserAccess(String username) {
         List<Course> courses = courseRep.findAllByState(true);

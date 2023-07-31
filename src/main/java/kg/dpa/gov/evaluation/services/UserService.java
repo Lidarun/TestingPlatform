@@ -4,6 +4,7 @@ package kg.dpa.gov.evaluation.services;
 import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.models.dto.UserDto;
 import kg.dpa.gov.evaluation.models.enums.Role;
+import org.springframework.cache.annotation.CachePut;
 
 import java.util.List;
 
@@ -30,4 +31,7 @@ public interface UserService {
     List<User> findAllByCourseId(long courseId);
 
     List<UserDto> findAllAsUserDto();
+
+    @CachePut
+    List<UserDto> updateCache();
 }

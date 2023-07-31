@@ -9,8 +9,8 @@ import kg.dpa.gov.evaluation.repository.UserRepository;
 import kg.dpa.gov.evaluation.services.CourseService;
 import kg.dpa.gov.evaluation.services.UserService;
 import kg.dpa.gov.evaluation.services.ValidationService;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService, ValidationService {
     }
 
     @Override
-    @Cacheable("users")
     public List<User> findAll() {
         return userRep.findAll();
     }
@@ -117,8 +116,15 @@ public class UserServiceImpl implements UserService, ValidationService {
     }
 
     @Override
-    @Cacheable("usersDto")
+    @Cacheable
     public List<UserDto> findAllAsUserDto() {
+        List<User> users = userRep.findAll();
+        return users.stream().map(mapper::map).collect(Collectors.toList());
+    }
+
+    @Override
+    @CachePut
+    public List<UserDto> updateCache() {
         List<User> users = userRep.findAll();
         return users.stream().map(mapper::map).collect(Collectors.toList());
     }

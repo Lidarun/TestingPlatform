@@ -77,7 +77,7 @@ public class UserController {
     private String showPage(@PathVariable long userId,
                             @PathVariable long moduleId,
                             Model model) {
-        List<Question> questions = resultHandler.findAllResultsByUserIdAndModuleId(userId, moduleId);
+        List<Question> questions = resultHandler.findUserResultsByModule(userId, moduleId);
 
         model.addAttribute("questions", questions);
 

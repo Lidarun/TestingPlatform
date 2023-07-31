@@ -14,9 +14,7 @@ public interface ResultHandler {
 
     void setResults(Map<Integer, String> results, Authentication authentication);
 
-    List<Question> findAllResultsByUserIdAndModuleId(long userId, long moduleId);
-
-    List<Result> findAllResultsByUserId(long id);
+    List<Question> findUserResultsByModule(long userId, long moduleId);
 
     List<Course> countResults(List<Course> courseList, long userId);
 

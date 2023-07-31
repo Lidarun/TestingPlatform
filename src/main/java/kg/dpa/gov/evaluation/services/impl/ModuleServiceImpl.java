@@ -35,7 +35,6 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    @Cacheable("modules")
     public List<Module> findAll() {
         return moduleRep.findAll();
     }
