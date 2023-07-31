@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import kg.dpa.gov.evaluation.enums.Role;
+import kg.dpa.gov.evaluation.models.enums.Role;
 import lombok.*;
 
 import java.util.Set;
