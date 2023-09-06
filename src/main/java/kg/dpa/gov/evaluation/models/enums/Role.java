@@ -1,4 +1,4 @@
-package kg.dpa.gov.evaluation.enums;
+package kg.dpa.gov.evaluation.models.enums;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

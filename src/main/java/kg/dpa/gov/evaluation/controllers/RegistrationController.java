@@ -34,8 +34,8 @@ public class RegistrationController {
                                BindingResult bindingResult , Model model){
         model.addAttribute(user);
 
-//        ObjectError errorUsername = validationService.existUserByUsername(user.getUsername());
-//        if (errorUsername != null) bindingResult.addError(errorUsername);
+        ObjectError errorUsername = validationService.existUserByUsername(user.getUsername());
+        if (errorUsername != null) bindingResult.addError(errorUsername);
 
         ObjectError errorEmail = validationService.existUserByEmail(user.getEmail());
         if (errorEmail != null) bindingResult.addError(errorEmail);
@@ -44,8 +44,8 @@ public class RegistrationController {
                 .comparePassword(user.getPassword(), user.getConfirmPassword());
         if (errorConfirmPassword != null) bindingResult.addError(errorConfirmPassword);
 
-//        ObjectError errorPassword = validationService.validPassword(user.getPassword());
-//        if (errorPassword != null) bindingResult.addError(errorPassword);
+        ObjectError errorPassword = validationService.validPassword(user.getPassword());
+        if (errorPassword != null) bindingResult.addError(errorPassword);
 
         if(bindingResult.hasErrors()) return "pages/register";
 

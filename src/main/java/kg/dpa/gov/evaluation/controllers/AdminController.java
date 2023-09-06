@@ -1,14 +1,16 @@
 package kg.dpa.gov.evaluation.controllers;
 
-import kg.dpa.gov.evaluation.enums.Role;
-import kg.dpa.gov.evaluation.models.Course;
+import kg.dpa.gov.evaluation.models.dto.UserDto;
+import kg.dpa.gov.evaluation.models.enums.Role;
 import kg.dpa.gov.evaluation.models.User;
 import kg.dpa.gov.evaluation.services.UserService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -20,9 +22,11 @@ public class AdminController {
         this.userService = userService;
     }
 
+
     @GetMapping()
-    public String showPage(Model model) {
+    private String showPage(Model model) {
         List<User> userList = userService.findAll();
+        userService.updateCache();
 
         model.addAttribute("countUsers", userList.size());
         model.addAttribute("users", userList);
@@ -32,8 +36,8 @@ public class AdminController {
     }
 
     @GetMapping("/{rolePage}")
-    public String showFilterPage(@PathVariable("rolePage") Role role,
-                                 Model model) {
+    private String showFilterPage(@PathVariable("rolePage") Role role,
+                                  Model model) {
         List<User> userList = userService.findAllByRole(role);
 
         model.addAttribute("countUsers", userList.size());
@@ -43,22 +47,9 @@ public class AdminController {
         return "dashboard/dashboard-filters/users-by-role";
     }
 
-    @GetMapping("/{rolePage}/{course}")
-    public String showFilterPage(@PathVariable("rolePage") Role role,
-                                 @PathVariable("course") Course course,
-                                 Model model) {
-        List<User> userList = userService.findAllByRoleAndCourse(role);
-
-        model.addAttribute("countUsers", userList.size());
-        model.addAttribute("users", userList);
-        model.addAttribute("role", Role.ROLE_SUPER_ADMIN);
-
-        return "dashboard/dashboard-filters/users-by-role";
-    }
-
     @GetMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") long id,
-                             Model model) {
+    private String updateUser(@PathVariable("id") long id,
+                              Model model) {
         User user = userService.findById(id);
 
         model.addAttribute("fromUser", user);
@@ -71,16 +62,30 @@ public class AdminController {
     }
 
     @PostMapping("/update/{id}")
-    public String setRole(@PathVariable long id,
-                          @RequestParam("role") Role role) {
-        boolean res = userService.changeRole(id, role);
+    private String setRole(@PathVariable long id,
+                           @RequestParam("role") Role role) {
+        userService.changeRole(id, role);
 
         return "redirect:/dashboard";
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteUser(@PathVariable long id) {
+    private String deleteUser(@PathVariable long id) {
         userService.deleteByID(id);
+
         return "redirect:/dashboard";
+    }
+
+
+    //Живой поиск
+    @ResponseBody
+    @GetMapping("/search")
+    public Optional<UserDto> searchUser(@RequestParam("query") String userInfo) {
+        List<UserDto> users = userService.findAllAsUserDto();
+
+        return users.stream().filter(user ->
+                user.getEmail().toLowerCase().contains(userInfo.toLowerCase()) ||
+                user.getFullName().toLowerCase().contains(userInfo.toLowerCase())).findFirst();
+
     }
 }

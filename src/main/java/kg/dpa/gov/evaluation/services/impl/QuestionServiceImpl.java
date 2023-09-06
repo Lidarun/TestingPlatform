@@ -8,6 +8,7 @@ import kg.dpa.gov.evaluation.models.dto.QuestionDto;
 import kg.dpa.gov.evaluation.repository.QuestionRepository;
 import kg.dpa.gov.evaluation.services.ModuleService;
 import kg.dpa.gov.evaluation.services.QuestionService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

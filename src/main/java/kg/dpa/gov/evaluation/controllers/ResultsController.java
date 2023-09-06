@@ -54,7 +54,6 @@ public class ResultsController {
         return "dashboard/results-filters/users-by-course";
     }
 
-    //    TODO
     @GetMapping("/filter/{courseId}/module/{moduleId}")
     private String showResultsByModule(@PathVariable long courseId,
                                        @PathVariable long moduleId,
@@ -67,7 +66,6 @@ public class ResultsController {
         List<Course> courseList = courseService.findAll();
 
         List<UserDto> usersWithResults = resultHandler.countResultsForUsersByModule(userList, moduleId);
-        usersWithResults.forEach(System.out::println);
 
         model.addAttribute("users", usersWithResults);
         model.addAttribute("courses", courseList);

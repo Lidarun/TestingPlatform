@@ -27,9 +27,11 @@ public class ModulesController {
     @GetMapping
     private String showPage(Model model) {
         List<Course> courses = courseService.findAll();
+
         model.addAttribute("formModule", new Module());
         model.addAttribute("courses", courses);
         model.addAttribute("modules", moduleService.findAll());
+
         return "dashboard/modules";
     }
 
@@ -38,6 +40,7 @@ public class ModulesController {
                               Model model) {
         List<Course> courses = courseService.findAll();
         Module module = moduleService.findById(id);
+
         model.addAttribute("formModule", module);
         model.addAttribute("courses", courses);
         model.addAttribute("modules", moduleService.findAll());
@@ -62,7 +65,7 @@ public class ModulesController {
     @PostMapping("/edit/{id}")
     public String updateCourse(@PathVariable("id") long id,
                                @ModelAttribute("formModule") Module updatedModule) {
-        System.out.println(updatedModule);
+
         moduleService.update(id, updatedModule);
 
         return "redirect:/modules";
@@ -70,7 +73,9 @@ public class ModulesController {
 
     @PostMapping("/{id}")
     private String deleteCourse(@PathVariable("id") long id) {
+
         moduleService.deleteById(id);
+
         return "redirect:/modules";
     }
 }
